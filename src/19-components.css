@@ -1,0 +1,85 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   19 · 通用组件
+
+   Obsidian 把同一类按钮散在十几个类名下 —— 左侧竖条、视图头、侧栏底栏、
+   状态栏、标签页、移动端工具栏各有一套。它们的基色、圆角、悬浮态其实
+   一模一样，之前分散在三个文件里各写一遍，改一次要改五处。
+   这里合成两条规则，各处只保留自己真正特殊的那点差异。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 图标按钮 ───────────────── */
+
+:is(.clickable-icon,
+    .view-action,
+    .nav-action-button,
+    .side-dock-ribbon-action,
+    .workspace-ribbon-collapse-btn,
+    .workspace-tab-header-new-tab,
+    .workspace-tab-header-tab-list,
+    .mobile-toolbar-option) {
+    color: var(--icon-default-color);
+    border-radius: var(--radius-xs);
+    transition: color .3s ease, background-color .3s ease;
+}
+
+:is(.clickable-icon,
+    .view-action,
+    .nav-action-button,
+    .side-dock-ribbon-action,
+    .workspace-ribbon-collapse-btn,
+    .workspace-tab-header-new-tab,
+    .workspace-tab-header-tab-list,
+    .mobile-toolbar-option):hover {
+    color: var(--icon-default-color-hover);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+/* 状态栏那排贴着窗口下缘，圆角只收上面两角 */
+.status-bar-item {
+    color: var(--footer-text-color);
+    border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+    padding: 0 6px;
+    transition: color .3s ease, background-color .3s ease;
+}
+
+.status-bar-item:hover {
+    color: var(--hover-footer-btn-icon-color);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+/* 关闭按钮统一走红 */
+:is(.modal-close-button, .workspace-tab-header-inner-close-button, .search-input-clear-button):hover {
+    color: var(--color-red);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+
+/* ───────────────── 普通按钮 ───────────────── */
+
+button:not(.clickable-icon):not(.workspace-tab-header-inner-close-button):not(.modal-close-button) {
+    font-family: var(--font-interface);
+    border-radius: var(--radius-xs);
+    box-shadow: none;
+    transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+}
+
+
+/* ───────────────── 键盘键 ───────────────── */
+
+/* 长文里写快捷键提示会用到 <kbd>，默认样式在各个浏览器里差很多 */
+.markdown-rendered kbd,
+.cm-s-obsidian kbd {
+    display: inline-block;
+    padding: .1em .45em;
+    font-family: var(--font-monospace);
+    font-size: .85em;
+    line-height: 1.4;
+    color: var(--writeArea-text-color);
+    background-color: var(--line-code-bg-color);
+    border: 1px solid var(--border-strong);
+    border-bottom-width: 2px;
+    border-radius: var(--radius-xs);
+    vertical-align: baseline;
+    white-space: nowrap;
+}

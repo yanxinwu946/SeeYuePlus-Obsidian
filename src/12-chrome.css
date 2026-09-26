@@ -91,13 +91,7 @@
     color: var(--pop-up-menu-text-color);
 }
 
-/* 底部按钮 */
-.modal button:not(.clickable-icon):not(.modal-close-button) {
-    border-radius: var(--radius-xs);
-    font-family: var(--interface-text-font);
-    box-shadow: none;
-    transition: all .3s ease;
-}
+/* 通用按钮与图标按钮的样式统一在 19-components.css 里写 */
 
 .modal .mod-cta {
     background-color: var(--menu-footer-OK-btn-bg-color);
@@ -284,25 +278,7 @@
     border-color: var(--focus-ring-color);
 }
 
-/* 通用按钮 */
-button:not(.clickable-icon):not(.workspace-tab-header-inner-close-button) {
-    font-family: var(--interface-text-font);
-    border-radius: var(--radius-xs);
-    box-shadow: none;
-    transition: all .3s ease;
-}
-
-/* 图标按钮 */
-.clickable-icon {
-    color: var(--icon-default-color);
-    border-radius: var(--radius-xs);
-    transition: all .3s ease;
-}
-
-.clickable-icon:hover {
-    color: var(--icon-default-color-hover);
-    background-color: var(--hover-footer-btn-icon-bg-color);
-}
+/* 通用按钮的基样式在 19-components.css */
 
 
 /* ───────────────── 标签页右键菜单与拖拽 ───────────────── */

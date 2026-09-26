@@ -127,6 +127,8 @@ body {
     /* 表格 */
     --table-bg-radius: 3px;
     --table-all-cell-padding: 6px 12px;
+    /* 表格超过这个高度就内部滚动，表头钉住。设 none 则不限高 */
+    --table-max-height: 50vh;
 
     /* 图片 */
     --image-radius: 4px;
@@ -591,6 +593,8 @@ body.theme-dark {
     --hl-important: #d08770;
 
     /* ---- 表格 ---- */
+    /* 深色主题不限高，与 Typora 版一致 */
+    --table-max-height: none;
     --table-bg-color: #2e3440;
     --table-all-cell-border: 1px solid rgba(255, 255, 255, 0.1);
     --table-thead-bg-color: #3b4252;
@@ -1398,20 +1402,7 @@ body {
     border-right-color: transparent;
 }
 
-.side-dock-ribbon-action {
-    color: var(--icon-color);
-    border-radius: var(--radius-s);
-    transition: all .3s ease;
-}
-
-.side-dock-ribbon-action:hover {
-    color: var(--icon-color-hover);
-    background-color: var(--hover-footer-btn-icon-bg-color);
-}
-
-.workspace-ribbon-collapse-btn {
-    color: var(--icon-color);
-}
+/* 图标按钮的基色、圆角、悬浮态统一在 19-components.css 里写 */
 
 
 /* ───────────────── 七、视图标题栏 ───────────────── */
@@ -1438,15 +1429,6 @@ body {
     color: var(--filelist-path-time-text-color);
 }
 
-.view-action {
-    color: var(--icon-color);
-    border-radius: var(--radius-xs);
-}
-
-.view-action:hover {
-    color: var(--icon-color-hover);
-    background-color: var(--hover-footer-btn-icon-bg-color);
-}
 
 
 /* ───────────────── 八、状态栏 ───────────────── */
@@ -1457,16 +1439,10 @@ body {
     color: var(--footer-text-color);
 }
 
+/* 状态栏贴着窗口下缘，圆角只收上面两角 —— 剩下的在 19-components.css */
 .status-bar-item {
-    color: var(--footer-text-color);
     border-radius: var(--radius-xs) var(--radius-xs) 0 0;
     padding: 0 6px;
-    transition: all .3s ease;
-}
-
-.status-bar-item:hover {
-    color: var(--hover-footer-btn-icon-color);
-    background-color: var(--hover-footer-btn-icon-bg-color);
 }
 
 
@@ -2861,16 +2837,7 @@ body.theme-dark .cm-s-obsidian .cm-positive {
     transform: scale(var(--hover-image-bigger-multiple));
 }
 
-/* 图片下方那行 alt 文字 */
-.markdown-rendered .image-embed::after,
-.markdown-rendered figcaption {
-    display: block;
-    text-align: center;
-    width: 100%;
-    font-size: 12px;
-    font-family: var(--writeArea-text-font);
-    color: var(--filelist-path-time-text-color);
-}
+/* 图片题注在 20-writing.css —— 那边用 attr(alt) 取出说明文字 */
 
 /* 图片加载失败 */
 .markdown-rendered .image-embed.is-unresolved,
@@ -3029,9 +2996,9 @@ body.theme-dark .cm-s-obsidian .cm-positive {
     pointer-events: none;
 }
 
+/* 外链图片要相对定位才能挂角标；display 由 20-writing.css 统一给 block */
 .markdown-rendered .image-embed[src*="http"] {
     position: relative;
-    display: inline-block;
 }
 
 
@@ -3178,17 +3145,6 @@ body.is-grabbing .nav-file-title.is-being-dragged {
     border-top: var(--sidebar-footer-divider);
     padding: 4px 6px;
     gap: 2px;
-}
-
-.nav-action-button {
-    color: var(--icon-default-color);
-    border-radius: var(--radius-xs);
-    transition: all .3s ease;
-}
-
-.nav-action-button:hover {
-    color: var(--icon-default-color-hover);
-    background-color: var(--hover-footer-btn-icon-bg-color);
 }
 
 .nav-action-button.is-active {
@@ -3514,13 +3470,7 @@ input::placeholder {
     color: var(--pop-up-menu-text-color);
 }
 
-/* 底部按钮 */
-.modal button:not(.clickable-icon):not(.modal-close-button) {
-    border-radius: var(--radius-xs);
-    font-family: var(--interface-text-font);
-    box-shadow: none;
-    transition: all .3s ease;
-}
+/* 通用按钮与图标按钮的样式统一在 19-components.css 里写 */
 
 .modal .mod-cta {
     background-color: var(--menu-footer-OK-btn-bg-color);
@@ -3707,25 +3657,7 @@ input::placeholder {
     border-color: var(--focus-ring-color);
 }
 
-/* 通用按钮 */
-button:not(.clickable-icon):not(.workspace-tab-header-inner-close-button) {
-    font-family: var(--interface-text-font);
-    border-radius: var(--radius-xs);
-    box-shadow: none;
-    transition: all .3s ease;
-}
-
-/* 图标按钮 */
-.clickable-icon {
-    color: var(--icon-default-color);
-    border-radius: var(--radius-xs);
-    transition: all .3s ease;
-}
-
-.clickable-icon:hover {
-    color: var(--icon-default-color-hover);
-    background-color: var(--hover-footer-btn-icon-bg-color);
-}
+/* 通用按钮的基样式在 19-components.css */
 
 
 /* ───────────────── 标签页右键菜单与拖拽 ───────────────── */
@@ -4937,4 +4869,219 @@ body {
     --color-base-60: color-mix(in srgb, var(--writeArea-text-color) 62%, var(--interface-default-bg-color));
     --color-base-70: color-mix(in srgb, var(--writeArea-text-color) 74%, var(--interface-default-bg-color));
     --color-base-100: var(--writeArea-text-color);
+}
+
+
+/* ─────────── 19-components.css ─────────── */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   19 · 通用组件
+
+   Obsidian 把同一类按钮散在十几个类名下 —— 左侧竖条、视图头、侧栏底栏、
+   状态栏、标签页、移动端工具栏各有一套。它们的基色、圆角、悬浮态其实
+   一模一样，之前分散在三个文件里各写一遍，改一次要改五处。
+   这里合成两条规则，各处只保留自己真正特殊的那点差异。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 图标按钮 ───────────────── */
+
+:is(.clickable-icon,
+    .view-action,
+    .nav-action-button,
+    .side-dock-ribbon-action,
+    .workspace-ribbon-collapse-btn,
+    .workspace-tab-header-new-tab,
+    .workspace-tab-header-tab-list,
+    .mobile-toolbar-option) {
+    color: var(--icon-default-color);
+    border-radius: var(--radius-xs);
+    transition: color .3s ease, background-color .3s ease;
+}
+
+:is(.clickable-icon,
+    .view-action,
+    .nav-action-button,
+    .side-dock-ribbon-action,
+    .workspace-ribbon-collapse-btn,
+    .workspace-tab-header-new-tab,
+    .workspace-tab-header-tab-list,
+    .mobile-toolbar-option):hover {
+    color: var(--icon-default-color-hover);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+/* 状态栏那排贴着窗口下缘，圆角只收上面两角 */
+.status-bar-item {
+    color: var(--footer-text-color);
+    border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+    padding: 0 6px;
+    transition: color .3s ease, background-color .3s ease;
+}
+
+.status-bar-item:hover {
+    color: var(--hover-footer-btn-icon-color);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+/* 关闭按钮统一走红 */
+:is(.modal-close-button, .workspace-tab-header-inner-close-button, .search-input-clear-button):hover {
+    color: var(--color-red);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+
+/* ───────────────── 普通按钮 ───────────────── */
+
+button:not(.clickable-icon):not(.workspace-tab-header-inner-close-button):not(.modal-close-button) {
+    font-family: var(--font-interface);
+    border-radius: var(--radius-xs);
+    box-shadow: none;
+    transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+}
+
+
+/* ───────────────── 键盘键 ───────────────── */
+
+/* 长文里写快捷键提示会用到 <kbd>，默认样式在各个浏览器里差很多 */
+.markdown-rendered kbd,
+.cm-s-obsidian kbd {
+    display: inline-block;
+    padding: .1em .45em;
+    font-family: var(--font-monospace);
+    font-size: .85em;
+    line-height: 1.4;
+    color: var(--writeArea-text-color);
+    background-color: var(--line-code-bg-color);
+    border: 1px solid var(--border-strong);
+    border-bottom-width: 2px;
+    border-radius: var(--radius-xs);
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+
+
+/* ─────────── 20-writing.css ─────────── */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   20 · 为长文写作补的东西
+
+   主题的定位是「给长文写作的一套排版秩序」，这一份收的是写长文时才会
+   用到的几件小事：给图配题注、让长表格钉住表头、给标注加修饰。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 图片题注 ───────────────── */
+
+/* Obsidian 把 ![]() 里的说明文字挂成 .image-embed 的 alt 属性，
+   attr() 取出来就是题注。没写说明的图不会凭空多出一行 */
+.markdown-rendered .image-embed {
+    display: block;
+}
+
+.markdown-rendered .image-embed::after {
+    content: attr(alt);
+    display: block;
+    text-align: center;
+    margin-top: .6em;
+    font-size: .82em;
+    line-height: 1.6;
+    color: var(--filelist-path-time-text-color);
+}
+
+/* 图片本身居中，题注才好在它下面正中对齐 */
+.markdown-rendered p:has(> .image-embed) {
+    text-align: center;
+}
+
+/* 行内的表情、徽章那种小图不该被当成插图排 */
+.markdown-rendered .image-embed[alt=""]::after {
+    display: none;
+}
+
+
+/* ───────────────── 长表格：钉住表头 ───────────────── */
+
+/* 这里有个坑：sticky 是相对「最近的可滚动祖先」定位的，
+   而 Obsidian 1.13 在阅读视图里把表格包进 div.el-table，它带 overflow: auto
+   （为了宽表格能横向滚）。于是表头钉在那个盒子上，而它自己不纵向滚动，
+   表头就一动不动 —— position 算出来是 sticky，看着却完全没生效。
+   办法是让这个盒子自己成为纵向滚动容器：限高 + 溢出滚动，表头才有得钉。
+   编辑视图里表格是 CodeMirror 的 widget，包在 .table-wrapper 里，两个都要管 */
+.workspace-leaf-content[data-type="markdown"] :is(div.el-table, .table-wrapper) {
+    max-height: var(--table-max-height);
+    overflow: auto;
+}
+
+.workspace-leaf-content[data-type="markdown"] thead th {
+    position: sticky;
+    top: 0;
+    /* th 本身已经有不透明底色（见 06-tables.css），不必再补遮罩 */
+    z-index: 2;
+}
+
+/* 横向扫一行时整行提亮，宽表格里不容易看串 */
+.workspace-leaf-content[data-type="markdown"] tbody tr:hover {
+    background-color: var(--hover-sidebar-filelist-bg-color);
+}
+
+
+/* ───────────────── 标注修饰 ───────────────── */
+
+/* 写法：> [!note|no-title]  或  > [!note|right]
+   Obsidian 把竖线后面的词原样放进 data-callout-metadata，
+   多个词用空格分开，所以用 ~= 按词匹配 */
+
+/* 不要标题栏，只留正文 */
+.callout[data-callout-metadata~="no-title"] > .callout-title {
+    display: none;
+}
+
+.callout[data-callout-metadata~="no-title"] > .callout-content > :first-child {
+    margin-top: .9em;
+}
+
+/* 素色：去掉底色与投影，只留左边一道竖线。适合当旁批用 */
+.callout[data-callout-metadata~="clean"] {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.callout[data-callout-metadata~="clean"] > .callout-title {
+    background-color: transparent;
+}
+
+/* 旁注：靠左或靠右浮起来，正文绕排 */
+.callout[data-callout-metadata~="right"],
+.callout[data-callout-metadata~="left"] {
+    width: 38%;
+    margin-block: 0 1em;
+}
+
+.callout[data-callout-metadata~="right"] {
+    float: right;
+    margin-left: 1.5em;
+}
+
+.callout[data-callout-metadata~="left"] {
+    float: left;
+    margin-right: 1.5em;
+}
+
+/* 编辑视图里浮动会跟光标打架，手机上也没地方绕排，都退回通栏 */
+:is(.is-mobile, .is-live-preview) .callout[data-callout-metadata~="right"],
+:is(.is-mobile, .is-live-preview) .callout[data-callout-metadata~="left"] {
+    float: none;
+    width: auto;
+    margin: 1em 0;
+}
+
+/* 居中收窄，用来放一句想让人停下来读的话 */
+.callout[data-callout-metadata~="center"] {
+    max-width: 72%;
+    margin-inline: auto;
+}
+
+.callout[data-callout-metadata~="center"] > .callout-title {
+    justify-content: center;
 }

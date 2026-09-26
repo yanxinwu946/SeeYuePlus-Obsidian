@@ -1,0 +1,122 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   20 · 为长文写作补的东西
+
+   主题的定位是「给长文写作的一套排版秩序」，这一份收的是写长文时才会
+   用到的几件小事：给图配题注、让长表格钉住表头、给标注加修饰。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 图片题注 ───────────────── */
+
+/* Obsidian 把 ![]() 里的说明文字挂成 .image-embed 的 alt 属性，
+   attr() 取出来就是题注。没写说明的图不会凭空多出一行 */
+.markdown-rendered .image-embed {
+    display: block;
+}
+
+.markdown-rendered .image-embed::after {
+    content: attr(alt);
+    display: block;
+    text-align: center;
+    margin-top: .6em;
+    font-size: .82em;
+    line-height: 1.6;
+    color: var(--filelist-path-time-text-color);
+}
+
+/* 图片本身居中，题注才好在它下面正中对齐 */
+.markdown-rendered p:has(> .image-embed) {
+    text-align: center;
+}
+
+/* 行内的表情、徽章那种小图不该被当成插图排 */
+.markdown-rendered .image-embed[alt=""]::after {
+    display: none;
+}
+
+
+/* ───────────────── 长表格：钉住表头 ───────────────── */
+
+/* 这里有个坑：sticky 是相对「最近的可滚动祖先」定位的，
+   而 Obsidian 1.13 在阅读视图里把表格包进 div.el-table，它带 overflow: auto
+   （为了宽表格能横向滚）。于是表头钉在那个盒子上，而它自己不纵向滚动，
+   表头就一动不动 —— position 算出来是 sticky，看着却完全没生效。
+   办法是让这个盒子自己成为纵向滚动容器：限高 + 溢出滚动，表头才有得钉。
+   编辑视图里表格是 CodeMirror 的 widget，包在 .table-wrapper 里，两个都要管 */
+.workspace-leaf-content[data-type="markdown"] :is(div.el-table, .table-wrapper) {
+    max-height: var(--table-max-height);
+    overflow: auto;
+}
+
+.workspace-leaf-content[data-type="markdown"] thead th {
+    position: sticky;
+    top: 0;
+    /* th 本身已经有不透明底色（见 06-tables.css），不必再补遮罩 */
+    z-index: 2;
+}
+
+/* 横向扫一行时整行提亮，宽表格里不容易看串 */
+.workspace-leaf-content[data-type="markdown"] tbody tr:hover {
+    background-color: var(--hover-sidebar-filelist-bg-color);
+}
+
+
+/* ───────────────── 标注修饰 ───────────────── */
+
+/* 写法：> [!note|no-title]  或  > [!note|right]
+   Obsidian 把竖线后面的词原样放进 data-callout-metadata，
+   多个词用空格分开，所以用 ~= 按词匹配 */
+
+/* 不要标题栏，只留正文 */
+.callout[data-callout-metadata~="no-title"] > .callout-title {
+    display: none;
+}
+
+.callout[data-callout-metadata~="no-title"] > .callout-content > :first-child {
+    margin-top: .9em;
+}
+
+/* 素色：去掉底色与投影，只留左边一道竖线。适合当旁批用 */
+.callout[data-callout-metadata~="clean"] {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.callout[data-callout-metadata~="clean"] > .callout-title {
+    background-color: transparent;
+}
+
+/* 旁注：靠左或靠右浮起来，正文绕排 */
+.callout[data-callout-metadata~="right"],
+.callout[data-callout-metadata~="left"] {
+    width: 38%;
+    margin-block: 0 1em;
+}
+
+.callout[data-callout-metadata~="right"] {
+    float: right;
+    margin-left: 1.5em;
+}
+
+.callout[data-callout-metadata~="left"] {
+    float: left;
+    margin-right: 1.5em;
+}
+
+/* 编辑视图里浮动会跟光标打架，手机上也没地方绕排，都退回通栏 */
+:is(.is-mobile, .is-live-preview) .callout[data-callout-metadata~="right"],
+:is(.is-mobile, .is-live-preview) .callout[data-callout-metadata~="left"] {
+    float: none;
+    width: auto;
+    margin: 1em 0;
+}
+
+/* 居中收窄，用来放一句想让人停下来读的话 */
+.callout[data-callout-metadata~="center"] {
+    max-width: 72%;
+    margin-inline: auto;
+}
+
+.callout[data-callout-metadata~="center"] > .callout-title {
+    justify-content: center;
+}

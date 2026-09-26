@@ -116,6 +116,8 @@ body {
     /* 表格 */
     --table-bg-radius: 3px;
     --table-all-cell-padding: 6px 12px;
+    /* 表格超过这个高度就内部滚动，表头钉住。设 none 则不限高 */
+    --table-max-height: 50vh;
 
     /* 图片 */
     --image-radius: 4px;
@@ -580,6 +582,8 @@ body.theme-dark {
     --hl-important: #d08770;
 
     /* ---- 表格 ---- */
+    /* 深色主题不限高，与 Typora 版一致 */
+    --table-max-height: none;
     --table-bg-color: #2e3440;
     --table-all-cell-border: 1px solid rgba(255, 255, 255, 0.1);
     --table-thead-bg-color: #3b4252;

@@ -91,16 +91,7 @@
     transform: scale(var(--hover-image-bigger-multiple));
 }
 
-/* 图片下方那行 alt 文字 */
-.markdown-rendered .image-embed::after,
-.markdown-rendered figcaption {
-    display: block;
-    text-align: center;
-    width: 100%;
-    font-size: 12px;
-    font-family: var(--writeArea-text-font);
-    color: var(--filelist-path-time-text-color);
-}
+/* 图片题注在 20-writing.css —— 那边用 attr(alt) 取出说明文字 */
 
 /* 图片加载失败 */
 .markdown-rendered .image-embed.is-unresolved,
@@ -259,7 +250,7 @@
     pointer-events: none;
 }
 
+/* 外链图片要相对定位才能挂角标；display 由 20-writing.css 统一给 block */
 .markdown-rendered .image-embed[src*="http"] {
     position: relative;
-    display: inline-block;
 }

@@ -141,17 +141,6 @@ body.is-grabbing .nav-file-title.is-being-dragged {
     gap: 2px;
 }
 
-.nav-action-button {
-    color: var(--icon-default-color);
-    border-radius: var(--radius-xs);
-    transition: all .3s ease;
-}
-
-.nav-action-button:hover {
-    color: var(--icon-default-color-hover);
-    background-color: var(--hover-footer-btn-icon-bg-color);
-}
-
 .nav-action-button.is-active {
     color: var(--accent-color);
 }
