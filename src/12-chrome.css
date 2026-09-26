@@ -363,6 +363,38 @@ button:not(.clickable-icon):not(.workspace-tab-header-inner-close-button) {
 }
 
 
+/* ───────────────── 悬浮预览 ───────────────── */
+
+/* 鼠标悬在链接上弹出的那扇小窗。里面是 .markdown-rendered，
+   正文那套排版规则会自动生效，这里只管外壳 */
+.popover.hover-popover {
+    background-color: var(--pop-up-menu-bg-color);
+    border: none;
+    border-radius: var(--radius-l);
+    box-shadow: 0 8px 32px var(--liquid-glass-menu-shadow);
+    overflow: hidden;
+}
+
+.popover.hover-popover .markdown-embed {
+    border-left: none;
+    padding: 0;
+}
+
+.popover.hover-popover .markdown-embed-content {
+    max-height: 60vh;
+}
+
+.popover.hover-popover .markdown-preview-view {
+    padding: 16px 20px;
+}
+
+/* 弹窗顶部那条可拖拽的横线 */
+.popover.hover-popover .popover-titlebar {
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-hairline);
+}
+
+
 /* ───────────────── 图谱控件 ───────────────── */
 
 .graph-controls {

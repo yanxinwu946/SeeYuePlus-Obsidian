@@ -70,6 +70,20 @@ body.is-phone .mobile-toolbar-option:hover {
     color: var(--accent-color);
 }
 
+/* 手机底部那道横条（iOS 的 home indicator）会让贴底元素透出背后的底色，
+   把状态栏和工具栏垫实 */
+body.is-phone .status-bar,
+body.is-phone .mobile-navbar,
+body.is-phone .mobile-toolbar {
+    padding-bottom: var(--safe-area-inset-bottom);
+    background-color: var(--sidebar-whole-bg-color);
+}
+
+body.is-phone .workspace-drawer {
+    padding-top: var(--safe-area-inset-top);
+}
+
+
 /* ───────────────── 平板 ───────────────── */
 
 /* 平板性能够跑模糊，只把边距和圆角收一收 */

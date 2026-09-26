@@ -38,11 +38,18 @@
     transition: background-color .3s ease, color .3s ease;
 }
 
-.nav-file-title:hover,
-.nav-folder-title:hover,
-.tree-item-self:hover {
+/* 拖拽文件时鼠标扫过的每一行都会触发 hover，
+   整棵树跟着乱闪，所以拖动期间把悬浮态关掉 */
+body:not(.is-grabbing) :is(.nav-file-title, .nav-folder-title, .tree-item-self):hover {
     background-color: var(--hover-sidebar-filelist-bg-color);
     color: var(--filelist-filename-text-color);
+}
+
+/* 拖动中给被拖的那一行一点反馈 */
+body.is-grabbing .nav-file-title.is-being-dragged {
+    background-color: var(--active-sidebar-filelist-bg-color);
+    color: var(--active-filelist-text-color);
+    border-radius: var(--active-sidebar-filelist-bg-radius);
 }
 
 /* 选中：白色药丸 + 主题色文字 */

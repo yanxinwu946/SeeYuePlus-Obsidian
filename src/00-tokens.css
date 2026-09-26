@@ -97,7 +97,8 @@ body {
     --code-block-topBar-left-redDot-color: #ff5f5a;
     --code-block-topBar-left-yellowDot-color: #ffbe2e;
     --code-block-topBar-left-greenDot-color: #2aca44;
-    /* 右上角语言角标 */
+    /* 右上角语言角标的大小 */
+    --code-block-right-program-lang-text-size: 12px;
     /* 顶栏高度，为三个圆点让出的空间 */
     --code-block-top-bar-height: 2.8em;
 
@@ -252,6 +253,12 @@ body.theme-light {
     --task-list-checked-tick-size: .8em;
     --task-list-checked-text-color: #999;
     --hover-task-list-box-bg-color: #eceff480;
+    /* 自定义任务状态的底色。Obsidian 给所有非空状态都加 is-checked，
+       不区分的话 - [?] - [-] - [!] 会全被画成「已完成」 */
+    --task-state-cancelled: #a0a4a8;
+    --task-state-question: #e0a63c;
+    --task-state-important: #d9534f;
+    --task-state-other: #9aa3ad;
 
     /* ---- 代码块 ---- */
     --code-block-bg-color: #f6f8fa;
@@ -360,7 +367,7 @@ body.theme-light {
     --hover-table-scroll-thumb-color: #aaa;
     --code-block-scroll-thumb-color: #ccc;
     --hover-code-block-scroll-thumb-color: #aaa;
-    --scroll-thumb-width: 6px;
+    --scroll-thumb-width: 10px;
 
     /* YAML / 属性面板 */
     --yaml-front-matter-text-color: #7b8a99;
@@ -531,6 +538,11 @@ body.theme-dark {
     --task-list-checked-tick-size: .8em;
     --task-list-checked-text-color: #8899aa;
     --hover-task-list-box-bg-color: #3b4252;
+    /* 自定义任务状态的底色 */
+    --task-state-cancelled: #6b7280;
+    --task-state-question: #c99a3f;
+    --task-state-important: #bf616a;
+    --task-state-other: #5c6672;
 
     /* ---- 代码块 ---- */
     --code-block-bg-color: #1d1f23;
@@ -634,7 +646,7 @@ body.theme-dark {
     --hover-table-scroll-thumb-color: rgba(255, 255, 255, 0.6);
     --code-block-scroll-thumb-color: rgba(255, 255, 255, 0.5);
     --hover-code-block-scroll-thumb-color: rgba(255, 255, 255, 0.3);
-    --scroll-thumb-width: 6px;
+    --scroll-thumb-width: 10px;
 
     /* YAML / 属性面板 */
     --yaml-front-matter-text-color: #8899aa;

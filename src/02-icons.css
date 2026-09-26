@@ -22,6 +22,11 @@ body {
 
     /* 任务列表的勾 */
     --icon-check: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M4.5 12.6 10 18 19.5 6.5'/></svg>");
+    /* 自定义任务状态各用各的记号，免得全被画成「已完成」 */
+    --icon-minus: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round'><path d='M5.5 12h13'/></svg>");
+    --icon-dot: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='4.2' fill='black'/></svg>");
+    --icon-arrow-right: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M13 5.5 18.5 11 13 16.5'/><path d='M18.5 11H5'/></svg>");
+    --icon-star: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><path d='m12 3.6 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.8l5.9-.8z'/></svg>");
     /* 脚注回跳箭头 */
     --icon-back: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M11 5.5 5.5 11l5.5 5.5'/><path d='M5.5 11H19'/></svg>");
     /* 网络图片角标 */

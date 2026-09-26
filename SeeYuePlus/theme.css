@@ -108,7 +108,8 @@ body {
     --code-block-topBar-left-redDot-color: #ff5f5a;
     --code-block-topBar-left-yellowDot-color: #ffbe2e;
     --code-block-topBar-left-greenDot-color: #2aca44;
-    /* 右上角语言角标 */
+    /* 右上角语言角标的大小 */
+    --code-block-right-program-lang-text-size: 12px;
     /* 顶栏高度，为三个圆点让出的空间 */
     --code-block-top-bar-height: 2.8em;
 
@@ -263,6 +264,12 @@ body.theme-light {
     --task-list-checked-tick-size: .8em;
     --task-list-checked-text-color: #999;
     --hover-task-list-box-bg-color: #eceff480;
+    /* 自定义任务状态的底色。Obsidian 给所有非空状态都加 is-checked，
+       不区分的话 - [?] - [-] - [!] 会全被画成「已完成」 */
+    --task-state-cancelled: #a0a4a8;
+    --task-state-question: #e0a63c;
+    --task-state-important: #d9534f;
+    --task-state-other: #9aa3ad;
 
     /* ---- 代码块 ---- */
     --code-block-bg-color: #f6f8fa;
@@ -371,7 +378,7 @@ body.theme-light {
     --hover-table-scroll-thumb-color: #aaa;
     --code-block-scroll-thumb-color: #ccc;
     --hover-code-block-scroll-thumb-color: #aaa;
-    --scroll-thumb-width: 6px;
+    --scroll-thumb-width: 10px;
 
     /* YAML / 属性面板 */
     --yaml-front-matter-text-color: #7b8a99;
@@ -542,6 +549,11 @@ body.theme-dark {
     --task-list-checked-tick-size: .8em;
     --task-list-checked-text-color: #8899aa;
     --hover-task-list-box-bg-color: #3b4252;
+    /* 自定义任务状态的底色 */
+    --task-state-cancelled: #6b7280;
+    --task-state-question: #c99a3f;
+    --task-state-important: #bf616a;
+    --task-state-other: #5c6672;
 
     /* ---- 代码块 ---- */
     --code-block-bg-color: #1d1f23;
@@ -645,7 +657,7 @@ body.theme-dark {
     --hover-table-scroll-thumb-color: rgba(255, 255, 255, 0.6);
     --code-block-scroll-thumb-color: rgba(255, 255, 255, 0.5);
     --hover-code-block-scroll-thumb-color: rgba(255, 255, 255, 0.3);
-    --scroll-thumb-width: 6px;
+    --scroll-thumb-width: 10px;
 
     /* YAML / 属性面板 */
     --yaml-front-matter-text-color: #8899aa;
@@ -792,6 +804,11 @@ body {
 
     /* 任务列表的勾 */
     --icon-check: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M4.5 12.6 10 18 19.5 6.5'/></svg>");
+    /* 自定义任务状态各用各的记号，免得全被画成「已完成」 */
+    --icon-minus: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round'><path d='M5.5 12h13'/></svg>");
+    --icon-dot: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='4.2' fill='black'/></svg>");
+    --icon-arrow-right: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M13 5.5 18.5 11 13 16.5'/><path d='M18.5 11H5'/></svg>");
+    --icon-star: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><path d='m12 3.6 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.8l5.9-.8z'/></svg>");
     /* 脚注回跳箭头 */
     --icon-back: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M11 5.5 5.5 11l5.5 5.5'/><path d='M5.5 11H19'/></svg>");
     /* 网络图片角标 */
@@ -871,7 +888,6 @@ body {
     --background-modifier-hover: var(--hover-sidebar-filelist-bg-color);
     --background-modifier-active-hover: var(--active-sidebar-filelist-bg-color);
     --background-modifier-form-field: var(--input-bg-color);
-    --background-modifier-form-field-highlighted: var(--input-bg-color);
     --background-modifier-box-shadow: rgba(0, 0, 0, .15);
     --background-modifier-success: var(--color-green);
     --background-modifier-error: var(--color-red);
@@ -889,19 +905,15 @@ body {
     --text-accent-hover: var(--accent-color-hover);
     --text-selection: var(--writeArea-selected-text-bg-color);
     --text-highlight-bg: var(--search-result-list-match-content-bg-color);
-    --text-highlight-bg-active: var(--search-result-list-match-content-bg-color);
     --text-error: var(--color-red);
     --text-success: var(--color-green);
     --text-warning: var(--color-orange);
-    --text-error-hover: var(--color-red);
-    --text-max-width: var(--writeArea-default-width);
 
     /* 控件 */
     --interactive-normal: var(--input-bg-color);
     --interactive-hover: var(--hover-sidebar-filelist-bg-color);
     --interactive-accent: var(--accent-color);
     --interactive-accent-hover: var(--accent-color-hover);
-    --interactive-success: var(--color-green);
     --color-accent: var(--accent-color);
     --color-accent-1: var(--accent-color);
     --color-accent-2: var(--accent-color-hover);
@@ -1028,19 +1040,8 @@ body {
     --menu-border-width: 0;
     --menu-radius: var(--radius-l);
     --menu-shadow: 0 5px 15px rgba(0, 0, 0, .15);
-    --menu-item-color: var(--context-menu-text-color);
-    --menu-item-background-hover: var(--hover-context-menu-list-line-bg-color);
-    --menu-item-background-active: var(--hover-context-menu-list-line-bg-color);
-    --menu-item-radius: var(--radius-s);
-    --menu-item-padding: 4px 10px;
-    --menu-item-icon-color: var(--context-menu-text-color);
-    --menu-item-icon-color-hover: var(--hover-context-menu-list-line-text-color);
-    --menu-item-icon-size: 15px;
 
     /* 提示框 */
-    --tooltip-background: var(--btn-tooltip-bg-color);
-    --tooltip-color: var(--btn-tooltip-text-color);
-    --tooltip-radius: var(--radius-s);
 
     /* 分隔线 */
     --divider-color: var(--border-hairline);
@@ -1054,7 +1055,6 @@ body {
     /* 嵌入块 */
     --embed-background: transparent;
     --embed-border-left: 2px solid var(--accent-color);
-    --embed-border-right: none;
     --embed-border-top: none;
     --embed-border-bottom: none;
     --embed-padding: 0 0 0 12px;
@@ -1066,9 +1066,7 @@ body {
     --metadata-border-color: transparent;
     --metadata-divider-color: transparent;
     --metadata-padding: 10px 14px;
-    --metadata-radius: var(--yaml-front-matter-border-radius);
     --metadata-label-text-color: var(--yaml-front-matter-text-color);
-    --metadata-label-text-size: var(--yaml-front-matter-text-size);
     --metadata-input-text-color: var(--writeArea-text-color);
     --metadata-input-background: transparent;
     --metadata-input-background-hover: transparent;
@@ -1082,10 +1080,6 @@ body {
 
     /* 搜索 */
     --search-result-background: transparent;
-    --search-result-border: transparent;
-    --search-result-file-matched-text-background: var(--search-result-list-match-content-bg-color);
-    --search-result-file-title-color: var(--filelist-filename-text-color);
-    --search-result-file-matches: transparent;
     --search-clear-button-color: var(--icon-color);
     --search-icon-color: var(--icon-color);
 
@@ -1151,8 +1145,6 @@ body {
     --table-row-alt-background: var(--table-tbody-evenNum-line-bg-color);
     --table-row-alt-background-hover: var(--table-tbody-evenNum-line-bg-color);
     --table-row-background-hover: transparent;
-    --table-cell-border-width: 0;
-    --table-cell-border-color: transparent;
     --table-selection: var(--writeArea-selected-text-bg-color);
     --table-selection-border-color: var(--accent-color);
     --table-drag-handle-background: var(--accent-color);
@@ -1204,7 +1196,6 @@ body {
 
     /* 文件树 */
     --vault-name-color: var(--filelist-filename-text-color);
-    --vault-name-font-size: var(--sidebar-text-size);
     --vault-name-font-weight: 600;
     --vault-name-padding: 6px 0;
     --vault-profile-color: var(--filelist-filename-text-color);
@@ -1225,11 +1216,8 @@ body {
     --graph-node-tag: var(--color-green);
     --graph-node-attachment: var(--color-orange);
     --graph-node-unresolved: var(--color-red);
-    --graph-node-highlight: var(--color-pink);
     --graph-line: var(--border-hairline);
     --graph-text: var(--writeArea-text-color);
-    --graph-arrow: var(--icon-default-color);
-    --graph-controls-background: var(--pop-up-menu-bg-color);
 
     /* 白板 */
     --canvas-background: var(--interface-default-bg-color);
@@ -1247,8 +1235,6 @@ body {
     --prompt-background: var(--pop-up-menu-bg-color);
     --prompt-border-color: transparent;
     --prompt-border-width: 0;
-    --prompt-radius: var(--radius-l);
-    --prompt-shadow: 0 8px 32px var(--liquid-glass-menu-shadow);
     --prompt-input-height: 40px;
 }
 
@@ -1904,6 +1890,8 @@ input[type="checkbox"].task-list-item-checkbox:checked {
     border-color: transparent;
 }
 
+/* 记号挂在 ::after 上，形状由下面各状态自己指定。
+   缺省不画记号 —— 认不出来的状态宁可留个空方框，也别硬套一个勾 */
 input[type="checkbox"].task-list-item-checkbox:checked::after {
     content: "";
     position: absolute;
@@ -1911,8 +1899,6 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
     margin: auto;
     width: var(--task-list-checked-tick-size);
     height: var(--task-list-checked-tick-size);
-    -webkit-mask-image: var(--icon-check);
-    mask-image: var(--icon-check);
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
     -webkit-mask-position: center;
@@ -1924,7 +1910,68 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
     box-shadow: none;
 }
 
-/* 已完成的行划掉并压暗 */
+/* —— 各状态各画各的 —— */
+/* Obsidian 的任务列表在阅读视图和编辑视图里是两套 DOM，
+   方框有的直接挂在 li 下、有的多包一层 p，所以两种都写 */
+:is(li.task-list-item, .HyperMD-task-line)[data-task="x"] input.task-list-item-checkbox:checked::after,
+:is(li.task-list-item, .HyperMD-task-line)[data-task="X"] input.task-list-item-checkbox:checked::after {
+    -webkit-mask-image: var(--icon-check);
+    mask-image: var(--icon-check);
+}
+
+:is(li.task-list-item, .HyperMD-task-line)[data-task="-"] input.task-list-item-checkbox:checked {
+    background-color: var(--task-state-cancelled) !important;
+}
+
+:is(li.task-list-item, .HyperMD-task-line)[data-task="-"] input.task-list-item-checkbox:checked::after {
+    -webkit-mask-image: var(--icon-minus);
+    mask-image: var(--icon-minus);
+}
+
+:is(li.task-list-item, .HyperMD-task-line)[data-task="?"] input.task-list-item-checkbox:checked {
+    background-color: var(--task-state-question) !important;
+}
+
+:is(li.task-list-item, .HyperMD-task-line)[data-task="?"] input.task-list-item-checkbox:checked::after {
+    -webkit-mask-image: var(--icon-question);
+    mask-image: var(--icon-question);
+}
+
+:is(li.task-list-item, .HyperMD-task-line)[data-task="!"] input.task-list-item-checkbox:checked {
+    background-color: var(--task-state-important) !important;
+}
+
+:is(li.task-list-item, .HyperMD-task-line)[data-task="!"] input.task-list-item-checkbox:checked::after {
+    -webkit-mask-image: var(--icon-warning);
+    mask-image: var(--icon-warning);
+}
+
+:is(li.task-list-item, .HyperMD-task-line)[data-task="/"] input.task-list-item-checkbox:checked::after {
+    -webkit-mask-image: var(--icon-dot);
+    mask-image: var(--icon-dot);
+}
+
+:is(li.task-list-item, .HyperMD-task-line)[data-task=">"] input.task-list-item-checkbox:checked::after {
+    -webkit-mask-image: var(--icon-arrow-right);
+    mask-image: var(--icon-arrow-right);
+}
+
+:is(li.task-list-item, .HyperMD-task-line)[data-task="*"] input.task-list-item-checkbox:checked {
+    background-color: var(--task-state-question) !important;
+}
+
+:is(li.task-list-item, .HyperMD-task-line)[data-task="*"] input.task-list-item-checkbox:checked::after {
+    -webkit-mask-image: var(--icon-star);
+    mask-image: var(--icon-star);
+}
+
+/* 剩下认不出来的状态：只填色，不画记号 */
+:is(li.task-list-item, .HyperMD-task-line):not([data-task=""]):not([data-task="x"]):not([data-task="X"]):not([data-task="-"]) input.task-list-item-checkbox:checked {
+    background-color: var(--task-state-other) !important;
+}
+
+/* 已完成的行划掉并压暗。只划 x —— Obsidian 给所有非空状态都加 is-checked，
+   照着 is-checked 划会把「取消」「疑问」这些一起划掉 */
 .markdown-rendered li.task-list-item[data-task="x"],
 .markdown-rendered li.task-list-item[data-task="X"] {
     color: var(--task-list-checked-text-color);
@@ -3078,11 +3125,18 @@ body.theme-dark .cm-s-obsidian .cm-positive {
     transition: background-color .3s ease, color .3s ease;
 }
 
-.nav-file-title:hover,
-.nav-folder-title:hover,
-.tree-item-self:hover {
+/* 拖拽文件时鼠标扫过的每一行都会触发 hover，
+   整棵树跟着乱闪，所以拖动期间把悬浮态关掉 */
+body:not(.is-grabbing) :is(.nav-file-title, .nav-folder-title, .tree-item-self):hover {
     background-color: var(--hover-sidebar-filelist-bg-color);
     color: var(--filelist-filename-text-color);
+}
+
+/* 拖动中给被拖的那一行一点反馈 */
+body.is-grabbing .nav-file-title.is-being-dragged {
+    background-color: var(--active-sidebar-filelist-bg-color);
+    color: var(--active-filelist-text-color);
+    border-radius: var(--active-sidebar-filelist-bg-radius);
 }
 
 /* 选中：白色药丸 + 主题色文字 */
@@ -3780,6 +3834,38 @@ button:not(.clickable-icon):not(.workspace-tab-header-inner-close-button) {
 }
 
 
+/* ───────────────── 悬浮预览 ───────────────── */
+
+/* 鼠标悬在链接上弹出的那扇小窗。里面是 .markdown-rendered，
+   正文那套排版规则会自动生效，这里只管外壳 */
+.popover.hover-popover {
+    background-color: var(--pop-up-menu-bg-color);
+    border: none;
+    border-radius: var(--radius-l);
+    box-shadow: 0 8px 32px var(--liquid-glass-menu-shadow);
+    overflow: hidden;
+}
+
+.popover.hover-popover .markdown-embed {
+    border-left: none;
+    padding: 0;
+}
+
+.popover.hover-popover .markdown-embed-content {
+    max-height: 60vh;
+}
+
+.popover.hover-popover .markdown-preview-view {
+    padding: 16px 20px;
+}
+
+/* 弹窗顶部那条可拖拽的横线 */
+.popover.hover-popover .popover-titlebar {
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-hairline);
+}
+
+
 /* ───────────────── 图谱控件 ───────────────── */
 
 .graph-controls {
@@ -3813,8 +3899,12 @@ button:not(.clickable-icon):not(.workspace-tab-header-inner-close-button) {
 
 ::-webkit-scrollbar-thumb {
     background-color: var(--writeArea-scroll-thumb-color);
-    border-radius: 4px;
-    border: none;
+    /* 透明边框 + padding-box 裁切：滚动条留宽一点好抓，
+       看得见的滑块还是细的。min-height 兜住长文档里那根针 */
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 999px;
+    min-height: 40px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -4239,6 +4329,20 @@ body.is-phone .mobile-toolbar-option:hover {
     color: var(--accent-color);
 }
 
+/* 手机底部那道横条（iOS 的 home indicator）会让贴底元素透出背后的底色，
+   把状态栏和工具栏垫实 */
+body.is-phone .status-bar,
+body.is-phone .mobile-navbar,
+body.is-phone .mobile-toolbar {
+    padding-bottom: var(--safe-area-inset-bottom);
+    background-color: var(--sidebar-whole-bg-color);
+}
+
+body.is-phone .workspace-drawer {
+    padding-top: var(--safe-area-inset-top);
+}
+
+
 /* ───────────────── 平板 ───────────────── */
 
 /* 平板性能够跑模糊，只把边距和圆角收一收 */
@@ -4260,4 +4364,654 @@ body.is-tablet .workspace-split.mod-root .workspace-leaf-content[data-type="mark
     .markdown-rendered :is(h2, h3, h4, h5, h6)::after {
         display: none !important;
     }
+}
+
+
+/* ─────────── 17-code-lang.css ─────────── */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   17 · 代码块的语言角标
+
+   Typora 版在代码块右上角标出语言名，靠的是它给 pre 打的 lang 属性，
+   外加一张把 lang 映射成人看的名字的表。Obsidian 不打 lang，
+   但会把 language-xxx 这个类挂在 pre 上 —— 同一张表换个选择器就能用。
+
+   没收录的语言不会生成 ::after（content 缺省即不生成伪元素），
+   所以不会冒出一串 language-xxx。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ───────────────── 角标本体 ───────────────── */
+
+.markdown-rendered pre[class*="language-"]::after {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    z-index: 3;
+    font-family: var(--code-block-text-font);
+    font-size: var(--code-block-right-program-lang-text-size);
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 1;
+    color: var(--code-block-right-program-lang-text-color);
+    pointer-events: none;
+    /* 悬浮才露出复制按钮，角标先让位，两者不叠 */
+    transition: opacity .15s ease;
+}
+
+/* 复制按钮浮出来的时候把角标藏掉，右上角只留一样东西 */
+.markdown-rendered pre[class*="language-"]:hover::after {
+    opacity: 0;
+}
+
+
+/* ───────────────── 语言名对照表 ───────────────── */
+
+/* —— A —— */
+pre.language-abap::after { content: "ABAP"; }
+pre.language-actionscript::after { content: "ActionScript"; }
+pre.language-ada::after { content: "Ada"; }
+pre.language-apache::after { content: "Apache"; }
+pre.language-applescript::after { content: "AppleScript"; }
+pre.language-arduino::after { content: "Arduino"; }
+pre.language-asciidoc::after { content: "AsciiDoc"; }
+pre.language-asm::after,
+pre.language-assembly::after { content: "Assembly"; }
+pre.language-aspnet::after { content: "ASP.NET"; }
+pre.language-awk::after { content: "AWK"; }
+
+/* —— B —— */
+pre.language-bash::after { content: "Bash"; }
+pre.language-basic::after { content: "BASIC"; }
+pre.language-bat::after,
+pre.language-batch::after { content: "Batch"; }
+pre.language-bicep::after { content: "Bicep"; }
+pre.language-brainfuck::after { content: "Brainfuck"; }
+
+/* —— C —— */
+pre.language-c::after { content: "C"; }
+pre.language-cpp::after,
+pre.language-c++::after { content: "C++"; }
+pre.language-csharp::after,
+pre.language-cs::after { content: "C#"; }
+pre.language-css::after { content: "CSS"; }
+pre.language-csv::after { content: "CSV"; }
+pre.language-clojure::after { content: "Clojure"; }
+pre.language-cmake::after { content: "CMake"; }
+pre.language-cobol::after { content: "COBOL"; }
+pre.language-coffeescript::after { content: "CoffeeScript"; }
+pre.language-crystal::after { content: "Crystal"; }
+pre.language-cypher::after { content: "Cypher"; }
+
+/* —— D —— */
+pre.language-d::after { content: "D"; }
+pre.language-dart::after { content: "Dart"; }
+pre.language-diff::after { content: "Diff"; }
+pre.language-django::after,
+pre.language-jinja2::after { content: "Django"; }
+pre.language-docker::after,
+pre.language-dockerfile::after { content: "Dockerfile"; }
+
+/* —— E —— */
+pre.language-elixir::after { content: "Elixir"; }
+pre.language-elm::after { content: "Elm"; }
+pre.language-erlang::after { content: "Erlang"; }
+
+/* —— F —— */
+pre.language-fsharp::after { content: "F#"; }
+pre.language-fortran::after { content: "Fortran"; }
+
+/* —— G —— */
+pre.language-gdscript::after { content: "GDScript"; }
+pre.language-gherkin::after { content: "Gherkin"; }
+pre.language-git::after { content: "Git"; }
+pre.language-glsl::after { content: "GLSL"; }
+pre.language-go::after,
+pre.language-golang::after { content: "Go"; }
+pre.language-gradle::after { content: "Gradle"; }
+pre.language-graphql::after { content: "GraphQL"; }
+pre.language-groovy::after { content: "Groovy"; }
+
+/* —— H —— */
+pre.language-haml::after { content: "Haml"; }
+pre.language-handlebars::after { content: "Handlebars"; }
+pre.language-haskell::after { content: "Haskell"; }
+pre.language-haxe::after { content: "Haxe"; }
+pre.language-hcl::after,
+pre.language-terraform::after { content: "Terraform"; }
+pre.language-html::after { content: "HTML"; }
+pre.language-http::after { content: "HTTP"; }
+
+/* —— I —— */
+pre.language-ini::after,
+pre.language-properties::after { content: "INI"; }
+
+/* —— J —— */
+pre.language-java::after { content: "Java"; }
+pre.language-js::after,
+pre.language-javascript::after { content: "JavaScript"; }
+pre.language-json::after { content: "JSON"; }
+pre.language-json5::after { content: "JSON5"; }
+pre.language-jsx::after { content: "JSX"; }
+pre.language-julia::after { content: "Julia"; }
+
+/* —— K —— */
+pre.language-kotlin::after { content: "Kotlin"; }
+
+/* —— L —— */
+pre.language-latex::after,
+pre.language-tex::after { content: "LaTeX"; }
+pre.language-less::after { content: "Less"; }
+pre.language-lisp::after { content: "Lisp"; }
+pre.language-lua::after { content: "Lua"; }
+
+/* —— M —— */
+pre.language-makefile::after,
+pre.language-make::after { content: "Makefile"; }
+pre.language-markdown::after,
+pre.language-md::after { content: "Markdown"; }
+pre.language-matlab::after { content: "MATLAB"; }
+pre.language-mermaid::after { content: "Mermaid"; }
+
+/* —— N —— */
+pre.language-nginx::after { content: "Nginx"; }
+pre.language-nim::after { content: "Nim"; }
+pre.language-nix::after { content: "Nix"; }
+
+/* —— O —— */
+pre.language-objectivec::after { content: "Objective-C"; }
+pre.language-ocaml::after { content: "OCaml"; }
+
+/* —— P —— */
+pre.language-pascal::after { content: "Pascal"; }
+pre.language-perl::after { content: "Perl"; }
+pre.language-php::after { content: "PHP"; }
+pre.language-plantuml::after { content: "PlantUML"; }
+pre.language-powershell::after,
+pre.language-ps1::after { content: "PowerShell"; }
+pre.language-protobuf::after { content: "Protobuf"; }
+pre.language-pug::after,
+pre.language-jade::after { content: "Pug"; }
+pre.language-purescript::after { content: "PureScript"; }
+pre.language-python::after,
+pre.language-py::after { content: "Python"; }
+
+/* —— Q —— */
+pre.language-qml::after { content: "QML"; }
+
+/* —— R —— */
+pre.language-r::after { content: "R"; }
+pre.language-reason::after { content: "Reason"; }
+pre.language-regex::after { content: "RegExp"; }
+pre.language-ruby::after,
+pre.language-rb::after { content: "Ruby"; }
+pre.language-rust::after { content: "Rust"; }
+
+/* —— S —— */
+pre.language-sas::after { content: "SAS"; }
+pre.language-sass::after { content: "Sass"; }
+pre.language-scala::after { content: "Scala"; }
+pre.language-scheme::after { content: "Scheme"; }
+pre.language-scss::after { content: "SCSS"; }
+pre.language-solidity::after { content: "Solidity"; }
+pre.language-sql::after { content: "SQL"; }
+pre.language-stylus::after { content: "Stylus"; }
+pre.language-swift::after { content: "Swift"; }
+
+/* —— T —— */
+pre.language-toml::after { content: "TOML"; }
+pre.language-ts::after,
+pre.language-typescript::after { content: "TypeScript"; }
+pre.language-tsx::after { content: "TSX"; }
+pre.language-twig::after { content: "Twig"; }
+
+/* —— V —— */
+pre.language-vala::after { content: "Vala"; }
+pre.language-vb::after,
+pre.language-vbnet::after { content: "VB.NET"; }
+pre.language-verilog::after { content: "Verilog"; }
+pre.language-vhdl::after { content: "VHDL"; }
+pre.language-vim::after { content: "Vim script"; }
+
+/* —— W —— */
+pre.language-wasm::after { content: "WebAssembly"; }
+
+/* —— X —— */
+pre.language-xml::after { content: "XML"; }
+
+/* —— Y —— */
+pre.language-yaml::after,
+pre.language-yml::after { content: "YAML"; }
+
+/* —— Z —— */
+pre.language-zig::after { content: "Zig"; }
+pre.language-zsh::after { content: "Zsh"; }
+
+
+/* ─────────── 18-obsidian-vars.css ─────────── */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   18 · 补齐 Obsidian 自己的变量
+
+   变量名以真机 dump 为准，见 preview/obsidian-vars.json ——
+   那是把主题关掉、扫描 Obsidian 全部样式表抓出来的 1097 个名字。
+   凭文档和别的主题猜名字很容易写错，而写错不会报错，只是静默不生效：
+   --menu-item-color、--tooltip-background、--prompt-radius、
+   --table-cell-border-width、--vault-name-font-size 这些都不存在。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+body {
+    /* ───────────────── 图标 ───────────────── */
+
+    --icon-color: var(--icon-default-color);
+    --icon-color-hover: var(--icon-default-color-hover);
+    --icon-color-active: var(--accent-color);
+    --icon-color-focus: var(--accent-color);
+    --icon-color-focused: var(--accent-color);
+    --icon-opacity: 1;
+    --icon-opacity-hover: 1;
+    --icon-opacity-active: 1;
+    --icon-stroke: 1.75px;
+    --icon-s: 16px;
+    --icon-m: 18px;
+    --icon-l: 18px;
+    --icon-xl: 32px;
+
+
+    /* ───────────────── 命令面板与菜单 ───────────────── */
+    /* 1.13 没有 --tooltip-* 变量，浮层提示只能直接写 .tooltip 选择器 */
+
+    --prompt-background: var(--pop-up-menu-bg-color);
+    --prompt-border-color: transparent;
+    --prompt-border-width: 0;
+    --prompt-input-height: 40px;
+
+    --menu-background: var(--context-menu-bg-color);
+    --menu-border-color: transparent;
+    --menu-border-width: 0;
+    --menu-radius: var(--radius-l);
+    --menu-padding: 4px 6px;
+    --menu-divider-color: var(--border-hairline);
+    --menu-divider-width: 1px;
+    --menu-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+
+
+    /* ───────────────── 表单控件 ───────────────── */
+
+    --slider-track-background: var(--border-hairline);
+    --slider-track-height: 4px;
+    --slider-fill-background: var(--accent-color);
+    --slider-thumb-background: var(--accent-color);
+    --slider-thumb-background-hover: var(--accent-color-hover);
+    --slider-thumb-border-width: 0;
+    --slider-thumb-border-color: transparent;
+    --slider-thumb-width: 14px;
+    --slider-thumb-height: 14px;
+    --slider-thumb-radius: 50%;
+    --slider-thumb-shadow: none;
+    --slider-thumb-shadow-hover: none;
+    --slider-thumb-shadow-active: none;
+
+    --toggle-width: 40px;
+    --toggle-radius: 999px;
+    --toggle-border-width: 0;
+    --toggle-thumb-color: #fff;
+    --toggle-thumb-width: 16px;
+    --toggle-thumb-height: 16px;
+    --toggle-thumb-radius: 50%;
+
+    --dropdown-background: var(--input-bg-color);
+    --dropdown-background-hover: var(--hover-sidebar-filelist-bg-color);
+    --dropdown-background-blend-mode: normal;
+
+    /* 属性值、标签那类胶囊 */
+    --pill-background: var(--tag-bg-color);
+    --pill-background-hover: var(--tag-bg-color);
+    --pill-color: var(--tag-text-color);
+    --pill-color-hover: var(--tag-text-color);
+    --pill-color-remove: var(--filelist-path-time-text-color);
+    --pill-color-remove-hover: var(--color-red);
+    --pill-border-width: 0;
+    --pill-border-color: transparent;
+    --pill-radius: var(--radius-xs);
+    --pill-padding-x: 6px;
+    --pill-padding-y: 1px;
+    --pill-weight: 500;
+    --pill-decoration: none;
+
+
+    /* ───────────────── 视图标题栏与侧栏 ───────────────── */
+
+    --file-header-background: transparent;
+    --file-header-background-focused: transparent;
+    --file-header-border: 1px solid var(--border-hairline);
+    --file-header-font: var(--interface-text-font);
+    --file-header-font-size: 13px;
+    --file-header-font-weight: 400;
+    --file-header-justify: center;
+
+    --nav-heading-color: var(--filelist-path-time-text-color);
+    --nav-heading-color-hover: var(--filelist-filename-text-color);
+    --nav-heading-color-collapsed: var(--filelist-path-time-text-color);
+    --nav-heading-color-collapsed-hover: var(--filelist-filename-text-color);
+    --nav-heading-weight: 600;
+    --nav-heading-weight-hover: 600;
+
+    /* 库名。1.13 叫 vault-profile，不叫 vault-name */
+    --vault-profile-color: var(--filelist-filename-text-color);
+    --vault-profile-color-hover: var(--active-filelist-text-color);
+    --vault-profile-font-size: var(--sidebar-text-size);
+    --vault-profile-font-weight: 600;
+    --vault-profile-radius: var(--radius-s);
+
+
+    /* ───────────────── 设置面板 ───────────────── */
+
+    --setting-items-background: transparent;
+    --setting-items-border-color: var(--border-hairline);
+    --setting-group-heading-color: var(--accent-color);
+    --setting-group-heading-weight: 600;
+
+
+    /* ───────────────── 嵌入块 ───────────────── */
+    /* 1.13 用的是 start / end，不是 left / right */
+
+    --embed-border-start: var(--embed-border-left);
+    --embed-border-end: none;
+    --embed-border-top: none;
+    --embed-border-bottom: none;
+    --embed-block-shadow-hover: none;
+    --embed-font-style: normal;
+
+    --embed-actions-background: var(--pop-up-menu-bg-color);
+    --embed-actions-radius: var(--radius-s);
+    --embed-actions-padding: 2px;
+    --embed-actions-shadow: 0 4px 16px var(--liquid-glass-menu-shadow);
+    --embed-action-color: var(--icon-default-color);
+    --embed-action-radius: var(--radius-xs);
+
+
+    /* ───────────────── 脚注 ───────────────── */
+    /* 之前是手写样式，1.13 其实有一整套变量 */
+
+    --footnote-size: .85em;
+    --footnote-line-height: 1.6;
+    --footnote-radius: var(--radius-xs);
+    --footnote-gap: .3em;
+    --footnote-padding-block: 1px;
+    --footnote-padding-inline: 4px;
+    --footnote-divider-color: var(--end-footnote-area-prompt-color);
+    --footnote-divider-color-active: var(--accent-color);
+    --footnote-divider-width: 1px;
+    --footnote-id-color: var(--end-footnote-area-prompt-color);
+    --footnote-id-color-no-occurrences: var(--color-red);
+    --footnote-id-delimiter: ".";
+    --footnote-input-background: var(--input-bg-color);
+    --footnote-input-background-active: var(--input-bg-color);
+
+
+    /* ───────────────── 表格（真名） ───────────────── */
+    /* 单元格的边由主题自己在 06-tables.css 里画，
+       这里把 Obsidian 自带的那圈关掉，免得叠成双层 */
+
+    --table-border-width: 0;
+    --table-border-color: transparent;
+    --table-header-border-width: 0;
+    --table-header-border-color: transparent;
+    --table-column-first-border-width: 0;
+    --table-column-last-border-width: 0;
+    --table-row-last-border-width: 0;
+    --table-selection-border-radius: var(--radius-xs);
+    --table-drag-handle-size: 16px;
+    --table-drag-handle-background-active: var(--accent-color);
+    --table-drag-handle-color-active: var(--accent-contrast);
+
+
+    /* ───────────────── 搜索 ───────────────── */
+
+    --search-input-radius: var(--radius-s);
+    --search-icon-color: var(--icon-default-color);
+    --search-clear-button-color: var(--icon-default-color);
+    --search-result-background: transparent;
+
+
+    /* ───────────────── 属性面板（真名） ───────────────── */
+
+    --metadata-border-radius: var(--yaml-front-matter-border-radius);
+    --metadata-border-width: 0;
+    --metadata-gap: 3px;
+    --metadata-divider-width: 1px;
+    --metadata-divider-color-hover: var(--border-hairline);
+    --metadata-divider-color-focus: var(--border-hairline);
+    --metadata-label-font: var(--code-block-text-font);
+    --metadata-label-font-size: var(--yaml-front-matter-text-size);
+    --metadata-label-background: transparent;
+    --metadata-label-background-hover: transparent;
+    --metadata-label-background-active: transparent;
+    --metadata-label-text-color-hover: var(--writeArea-text-color);
+    --metadata-input-font: var(--code-block-text-font);
+    --metadata-input-font-size: var(--yaml-front-matter-text-size);
+    --metadata-property-box-shadow: none;
+    --metadata-property-box-shadow-hover: none;
+    --metadata-property-box-shadow-focus: none;
+
+
+    /* ───────────────── 标签页切换器 ───────────────── */
+
+    --tab-switcher-background: var(--pop-up-menu-bg-color);
+    --tab-switcher-menubar-background: var(--pop-up-menu-bg-color);
+    --tab-switcher-preview-radius: var(--radius-m);
+    --tab-switcher-preview-shadow: 0 4px 16px var(--liquid-glass-menu-shadow);
+    --tab-switcher-preview-shadow-active: 0 8px 32px var(--liquid-glass-menu-shadow);
+    --tab-switcher-preview-background-shadow: none;
+
+
+    /* ───────────────── 图谱、白板、模糊 ───────────────── */
+
+    --graph-controls-width: 240px;
+    --canvas-controls-radius: var(--radius-s);
+
+    --blur-radius-s: 4px;
+    --blur-radius-m: 8px;
+    --blur-radius-l: 16px;
+
+
+    /* ───────────────── 移动端触摸目标与安全区 ───────────────── */
+
+    --touch-size-s: 32px;
+    --touch-size-m: 40px;
+    --touch-size-l: 48px;
+    --touch-radius-xs: var(--radius-xs);
+    --touch-radius-s: var(--radius-s);
+    --touch-radius-m: var(--radius-m);
+    --touch-radius-l: var(--radius-l);
+
+
+    /* ───────────────── Bases（1.9 起的核心功能） ───────────────── */
+
+    --bases-table-border-color: var(--border-hairline);
+    --bases-table-container-border-width: 1px;
+    --bases-table-container-border-radius: var(--radius-m);
+    --bases-table-column-border-width: 0;
+    --bases-table-row-border-width: 1px;
+    --bases-table-header-background: var(--table-thead-bg-color);
+    --bases-table-header-background-hover: var(--table-thead-bg-color);
+    --bases-table-header-color: var(--table-thead-text-color);
+    --bases-table-header-weight: var(--bold-text-weight);
+    --bases-table-font-size: var(--sidebar-text-size);
+    --bases-table-row-background-hover: var(--hover-sidebar-filelist-bg-color);
+    --bases-table-group-background: var(--background-secondary);
+    --bases-table-group-gap: 6px;
+    --bases-table-summary-background: var(--background-secondary);
+    --bases-table-summary-background-hover: var(--hover-sidebar-filelist-bg-color);
+    --bases-table-cell-background-active: var(--accent-color);
+    --bases-table-cell-background-selected: var(--writeArea-selected-text-bg-color);
+    --bases-table-cell-radius-active: var(--radius-xs);
+    --bases-table-cell-radius-focus: var(--radius-xs);
+    --bases-table-cell-shadow-active: none;
+    --bases-table-cell-shadow-focus: none;
+    --bases-table-column-min-width: 60px;
+    --bases-table-row-height: 32px;
+
+    --bases-cards-background: var(--pop-up-menu-bg-color);
+    --bases-cards-container-background: transparent;
+    --bases-cards-cover-background: var(--background-secondary);
+    --bases-cards-border-width: 0;
+    --bases-cards-radius: var(--radius-m);
+    --bases-cards-shadow: var(--frosted-glass-writeArea-shadow);
+    --bases-cards-shadow-hover: var(--frosted-glass-writeArea-shadow);
+    --bases-cards-font-size: var(--sidebar-text-size);
+    --bases-cards-line-height: 1.5;
+
+    --bases-embed-border-width: 1px;
+    --bases-embed-border-color: var(--border-hairline);
+    --bases-embed-border-radius: var(--radius-m);
+
+    --bases-header-border-width: 1px;
+    --bases-header-height: 40px;
+    --bases-filter-input-background: var(--input-bg-color);
+
+    --bases-group-heading-property-color: var(--filelist-path-time-text-color);
+    --bases-group-heading-property-size: var(--sidebar-text-size);
+    --bases-group-heading-property-weight: 400;
+    --bases-group-heading-value-size: var(--sidebar-text-size);
+    --bases-group-heading-value-weight: 600;
+
+
+    /* ───────────────── 按钮 ───────────────── */
+    /* 1.13 有一套完整的按钮变量。之前是直接写 button 选择器，
+       但模态框、设置面板、提示条里的按钮走的都是这套变量 */
+
+    --button-radius: var(--radius-xs);
+    --button-disabled-opacity: .5;
+
+    --button-primary-bg-color: var(--accent-color);
+    --button-primary-fg-color: var(--accent-contrast);
+    --button-primary-border-color: transparent;
+    --button-primary-hover-bg-color: var(--accent-color-hover);
+    --button-primary-hover-fg-color: var(--accent-contrast);
+    --button-primary-hover-border-color: transparent;
+    --button-primary-active-bg-color: var(--accent-color-hover);
+    --button-primary-active-fg-color: var(--accent-contrast);
+    --button-primary-active-border-color: transparent;
+    --button-primary-disabled-bg-color: var(--accent-color);
+    --button-primary-disabled-fg-color: var(--accent-contrast);
+    --button-primary-disabled-border-color: transparent;
+
+    --button-secondary-bg-color: var(--menu-footer-other-btn-bg-color);
+    --button-secondary-fg-color: var(--menu-footer-other-btn-text-color);
+    --button-secondary-border-color: transparent;
+    --button-secondary-hover-bg-color: var(--hover-menu-footer-other-btn-bg-color);
+    --button-secondary-hover-fg-color: var(--menu-footer-other-btn-text-color);
+    --button-secondary-hover-border-color: transparent;
+    --button-secondary-active-bg-color: var(--hover-menu-footer-other-btn-bg-color);
+    --button-secondary-active-fg-color: var(--menu-footer-other-btn-text-color);
+    --button-secondary-active-border-color: transparent;
+    --button-secondary-disabled-bg-color: var(--menu-footer-other-btn-bg-color);
+    --button-secondary-disabled-fg-color: var(--menu-footer-other-btn-text-color);
+    --button-secondary-disabled-border-color: transparent;
+
+
+    /* ───────────────── 提示条与撤销 ───────────────── */
+
+    --message-bar-bg-color: var(--pop-up-menu-bg-color);
+    --message-bar-fg-color: var(--pop-up-menu-text-color);
+    --message-bar-border-color: transparent;
+    --message-bar-icon-color: var(--accent-color);
+    --message-bar-close-button-color: var(--icon-default-color);
+    --message-bar-close-button-color-hover: var(--color-red);
+    --message-bar-close-button-border-radius: var(--radius-xs);
+
+    --undo-button-bg-color: var(--context-menu-bg-color);
+    --undo-button-bg-color-hover: var(--hover-context-menu-list-line-bg-color);
+    --undo-button-bg-color-active: var(--hover-context-menu-list-line-bg-color);
+    --undo-button-fg-color: var(--context-menu-text-color);
+    --undo-button-fg-color-hover: var(--hover-context-menu-list-line-text-color);
+    --undo-button-fg-color-active: var(--hover-context-menu-list-line-text-color);
+    --undo-button-border: none;
+
+
+    /* ───────────────── 视图头与顶栏渐隐 ───────────────── */
+
+    --view-header-height: 36px;
+    --view-header-action-radius: var(--radius-xs);
+    --view-header-position: relative;
+    --view-top-fade-opacity: 0;
+
+
+    /* ───────────────── 字号阶梯 ───────────────── */
+
+    --font-ui-smaller: 11px;
+    --font-ui-small: 12px;
+    --font-ui-medium: 14px;
+    --font-ui-large: 18px;
+
+
+    /* ───────────────── 正文边距 ───────────────── */
+
+    --file-margins: 24px 32px;
+    --file-margins-x: 32px;
+    --file-margins-y: 24px;
+
+
+    /* ───────────────── 列表层级线 ───────────────── */
+
+    --indentation-guide-editing-indent: .5em;
+    --indentation-guide-reading-indent: -.85em;
+    --indentation-guide-source-indent: .25em;
+
+
+    /* ───────────────── 侧栏标签 ───────────────── */
+
+    --nav-tag-radius: var(--radius-xs);
+    --nav-tag-weight: 400;
+    --nav-tag-color-active: var(--active-filelist-text-color);
+
+
+    /* ───────────────── 设置面板 ───────────────── */
+
+    --setting-items-border-width: 0;
+    --setting-items-divider-width: 1px;
+    --setting-items-radius: var(--radius-m);
+    --setting-items-padding-x: 0;
+    --setting-items-padding-y: 0;
+
+
+    /* ───────────────── 焦点描边 ───────────────── */
+
+    --shadow-border-accent: 0 0 0 2px var(--accent-color);
+    --shadow-border-themed: 0 0 0 2px var(--border-strong);
+    --shadow-border-themed-inset: inset 0 0 0 2px var(--border-strong);
+
+
+    /* ───────────────── 移动端抽屉 ───────────────── */
+
+    --mobile-sidebar-background: var(--sidebar-whole-bg-color);
+    --mobile-sidebar-radius: var(--radius-m);
+    --mobile-sidebar-width: 80vw;
+    --mobile-sidebar-max-width: 420px;
+
+
+    /* ───────────────── 堆叠标签页 ───────────────── */
+
+    --tab-stacked-font-size: var(--sidebar-text-size);
+    --tab-stacked-font-weight: 500;
+    --tab-stacked-header-width: 30px;
+    --tab-stacked-shadow: none;
+
+
+    /* ───────────────── 灰阶 ───────────────── */
+    /* Obsidian 的 12 级灰阶，第三方插件常拿它当调色板。
+       用正文色往底色上兑，两套配色各自算各自的，不必写两遍 */
+    --color-base-00: var(--interface-default-bg-color);
+    --color-base-05: color-mix(in srgb, var(--writeArea-text-color) 5%, var(--interface-default-bg-color));
+    --color-base-10: color-mix(in srgb, var(--writeArea-text-color) 10%, var(--interface-default-bg-color));
+    --color-base-20: color-mix(in srgb, var(--writeArea-text-color) 18%, var(--interface-default-bg-color));
+    --color-base-25: color-mix(in srgb, var(--writeArea-text-color) 24%, var(--interface-default-bg-color));
+    --color-base-30: color-mix(in srgb, var(--writeArea-text-color) 30%, var(--interface-default-bg-color));
+    --color-base-35: color-mix(in srgb, var(--writeArea-text-color) 36%, var(--interface-default-bg-color));
+    --color-base-40: color-mix(in srgb, var(--writeArea-text-color) 42%, var(--interface-default-bg-color));
+    --color-base-50: color-mix(in srgb, var(--writeArea-text-color) 52%, var(--interface-default-bg-color));
+    --color-base-60: color-mix(in srgb, var(--writeArea-text-color) 62%, var(--interface-default-bg-color));
+    --color-base-70: color-mix(in srgb, var(--writeArea-text-color) 74%, var(--interface-default-bg-color));
+    --color-base-100: var(--writeArea-text-color);
 }

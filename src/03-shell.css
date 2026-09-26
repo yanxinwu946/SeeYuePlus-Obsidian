@@ -68,7 +68,6 @@ body {
     --background-modifier-hover: var(--hover-sidebar-filelist-bg-color);
     --background-modifier-active-hover: var(--active-sidebar-filelist-bg-color);
     --background-modifier-form-field: var(--input-bg-color);
-    --background-modifier-form-field-highlighted: var(--input-bg-color);
     --background-modifier-box-shadow: rgba(0, 0, 0, .15);
     --background-modifier-success: var(--color-green);
     --background-modifier-error: var(--color-red);
@@ -86,19 +85,15 @@ body {
     --text-accent-hover: var(--accent-color-hover);
     --text-selection: var(--writeArea-selected-text-bg-color);
     --text-highlight-bg: var(--search-result-list-match-content-bg-color);
-    --text-highlight-bg-active: var(--search-result-list-match-content-bg-color);
     --text-error: var(--color-red);
     --text-success: var(--color-green);
     --text-warning: var(--color-orange);
-    --text-error-hover: var(--color-red);
-    --text-max-width: var(--writeArea-default-width);
 
     /* 控件 */
     --interactive-normal: var(--input-bg-color);
     --interactive-hover: var(--hover-sidebar-filelist-bg-color);
     --interactive-accent: var(--accent-color);
     --interactive-accent-hover: var(--accent-color-hover);
-    --interactive-success: var(--color-green);
     --color-accent: var(--accent-color);
     --color-accent-1: var(--accent-color);
     --color-accent-2: var(--accent-color-hover);
@@ -225,19 +220,8 @@ body {
     --menu-border-width: 0;
     --menu-radius: var(--radius-l);
     --menu-shadow: 0 5px 15px rgba(0, 0, 0, .15);
-    --menu-item-color: var(--context-menu-text-color);
-    --menu-item-background-hover: var(--hover-context-menu-list-line-bg-color);
-    --menu-item-background-active: var(--hover-context-menu-list-line-bg-color);
-    --menu-item-radius: var(--radius-s);
-    --menu-item-padding: 4px 10px;
-    --menu-item-icon-color: var(--context-menu-text-color);
-    --menu-item-icon-color-hover: var(--hover-context-menu-list-line-text-color);
-    --menu-item-icon-size: 15px;
 
     /* 提示框 */
-    --tooltip-background: var(--btn-tooltip-bg-color);
-    --tooltip-color: var(--btn-tooltip-text-color);
-    --tooltip-radius: var(--radius-s);
 
     /* 分隔线 */
     --divider-color: var(--border-hairline);
@@ -251,7 +235,6 @@ body {
     /* 嵌入块 */
     --embed-background: transparent;
     --embed-border-left: 2px solid var(--accent-color);
-    --embed-border-right: none;
     --embed-border-top: none;
     --embed-border-bottom: none;
     --embed-padding: 0 0 0 12px;
@@ -263,9 +246,7 @@ body {
     --metadata-border-color: transparent;
     --metadata-divider-color: transparent;
     --metadata-padding: 10px 14px;
-    --metadata-radius: var(--yaml-front-matter-border-radius);
     --metadata-label-text-color: var(--yaml-front-matter-text-color);
-    --metadata-label-text-size: var(--yaml-front-matter-text-size);
     --metadata-input-text-color: var(--writeArea-text-color);
     --metadata-input-background: transparent;
     --metadata-input-background-hover: transparent;
@@ -279,10 +260,6 @@ body {
 
     /* 搜索 */
     --search-result-background: transparent;
-    --search-result-border: transparent;
-    --search-result-file-matched-text-background: var(--search-result-list-match-content-bg-color);
-    --search-result-file-title-color: var(--filelist-filename-text-color);
-    --search-result-file-matches: transparent;
     --search-clear-button-color: var(--icon-color);
     --search-icon-color: var(--icon-color);
 
@@ -348,8 +325,6 @@ body {
     --table-row-alt-background: var(--table-tbody-evenNum-line-bg-color);
     --table-row-alt-background-hover: var(--table-tbody-evenNum-line-bg-color);
     --table-row-background-hover: transparent;
-    --table-cell-border-width: 0;
-    --table-cell-border-color: transparent;
     --table-selection: var(--writeArea-selected-text-bg-color);
     --table-selection-border-color: var(--accent-color);
     --table-drag-handle-background: var(--accent-color);
@@ -401,7 +376,6 @@ body {
 
     /* 文件树 */
     --vault-name-color: var(--filelist-filename-text-color);
-    --vault-name-font-size: var(--sidebar-text-size);
     --vault-name-font-weight: 600;
     --vault-name-padding: 6px 0;
     --vault-profile-color: var(--filelist-filename-text-color);
@@ -422,11 +396,8 @@ body {
     --graph-node-tag: var(--color-green);
     --graph-node-attachment: var(--color-orange);
     --graph-node-unresolved: var(--color-red);
-    --graph-node-highlight: var(--color-pink);
     --graph-line: var(--border-hairline);
     --graph-text: var(--writeArea-text-color);
-    --graph-arrow: var(--icon-default-color);
-    --graph-controls-background: var(--pop-up-menu-bg-color);
 
     /* 白板 */
     --canvas-background: var(--interface-default-bg-color);
@@ -444,8 +415,6 @@ body {
     --prompt-background: var(--pop-up-menu-bg-color);
     --prompt-border-color: transparent;
     --prompt-border-width: 0;
-    --prompt-radius: var(--radius-l);
-    --prompt-shadow: 0 8px 32px var(--liquid-glass-menu-shadow);
     --prompt-input-height: 40px;
 }
 

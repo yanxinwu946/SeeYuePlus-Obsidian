@@ -1,0 +1,216 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   17 · 代码块的语言角标
+
+   Typora 版在代码块右上角标出语言名，靠的是它给 pre 打的 lang 属性，
+   外加一张把 lang 映射成人看的名字的表。Obsidian 不打 lang，
+   但会把 language-xxx 这个类挂在 pre 上 —— 同一张表换个选择器就能用。
+
+   没收录的语言不会生成 ::after（content 缺省即不生成伪元素），
+   所以不会冒出一串 language-xxx。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ───────────────── 角标本体 ───────────────── */
+
+.markdown-rendered pre[class*="language-"]::after {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    z-index: 3;
+    font-family: var(--code-block-text-font);
+    font-size: var(--code-block-right-program-lang-text-size);
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 1;
+    color: var(--code-block-right-program-lang-text-color);
+    pointer-events: none;
+    /* 悬浮才露出复制按钮，角标先让位，两者不叠 */
+    transition: opacity .15s ease;
+}
+
+/* 复制按钮浮出来的时候把角标藏掉，右上角只留一样东西 */
+.markdown-rendered pre[class*="language-"]:hover::after {
+    opacity: 0;
+}
+
+
+/* ───────────────── 语言名对照表 ───────────────── */
+
+/* —— A —— */
+pre.language-abap::after { content: "ABAP"; }
+pre.language-actionscript::after { content: "ActionScript"; }
+pre.language-ada::after { content: "Ada"; }
+pre.language-apache::after { content: "Apache"; }
+pre.language-applescript::after { content: "AppleScript"; }
+pre.language-arduino::after { content: "Arduino"; }
+pre.language-asciidoc::after { content: "AsciiDoc"; }
+pre.language-asm::after,
+pre.language-assembly::after { content: "Assembly"; }
+pre.language-aspnet::after { content: "ASP.NET"; }
+pre.language-awk::after { content: "AWK"; }
+
+/* —— B —— */
+pre.language-bash::after { content: "Bash"; }
+pre.language-basic::after { content: "BASIC"; }
+pre.language-bat::after,
+pre.language-batch::after { content: "Batch"; }
+pre.language-bicep::after { content: "Bicep"; }
+pre.language-brainfuck::after { content: "Brainfuck"; }
+
+/* —— C —— */
+pre.language-c::after { content: "C"; }
+pre.language-cpp::after,
+pre.language-c++::after { content: "C++"; }
+pre.language-csharp::after,
+pre.language-cs::after { content: "C#"; }
+pre.language-css::after { content: "CSS"; }
+pre.language-csv::after { content: "CSV"; }
+pre.language-clojure::after { content: "Clojure"; }
+pre.language-cmake::after { content: "CMake"; }
+pre.language-cobol::after { content: "COBOL"; }
+pre.language-coffeescript::after { content: "CoffeeScript"; }
+pre.language-crystal::after { content: "Crystal"; }
+pre.language-cypher::after { content: "Cypher"; }
+
+/* —— D —— */
+pre.language-d::after { content: "D"; }
+pre.language-dart::after { content: "Dart"; }
+pre.language-diff::after { content: "Diff"; }
+pre.language-django::after,
+pre.language-jinja2::after { content: "Django"; }
+pre.language-docker::after,
+pre.language-dockerfile::after { content: "Dockerfile"; }
+
+/* —— E —— */
+pre.language-elixir::after { content: "Elixir"; }
+pre.language-elm::after { content: "Elm"; }
+pre.language-erlang::after { content: "Erlang"; }
+
+/* —— F —— */
+pre.language-fsharp::after { content: "F#"; }
+pre.language-fortran::after { content: "Fortran"; }
+
+/* —— G —— */
+pre.language-gdscript::after { content: "GDScript"; }
+pre.language-gherkin::after { content: "Gherkin"; }
+pre.language-git::after { content: "Git"; }
+pre.language-glsl::after { content: "GLSL"; }
+pre.language-go::after,
+pre.language-golang::after { content: "Go"; }
+pre.language-gradle::after { content: "Gradle"; }
+pre.language-graphql::after { content: "GraphQL"; }
+pre.language-groovy::after { content: "Groovy"; }
+
+/* —— H —— */
+pre.language-haml::after { content: "Haml"; }
+pre.language-handlebars::after { content: "Handlebars"; }
+pre.language-haskell::after { content: "Haskell"; }
+pre.language-haxe::after { content: "Haxe"; }
+pre.language-hcl::after,
+pre.language-terraform::after { content: "Terraform"; }
+pre.language-html::after { content: "HTML"; }
+pre.language-http::after { content: "HTTP"; }
+
+/* —— I —— */
+pre.language-ini::after,
+pre.language-properties::after { content: "INI"; }
+
+/* —— J —— */
+pre.language-java::after { content: "Java"; }
+pre.language-js::after,
+pre.language-javascript::after { content: "JavaScript"; }
+pre.language-json::after { content: "JSON"; }
+pre.language-json5::after { content: "JSON5"; }
+pre.language-jsx::after { content: "JSX"; }
+pre.language-julia::after { content: "Julia"; }
+
+/* —— K —— */
+pre.language-kotlin::after { content: "Kotlin"; }
+
+/* —— L —— */
+pre.language-latex::after,
+pre.language-tex::after { content: "LaTeX"; }
+pre.language-less::after { content: "Less"; }
+pre.language-lisp::after { content: "Lisp"; }
+pre.language-lua::after { content: "Lua"; }
+
+/* —— M —— */
+pre.language-makefile::after,
+pre.language-make::after { content: "Makefile"; }
+pre.language-markdown::after,
+pre.language-md::after { content: "Markdown"; }
+pre.language-matlab::after { content: "MATLAB"; }
+pre.language-mermaid::after { content: "Mermaid"; }
+
+/* —— N —— */
+pre.language-nginx::after { content: "Nginx"; }
+pre.language-nim::after { content: "Nim"; }
+pre.language-nix::after { content: "Nix"; }
+
+/* —— O —— */
+pre.language-objectivec::after { content: "Objective-C"; }
+pre.language-ocaml::after { content: "OCaml"; }
+
+/* —— P —— */
+pre.language-pascal::after { content: "Pascal"; }
+pre.language-perl::after { content: "Perl"; }
+pre.language-php::after { content: "PHP"; }
+pre.language-plantuml::after { content: "PlantUML"; }
+pre.language-powershell::after,
+pre.language-ps1::after { content: "PowerShell"; }
+pre.language-protobuf::after { content: "Protobuf"; }
+pre.language-pug::after,
+pre.language-jade::after { content: "Pug"; }
+pre.language-purescript::after { content: "PureScript"; }
+pre.language-python::after,
+pre.language-py::after { content: "Python"; }
+
+/* —— Q —— */
+pre.language-qml::after { content: "QML"; }
+
+/* —— R —— */
+pre.language-r::after { content: "R"; }
+pre.language-reason::after { content: "Reason"; }
+pre.language-regex::after { content: "RegExp"; }
+pre.language-ruby::after,
+pre.language-rb::after { content: "Ruby"; }
+pre.language-rust::after { content: "Rust"; }
+
+/* —— S —— */
+pre.language-sas::after { content: "SAS"; }
+pre.language-sass::after { content: "Sass"; }
+pre.language-scala::after { content: "Scala"; }
+pre.language-scheme::after { content: "Scheme"; }
+pre.language-scss::after { content: "SCSS"; }
+pre.language-solidity::after { content: "Solidity"; }
+pre.language-sql::after { content: "SQL"; }
+pre.language-stylus::after { content: "Stylus"; }
+pre.language-swift::after { content: "Swift"; }
+
+/* —— T —— */
+pre.language-toml::after { content: "TOML"; }
+pre.language-ts::after,
+pre.language-typescript::after { content: "TypeScript"; }
+pre.language-tsx::after { content: "TSX"; }
+pre.language-twig::after { content: "Twig"; }
+
+/* —— V —— */
+pre.language-vala::after { content: "Vala"; }
+pre.language-vb::after,
+pre.language-vbnet::after { content: "VB.NET"; }
+pre.language-verilog::after { content: "Verilog"; }
+pre.language-vhdl::after { content: "VHDL"; }
+pre.language-vim::after { content: "Vim script"; }
+
+/* —— W —— */
+pre.language-wasm::after { content: "WebAssembly"; }
+
+/* —— X —— */
+pre.language-xml::after { content: "XML"; }
+
+/* —— Y —— */
+pre.language-yaml::after,
+pre.language-yml::after { content: "YAML"; }
+
+/* —— Z —— */
+pre.language-zig::after { content: "Zig"; }
+pre.language-zsh::after { content: "Zsh"; }
