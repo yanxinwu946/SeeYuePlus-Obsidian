@@ -154,9 +154,10 @@ hr {
 
 /* ───────────────── 标题等级图标 ───────────────── */
 
-/* 挂在色块外侧，占 ::after 以免和色块争位 */
-.markdown-rendered > :is(h2, h3, h4, h5, h6)::after,
-.markdown-rendered .markdown-preview-section > :is(h2, h3, h4, h5, h6)::after,
+/* 挂在色块外侧，占 ::after 以免和色块争位。
+   这里不能用 > —— Obsidian 把每个标题包在 <div class="el-h2"> 里，
+   标题并不是 .markdown-preview-section 的直接子元素 */
+.markdown-rendered :is(h2, h3, h4, h5, h6)::after,
 .markdown-source-view.mod-cm6 .cm-line:is(.HyperMD-header-2, .HyperMD-header-3, .HyperMD-header-4, .HyperMD-header-5, .HyperMD-header-6)::after {
     display: var(--headline-rating-prompt-state);
     position: absolute;
@@ -171,6 +172,11 @@ hr {
     color: var(--headline-rating-prompt-word-color) !important;
     -webkit-text-stroke: 0;
     pointer-events: none;
+}
+
+/* 标注里的标题是标注自己的标题栏，不该再挂等级标记 */
+.markdown-rendered .callout :is(h2, h3, h4, h5, h6)::after {
+    display: none;
 }
 
 .markdown-rendered h2::after,
@@ -200,8 +206,7 @@ hr {
 
 /* 正文栏太窄时图标会挤到屏幕外，索性收起来 */
 @media (max-width: 900px) {
-    .markdown-rendered > :is(h2, h3, h4, h5, h6)::after,
-    .markdown-rendered .markdown-preview-section > :is(h2, h3, h4, h5, h6)::after,
+    .markdown-rendered :is(h2, h3, h4, h5, h6)::after,
     .markdown-source-view.mod-cm6 .cm-line:is(.HyperMD-header-2, .HyperMD-header-3, .HyperMD-header-4, .HyperMD-header-5, .HyperMD-header-6)::after {
         display: none;
     }

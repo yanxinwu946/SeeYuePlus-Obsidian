@@ -148,6 +148,13 @@
     line-height: 2;
 }
 
+/* Obsidian 在脚注区里塞了一条 hr，而主题已经用 border-top 画了分隔线，
+   两条线中间夹着 Footnotes 标签，看着像排版出错 */
+.markdown-rendered .footnotes hr,
+.markdown-rendered section.footnotes hr {
+    display: none;
+}
+
 .markdown-rendered .footnotes::before {
     content: "Footnotes";
     display: block;
