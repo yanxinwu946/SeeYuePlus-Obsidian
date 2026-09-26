@@ -373,6 +373,21 @@ body.theme-light {
     /* 公式块与 HTML 块 */
     --hover-math-html-block-bg-color: #f3f3f3;
 
+    /* ---- Mermaid 图表 ---- */
+    /* Typora 版把图表配色写死成 Nord 深色，这里拆成令牌，浅色底才不至于糊成一团 */
+    --mermaid-line-color: #5e81ac;
+    --mermaid-node-fill: #eceff4;
+    --mermaid-node-stroke: #5e81ac;
+    --mermaid-cluster-fill: #f3f3f3;
+    --mermaid-cluster-stroke: #5e81ac;
+    --mermaid-label-bg: #eceff4;
+    --mermaid-text-color: #2e3440;
+    --mermaid-note-fill: #f3f3f3;
+    --mermaid-note-stroke: #d08770;
+    --mermaid-grid-line: #ddd;
+    --mermaid-grid-text: #333;
+    --mermaid-section-fill: #5e81ac;
+
     /* ---- 导出 PDF ---- */
     /* 页边距，上下 左右 */
     --pdf-page-margin: 14mm 12mm;
@@ -631,6 +646,21 @@ body.theme-dark {
 
     /* 公式块与 HTML 块 */
     --hover-math-html-block-bg-color: #1d1f23;
+
+    /* ---- Mermaid 图表 ---- */
+    /* Nord 调色板，与 Typora 版一致 */
+    --mermaid-line-color: #88c0d0;
+    --mermaid-node-fill: #434c5e;
+    --mermaid-node-stroke: #81a1c1;
+    --mermaid-cluster-fill: #2e3440;
+    --mermaid-cluster-stroke: #5e81ac;
+    --mermaid-label-bg: #3b4252;
+    --mermaid-text-color: #eceff4;
+    --mermaid-note-fill: #3b4252;
+    --mermaid-note-stroke: #d08770;
+    --mermaid-grid-line: #4c566a;
+    --mermaid-grid-text: #d8dee9;
+    --mermaid-section-fill: #5e81ac;
 
     /* ---- 导出 PDF ---- */
     /* 深色主题导出成深色 PDF。想要白纸黑字，把下面那行改成 #FFFFFF */

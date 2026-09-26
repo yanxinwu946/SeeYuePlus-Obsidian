@@ -22,8 +22,7 @@ body {
 
     /* 任务列表的勾 */
     --icon-check: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M4.5 12.6 10 18 19.5 6.5'/></svg>");
-    /* 脚注冒号与回跳箭头 */
-    --icon-colon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><circle cx='12' cy='8.6' r='2.1'/><circle cx='12' cy='15.8' r='2.1'/></svg>");
+    /* 脚注回跳箭头 */
     --icon-back: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M11 5.5 5.5 11l5.5 5.5'/><path d='M5.5 11H19'/></svg>");
     /* 网络图片角标 */
     --icon-cloud: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M7 18.5h10.2a4.3 4.3 0 0 0 .5-8.6 6 6 0 0 0-11.5 1.2A3.8 3.8 0 0 0 7 18.5z'/></svg>");

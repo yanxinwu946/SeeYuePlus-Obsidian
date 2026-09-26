@@ -1,0 +1,94 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   16 · 移动端
+
+   Obsidian 手机端和桌面端共用同一份 theme.css，所以这里得单独收一收：
+   48px 的背景模糊在手机 GPU 上很吃力，玻璃留色不留模糊；
+   窄屏上那圈边距和 2.8em 的代码块顶栏也都要缩。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ───────────────── 手机 ───────────────── */
+
+body.is-phone {
+    /* 玻璃退成半透明纯色：颜色还在，模糊关掉 */
+    --frosted-glass-blur: 0px;
+    --liquid-glass-saturate: 100%;
+    --frosted-glass-writeArea-border-radius: 10px;
+    /* 窄屏用满整行，读起来才不憋屈 */
+    --writeArea-default-width: 100%;
+    /* 代码块顶栏那三点占的地方按比例缩 */
+    --code-block-top-bar-height: 2.2em;
+    --code-block-radius: 12px;
+    /* 屏幕本来就小，行距收一档 */
+    --writeArea-text-line-spacing: 1.75rem;
+}
+
+/* 玻璃卡片贴边，别再把内容挤窄 */
+body.is-phone .workspace-split.mod-root .workspace-leaf-content[data-type="markdown"] .view-content {
+    margin: 6px;
+}
+
+/* 手机上的侧栏是从边上拉出来的浮层，透出后面的正文会很脏，改成实底 */
+body.is-phone .workspace-drawer,
+body.is-mobile .workspace-drawer {
+    background-color: var(--sidebar-whole-bg-color);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+body.is-phone .workspace-drawer-header {
+    border-bottom: 1px solid var(--border-hairline);
+}
+
+/* 手机上够不到悬浮态，凡是只靠 hover 才看得见的装饰都收起来 */
+body.is-mobile .copy-code-button {
+    opacity: 1;
+    transform: none;
+}
+
+body.is-mobile .markdown-rendered .copy-code-button {
+    padding: 3px 10px;
+    font-size: 11px;
+}
+
+/* 触摸设备没有光标，编辑态那套 activeLine 提示没意义 */
+body.is-mobile .cm-s-obsidian .cm-activeLine {
+    background-color: transparent;
+}
+
+/* 手机上的工具栏与底部条 */
+body.is-phone .mobile-toolbar,
+body.is-phone .mobile-navbar {
+    background-color: var(--sidebar-whole-bg-color);
+    border-color: var(--border-hairline);
+}
+
+body.is-phone .mobile-toolbar-option {
+    color: var(--icon-default-color);
+}
+
+body.is-phone .mobile-toolbar-option:hover {
+    color: var(--accent-color);
+}
+
+/* ───────────────── 平板 ───────────────── */
+
+/* 平板性能够跑模糊，只把边距和圆角收一收 */
+body.is-tablet {
+    --frosted-glass-blur: 24px;
+    --frosted-glass-writeArea-border-radius: 14px;
+    --writeArea-default-width: min(1500px, 96%);
+}
+
+body.is-tablet .workspace-split.mod-root .workspace-leaf-content[data-type="markdown"] .view-content {
+    margin: 12px 10px;
+}
+
+/* ───────────────── 窄屏通用 ───────────────── */
+
+/* 标题等级标记挂在正文左缘之外，窄屏上会被切掉。
+   桌面端拖窄窗口时也走这一条 */
+@media (max-width: 900px) {
+    .markdown-rendered :is(h2, h3, h4, h5, h6)::after {
+        display: none !important;
+    }
+}

@@ -157,44 +157,38 @@
     margin-bottom: .4em;
 }
 
-.markdown-rendered .footnotes ol {
-    padding-inline-start: 1.4em;
-}
-
+/* 脚注区也是 ol，但这里要的是真编号，不是正文那套圆形徽章。
+   编号塞进 ::before 手写 —— 用原生 marker 的话它会渲染在 ::before 之后，
+   排出来是「: 1. 正文」，顺序反了，list-style-position 也掰不过来。
+   Typora 版在编号后画了个冒号图标，那是为了还原它自己的 [^1]: 源码形态，
+   Obsidian 本来就是编号列表，不必再补 */
 .markdown-rendered .footnotes ol,
 .markdown-rendered section.footnotes ol {
-    /* 脚注区也是 ol，但这里要的是编号，不是正文那套圆形徽章 */
-    list-style: decimal;
-    counter-reset: none;
-    padding-inline-start: 1.8em;
+    list-style: none;
+    counter-reset: list-item;
+    padding-inline-start: 1.2em;
 }
 
 .markdown-rendered .footnotes li {
-    counter-increment: none;
+    counter-increment: list-item;
 }
 
 .markdown-rendered .footnotes li::marker {
-    color: var(--end-footnote-area-prompt-color);
-    font-size: .85em;
+    content: "";
 }
 
-/* 脚注编号与内容之间的冒号 */
+/* 正文有序列表那条规则会给脚注的 li 也铺上圆形徽章，整个关掉 */
 .markdown-rendered .footnotes li::before {
-    content: "";
-    display: inline-block;
-    width: .8em;
-    height: .8em;
-    margin-right: .3em;
-    vertical-align: -.06em;
-    -webkit-mask-image: var(--icon-colon);
-    mask-image: var(--icon-colon);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    background-color: var(--footnote-content-end-hook-color);
+    display: none;
+}
+
+/* 编号挂在段落上，不能挂在 li 上 —— li 里是块级 p，
+   挂在 li 上的话编号会自成一块，正文被挤到下一行 */
+.markdown-rendered .footnotes li > p:first-child::before {
+    content: counter(list-item) ".";
+    margin-right: .45em;
+    color: var(--end-footnote-area-prompt-color);
+    font-weight: 600;
 }
 
 /* 回到正文的那枚箭头 */

@@ -1,0 +1,153 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   15 · Mermaid 图表
+
+   Mermaid 画出来是一棵 SVG，颜色全写在元素属性里，不吃继承，
+   所以只能一条条 !important 压过去 —— 这也正是 Typora 版当年写死
+   Nord 深色的原因。这边把颜色拆成令牌，浅色底换成同色系的浅填充，
+   色相不变，图表和正文才像一套东西。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ───────────────── 容器 ───────────────── */
+
+/* 图表当一块代码块对待：同样的圆角、底色和投影，视觉上连成一片 */
+.mermaid,
+.block-language-mermaid {
+    background-color: var(--code-block-bg-color);
+    border: var(--code-block-border);
+    border-radius: var(--code-block-radius);
+    box-shadow: var(--code-block-shadow);
+    padding: 1.2em;
+    margin: 1.5em 0;
+    text-align: center;
+    overflow-x: auto;
+}
+
+.mermaid svg,
+.block-language-mermaid svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 图表自带的缩放工具条 */
+.mermaid-toolbar,
+.mermaid-toolbar-button {
+    color: var(--icon-default-color);
+    background-color: transparent;
+    border: none;
+}
+
+.mermaid-toolbar-button:hover {
+    color: var(--accent-color);
+}
+
+/* ───────────────── 连线与箭头 ───────────────── */
+
+.mermaid svg :is(.edgePath .path, .flowchart-link, .messageLine0, .messageLine1, .loopLine, .relationshipLine, .er.relationshipLine) {
+    stroke: var(--mermaid-line-color) !important;
+    stroke-width: 2px !important;
+}
+
+.mermaid svg :is(.arrowheadPath, .marker, marker path) {
+    fill: var(--mermaid-line-color) !important;
+    stroke: var(--mermaid-line-color) !important;
+}
+
+/* ───────────────── 节点 ───────────────── */
+
+.mermaid svg .node :is(rect, circle, ellipse, polygon, path) {
+    fill: var(--mermaid-node-fill) !important;
+    stroke: var(--mermaid-node-stroke) !important;
+    stroke-width: 2px !important;
+}
+
+/* 分组框 */
+.mermaid svg .cluster rect {
+    fill: var(--mermaid-cluster-fill) !important;
+    stroke: var(--mermaid-cluster-stroke) !important;
+    stroke-width: 1px !important;
+}
+
+/* ───────────────── 文字 ───────────────── */
+
+.mermaid svg :is(.nodeLabel, .label, .messageText, .labelText, .loopText, .taskText, .taskTextOutsideRight, .taskTextOutsideLeft, text) {
+    color: var(--mermaid-text-color) !important;
+    fill: var(--mermaid-text-color) !important;
+}
+
+/* 连线上的标签：mermaid 给它铺了一层矩形底，得连底一起换色，
+   否则浅色主题下会是一块突兀的深色方块 */
+.mermaid svg .edgeLabel {
+    background-color: transparent !important;
+}
+
+.mermaid svg .edgeLabel rect {
+    fill: var(--mermaid-label-bg) !important;
+    stroke: var(--mermaid-label-bg) !important;
+}
+
+.mermaid svg .edgeLabel :is(foreignObject, span, div, p) {
+    background-color: var(--mermaid-label-bg) !important;
+    color: var(--mermaid-text-color) !important;
+}
+
+/* ───────────────── 序列图 ───────────────── */
+
+.mermaid svg .actor {
+    fill: var(--mermaid-node-fill) !important;
+    stroke: var(--mermaid-node-stroke) !important;
+}
+
+.mermaid svg .actor-line {
+    stroke: var(--mermaid-cluster-stroke) !important;
+}
+
+/* 便签 */
+.mermaid svg .note {
+    fill: var(--mermaid-note-fill) !important;
+    stroke: var(--mermaid-note-stroke) !important;
+}
+
+/* ───────────────── 甘特图 ───────────────── */
+
+.mermaid svg .grid .tick line {
+    stroke: var(--mermaid-grid-line) !important;
+}
+
+.mermaid svg .grid .tick text {
+    fill: var(--mermaid-grid-text) !important;
+}
+
+.mermaid svg :is(.section0, .section1, .section2, .section3) {
+    fill: var(--mermaid-section-fill) !important;
+}
+
+/* 甘特图的今日线 */
+.mermaid svg .today {
+    stroke: var(--mermaid-note-stroke) !important;
+    stroke-width: 2px !important;
+}
+
+/* ───────────────── 状态图与类图 ───────────────── */
+
+.mermaid svg :is(.stateGroup, .state-note, .classGroup) rect,
+.mermaid svg .statediagram-cluster rect {
+    fill: var(--mermaid-node-fill) !important;
+    stroke: var(--mermaid-node-stroke) !important;
+}
+
+.mermaid svg .transition {
+    stroke: var(--mermaid-line-color) !important;
+}
+
+/* ───────────────── 饼图 ───────────────── */
+
+/* 饼图靠 mermaid 自己的色板区分扇区，只把描边统一掉，别动填充 */
+.mermaid svg .pieCircle {
+    stroke: var(--code-block-bg-color) !important;
+    stroke-width: 2px !important;
+}
+
+.mermaid svg .pieTitleText,
+.mermaid svg .slice {
+    fill: var(--mermaid-text-color) !important;
+}

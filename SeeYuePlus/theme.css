@@ -384,6 +384,21 @@ body.theme-light {
     /* 公式块与 HTML 块 */
     --hover-math-html-block-bg-color: #f3f3f3;
 
+    /* ---- Mermaid 图表 ---- */
+    /* Typora 版把图表配色写死成 Nord 深色，这里拆成令牌，浅色底才不至于糊成一团 */
+    --mermaid-line-color: #5e81ac;
+    --mermaid-node-fill: #eceff4;
+    --mermaid-node-stroke: #5e81ac;
+    --mermaid-cluster-fill: #f3f3f3;
+    --mermaid-cluster-stroke: #5e81ac;
+    --mermaid-label-bg: #eceff4;
+    --mermaid-text-color: #2e3440;
+    --mermaid-note-fill: #f3f3f3;
+    --mermaid-note-stroke: #d08770;
+    --mermaid-grid-line: #ddd;
+    --mermaid-grid-text: #333;
+    --mermaid-section-fill: #5e81ac;
+
     /* ---- 导出 PDF ---- */
     /* 页边距，上下 左右 */
     --pdf-page-margin: 14mm 12mm;
@@ -643,6 +658,21 @@ body.theme-dark {
     /* 公式块与 HTML 块 */
     --hover-math-html-block-bg-color: #1d1f23;
 
+    /* ---- Mermaid 图表 ---- */
+    /* Nord 调色板，与 Typora 版一致 */
+    --mermaid-line-color: #88c0d0;
+    --mermaid-node-fill: #434c5e;
+    --mermaid-node-stroke: #81a1c1;
+    --mermaid-cluster-fill: #2e3440;
+    --mermaid-cluster-stroke: #5e81ac;
+    --mermaid-label-bg: #3b4252;
+    --mermaid-text-color: #eceff4;
+    --mermaid-note-fill: #3b4252;
+    --mermaid-note-stroke: #d08770;
+    --mermaid-grid-line: #4c566a;
+    --mermaid-grid-text: #d8dee9;
+    --mermaid-section-fill: #5e81ac;
+
     /* ---- 导出 PDF ---- */
     /* 深色主题导出成深色 PDF。想要白纸黑字，把下面那行改成 #FFFFFF */
     --pdf-page-margin: 14mm 12mm;
@@ -762,8 +792,7 @@ body {
 
     /* 任务列表的勾 */
     --icon-check: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M4.5 12.6 10 18 19.5 6.5'/></svg>");
-    /* 脚注冒号与回跳箭头 */
-    --icon-colon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><circle cx='12' cy='8.6' r='2.1'/><circle cx='12' cy='15.8' r='2.1'/></svg>");
+    /* 脚注回跳箭头 */
     --icon-back: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M11 5.5 5.5 11l5.5 5.5'/><path d='M5.5 11H19'/></svg>");
     /* 网络图片角标 */
     --icon-cloud: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M7 18.5h10.2a4.3 4.3 0 0 0 .5-8.6 6 6 0 0 0-11.5 1.2A3.8 3.8 0 0 0 7 18.5z'/></svg>");
@@ -1189,6 +1218,29 @@ body {
     --titlebar-text-color: var(--filelist-filename-text-color);
     --titlebar-text-color-focused: var(--filelist-filename-text-color);
     --titlebar-text-weight: 600;
+
+    /* 关系图谱 */
+    --graph-node: var(--filelist-file-type-text-color);
+    --graph-node-focused: var(--accent-color);
+    --graph-node-tag: var(--color-green);
+    --graph-node-attachment: var(--color-orange);
+    --graph-node-unresolved: var(--color-red);
+    --graph-node-highlight: var(--color-pink);
+    --graph-line: var(--border-hairline);
+    --graph-text: var(--writeArea-text-color);
+    --graph-arrow: var(--icon-default-color);
+    --graph-controls-background: var(--pop-up-menu-bg-color);
+
+    /* 白板 */
+    --canvas-background: var(--interface-default-bg-color);
+    --canvas-card-label-color: var(--filelist-path-time-text-color);
+    --canvas-dot-pattern: var(--border-hairline);
+    --canvas-color-1: var(--color-red);
+    --canvas-color-2: var(--color-orange);
+    --canvas-color-3: var(--color-yellow);
+    --canvas-color-4: var(--color-green);
+    --canvas-color-5: var(--color-cyan);
+    --canvas-color-6: var(--color-purple);
 
     /* 提示 / 建议列表 */
     --suggestion-background: var(--context-menu-bg-color);
@@ -2850,44 +2902,38 @@ body.theme-dark .cm-s-obsidian .cm-positive {
     margin-bottom: .4em;
 }
 
-.markdown-rendered .footnotes ol {
-    padding-inline-start: 1.4em;
-}
-
+/* 脚注区也是 ol，但这里要的是真编号，不是正文那套圆形徽章。
+   编号塞进 ::before 手写 —— 用原生 marker 的话它会渲染在 ::before 之后，
+   排出来是「: 1. 正文」，顺序反了，list-style-position 也掰不过来。
+   Typora 版在编号后画了个冒号图标，那是为了还原它自己的 [^1]: 源码形态，
+   Obsidian 本来就是编号列表，不必再补 */
 .markdown-rendered .footnotes ol,
 .markdown-rendered section.footnotes ol {
-    /* 脚注区也是 ol，但这里要的是编号，不是正文那套圆形徽章 */
-    list-style: decimal;
-    counter-reset: none;
-    padding-inline-start: 1.8em;
+    list-style: none;
+    counter-reset: list-item;
+    padding-inline-start: 1.2em;
 }
 
 .markdown-rendered .footnotes li {
-    counter-increment: none;
+    counter-increment: list-item;
 }
 
 .markdown-rendered .footnotes li::marker {
-    color: var(--end-footnote-area-prompt-color);
-    font-size: .85em;
+    content: "";
 }
 
-/* 脚注编号与内容之间的冒号 */
+/* 正文有序列表那条规则会给脚注的 li 也铺上圆形徽章，整个关掉 */
 .markdown-rendered .footnotes li::before {
-    content: "";
-    display: inline-block;
-    width: .8em;
-    height: .8em;
-    margin-right: .3em;
-    vertical-align: -.06em;
-    -webkit-mask-image: var(--icon-colon);
-    mask-image: var(--icon-colon);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    background-color: var(--footnote-content-end-hook-color);
+    display: none;
+}
+
+/* 编号挂在段落上，不能挂在 li 上 —— li 里是块级 p，
+   挂在 li 上的话编号会自成一块，正文被挤到下一行 */
+.markdown-rendered .footnotes li > p:first-child::before {
+    content: counter(list-item) ".";
+    margin-right: .45em;
+    color: var(--end-footnote-area-prompt-color);
+    font-weight: 600;
 }
 
 /* 回到正文的那枚箭头 */
@@ -3946,5 +3992,260 @@ button:not(.clickable-icon):not(.workspace-tab-header-inner-close-button) {
     /* 外链在纸上点不动，把尾巴图标收起来 */
     .markdown-rendered a.external-link::after {
         display: none;
+    }
+}
+
+
+/* ─────────── 15-mermaid.css ─────────── */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   15 · Mermaid 图表
+
+   Mermaid 画出来是一棵 SVG，颜色全写在元素属性里，不吃继承，
+   所以只能一条条 !important 压过去 —— 这也正是 Typora 版当年写死
+   Nord 深色的原因。这边把颜色拆成令牌，浅色底换成同色系的浅填充，
+   色相不变，图表和正文才像一套东西。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ───────────────── 容器 ───────────────── */
+
+/* 图表当一块代码块对待：同样的圆角、底色和投影，视觉上连成一片 */
+.mermaid,
+.block-language-mermaid {
+    background-color: var(--code-block-bg-color);
+    border: var(--code-block-border);
+    border-radius: var(--code-block-radius);
+    box-shadow: var(--code-block-shadow);
+    padding: 1.2em;
+    margin: 1.5em 0;
+    text-align: center;
+    overflow-x: auto;
+}
+
+.mermaid svg,
+.block-language-mermaid svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 图表自带的缩放工具条 */
+.mermaid-toolbar,
+.mermaid-toolbar-button {
+    color: var(--icon-default-color);
+    background-color: transparent;
+    border: none;
+}
+
+.mermaid-toolbar-button:hover {
+    color: var(--accent-color);
+}
+
+/* ───────────────── 连线与箭头 ───────────────── */
+
+.mermaid svg :is(.edgePath .path, .flowchart-link, .messageLine0, .messageLine1, .loopLine, .relationshipLine, .er.relationshipLine) {
+    stroke: var(--mermaid-line-color) !important;
+    stroke-width: 2px !important;
+}
+
+.mermaid svg :is(.arrowheadPath, .marker, marker path) {
+    fill: var(--mermaid-line-color) !important;
+    stroke: var(--mermaid-line-color) !important;
+}
+
+/* ───────────────── 节点 ───────────────── */
+
+.mermaid svg .node :is(rect, circle, ellipse, polygon, path) {
+    fill: var(--mermaid-node-fill) !important;
+    stroke: var(--mermaid-node-stroke) !important;
+    stroke-width: 2px !important;
+}
+
+/* 分组框 */
+.mermaid svg .cluster rect {
+    fill: var(--mermaid-cluster-fill) !important;
+    stroke: var(--mermaid-cluster-stroke) !important;
+    stroke-width: 1px !important;
+}
+
+/* ───────────────── 文字 ───────────────── */
+
+.mermaid svg :is(.nodeLabel, .label, .messageText, .labelText, .loopText, .taskText, .taskTextOutsideRight, .taskTextOutsideLeft, text) {
+    color: var(--mermaid-text-color) !important;
+    fill: var(--mermaid-text-color) !important;
+}
+
+/* 连线上的标签：mermaid 给它铺了一层矩形底，得连底一起换色，
+   否则浅色主题下会是一块突兀的深色方块 */
+.mermaid svg .edgeLabel {
+    background-color: transparent !important;
+}
+
+.mermaid svg .edgeLabel rect {
+    fill: var(--mermaid-label-bg) !important;
+    stroke: var(--mermaid-label-bg) !important;
+}
+
+.mermaid svg .edgeLabel :is(foreignObject, span, div, p) {
+    background-color: var(--mermaid-label-bg) !important;
+    color: var(--mermaid-text-color) !important;
+}
+
+/* ───────────────── 序列图 ───────────────── */
+
+.mermaid svg .actor {
+    fill: var(--mermaid-node-fill) !important;
+    stroke: var(--mermaid-node-stroke) !important;
+}
+
+.mermaid svg .actor-line {
+    stroke: var(--mermaid-cluster-stroke) !important;
+}
+
+/* 便签 */
+.mermaid svg .note {
+    fill: var(--mermaid-note-fill) !important;
+    stroke: var(--mermaid-note-stroke) !important;
+}
+
+/* ───────────────── 甘特图 ───────────────── */
+
+.mermaid svg .grid .tick line {
+    stroke: var(--mermaid-grid-line) !important;
+}
+
+.mermaid svg .grid .tick text {
+    fill: var(--mermaid-grid-text) !important;
+}
+
+.mermaid svg :is(.section0, .section1, .section2, .section3) {
+    fill: var(--mermaid-section-fill) !important;
+}
+
+/* 甘特图的今日线 */
+.mermaid svg .today {
+    stroke: var(--mermaid-note-stroke) !important;
+    stroke-width: 2px !important;
+}
+
+/* ───────────────── 状态图与类图 ───────────────── */
+
+.mermaid svg :is(.stateGroup, .state-note, .classGroup) rect,
+.mermaid svg .statediagram-cluster rect {
+    fill: var(--mermaid-node-fill) !important;
+    stroke: var(--mermaid-node-stroke) !important;
+}
+
+.mermaid svg .transition {
+    stroke: var(--mermaid-line-color) !important;
+}
+
+/* ───────────────── 饼图 ───────────────── */
+
+/* 饼图靠 mermaid 自己的色板区分扇区，只把描边统一掉，别动填充 */
+.mermaid svg .pieCircle {
+    stroke: var(--code-block-bg-color) !important;
+    stroke-width: 2px !important;
+}
+
+.mermaid svg .pieTitleText,
+.mermaid svg .slice {
+    fill: var(--mermaid-text-color) !important;
+}
+
+
+/* ─────────── 16-mobile.css ─────────── */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   16 · 移动端
+
+   Obsidian 手机端和桌面端共用同一份 theme.css，所以这里得单独收一收：
+   48px 的背景模糊在手机 GPU 上很吃力，玻璃留色不留模糊；
+   窄屏上那圈边距和 2.8em 的代码块顶栏也都要缩。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ───────────────── 手机 ───────────────── */
+
+body.is-phone {
+    /* 玻璃退成半透明纯色：颜色还在，模糊关掉 */
+    --frosted-glass-blur: 0px;
+    --liquid-glass-saturate: 100%;
+    --frosted-glass-writeArea-border-radius: 10px;
+    /* 窄屏用满整行，读起来才不憋屈 */
+    --writeArea-default-width: 100%;
+    /* 代码块顶栏那三点占的地方按比例缩 */
+    --code-block-top-bar-height: 2.2em;
+    --code-block-radius: 12px;
+    /* 屏幕本来就小，行距收一档 */
+    --writeArea-text-line-spacing: 1.75rem;
+}
+
+/* 玻璃卡片贴边，别再把内容挤窄 */
+body.is-phone .workspace-split.mod-root .workspace-leaf-content[data-type="markdown"] .view-content {
+    margin: 6px;
+}
+
+/* 手机上的侧栏是从边上拉出来的浮层，透出后面的正文会很脏，改成实底 */
+body.is-phone .workspace-drawer,
+body.is-mobile .workspace-drawer {
+    background-color: var(--sidebar-whole-bg-color);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+body.is-phone .workspace-drawer-header {
+    border-bottom: 1px solid var(--border-hairline);
+}
+
+/* 手机上够不到悬浮态，凡是只靠 hover 才看得见的装饰都收起来 */
+body.is-mobile .copy-code-button {
+    opacity: 1;
+    transform: none;
+}
+
+body.is-mobile .markdown-rendered .copy-code-button {
+    padding: 3px 10px;
+    font-size: 11px;
+}
+
+/* 触摸设备没有光标，编辑态那套 activeLine 提示没意义 */
+body.is-mobile .cm-s-obsidian .cm-activeLine {
+    background-color: transparent;
+}
+
+/* 手机上的工具栏与底部条 */
+body.is-phone .mobile-toolbar,
+body.is-phone .mobile-navbar {
+    background-color: var(--sidebar-whole-bg-color);
+    border-color: var(--border-hairline);
+}
+
+body.is-phone .mobile-toolbar-option {
+    color: var(--icon-default-color);
+}
+
+body.is-phone .mobile-toolbar-option:hover {
+    color: var(--accent-color);
+}
+
+/* ───────────────── 平板 ───────────────── */
+
+/* 平板性能够跑模糊，只把边距和圆角收一收 */
+body.is-tablet {
+    --frosted-glass-blur: 24px;
+    --frosted-glass-writeArea-border-radius: 14px;
+    --writeArea-default-width: min(1500px, 96%);
+}
+
+body.is-tablet .workspace-split.mod-root .workspace-leaf-content[data-type="markdown"] .view-content {
+    margin: 12px 10px;
+}
+
+/* ───────────────── 窄屏通用 ───────────────── */
+
+/* 标题等级标记挂在正文左缘之外，窄屏上会被切掉。
+   桌面端拖窄窗口时也走这一条 */
+@media (max-width: 900px) {
+    .markdown-rendered :is(h2, h3, h4, h5, h6)::after {
+        display: none !important;
     }
 }
