@@ -27,8 +27,13 @@
 /* 不随明暗变化，改这里等于换一版心情 */
 
 body {
-    /* 正文与标题字体。霞鹜文楷没装就依次回退 */
-    --writeArea-text-font: "霞鹜文楷", "LXGW WenKai", "Noto Sans SC", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+    /* 正文与标题字体。
+       霞鹜文楷有好几个发行版，家族名各不相同，少写一个就白装：
+         官方版      霞鹜文楷 / LXGW WenKai
+         屏幕阅读版  霞鹜文楷 屏幕阅读版 / LXGW WenKai Screen
+         GB 版       霞鹜文楷 GB / LXGW WenKai GB
+       CSS 的字体名要一字不差才匹配得上，不做模糊匹配，所以得逐个列全 */
+    --writeArea-text-font: "霞鹜文楷", "霞鹜文楷 屏幕阅读版", "霞鹜文楷 GB", "霞鹜文楷 GB 屏幕阅读版", "LXGW WenKai", "LXGW WenKai Screen", "LXGW WenKai GB", "LXGW WenKai GB Screen", "Noto Sans SC", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
     /* 界面外壳字体。正文用楷体，外壳用无衬线，两套各司其职 */
     --interface-text-font: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, "Segoe UI", sans-serif;
     /* 代码字体 */
@@ -735,16 +740,20 @@ body.theme-dark {
 
    主题不带字体文件。装了霞鹜文楷就直接生效，没装则回退到系统无衬线，
    排版节奏不变，只是笔画换了副面孔。
+
+   这里一律读 Obsidian 自己的 --font-text / --font-interface / --font-monospace，
+   不直接读主题令牌 —— 那三个变量是「设置 → 外观 → 字体」写进去的。
+   主题只在 03-shell.css 里给它们一个默认值，用户在界面上改过就由用户说了算。
    ═══════════════════════════════════════════════════════════════════════ */
 
 
 /* 正文与标题 —— 楷体，长文读起来松快 */
 .markdown-rendered,
 .markdown-source-view.mod-cm6 .cm-content,
-.inline-title,
 .markdown-preview-view,
+.inline-title,
 .cm-s-obsidian {
-    font-family: var(--writeArea-text-font);
+    font-family: var(--font-text);
 }
 
 /* 界面外壳 —— 侧栏、菜单、设置面板等一切非正文的地方走无衬线。
@@ -768,7 +777,7 @@ body,
 .tree-item-self,
 .view-header,
 .tooltip {
-    font-family: var(--interface-text-font);
+    font-family: var(--font-interface);
 }
 
 /* 代码 —— 等宽 */
@@ -782,7 +791,7 @@ samp,
 .markdown-rendered code,
 .HyperMD-codeblock,
 .cm-s-obsidian .cm-table-widget {
-    font-family: var(--code-block-text-font);
+    font-family: var(--font-monospace);
 }
 
 
@@ -839,12 +848,14 @@ body {
 /* ───────────────── 一、把令牌交给 Obsidian ───────────────── */
 
 body {
-    /* 字体 */
-    --font-text: var(--writeArea-text-font);
+    /* 字体。只写 -theme 那一层 ——
+       --font-text 是 Obsidian 自己拼出来的：
+           var(--font-text-override), var(--font-text-theme), var(--font-default)
+       override 是用户在「设置 → 外观 → 字体」里选的。主题直接写 --font-text
+       会把整条组合盖掉，用户在界面上选的字体就白选了。 */
+    --font-text-theme: var(--writeArea-text-font);
     --font-text-size: var(--writeArea-text-size);
-    --font-interface: var(--interface-text-font);
     --font-interface-theme: var(--interface-text-font);
-    --font-monospace: var(--code-block-text-font);
     --font-monospace-theme: var(--code-block-text-font);
     --font-small: .875em;
     --font-smaller: .8em;

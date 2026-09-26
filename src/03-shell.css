@@ -11,12 +11,14 @@
 /* ───────────────── 一、把令牌交给 Obsidian ───────────────── */
 
 body {
-    /* 字体 */
-    --font-text: var(--writeArea-text-font);
+    /* 字体。只写 -theme 那一层 ——
+       --font-text 是 Obsidian 自己拼出来的：
+           var(--font-text-override), var(--font-text-theme), var(--font-default)
+       override 是用户在「设置 → 外观 → 字体」里选的。主题直接写 --font-text
+       会把整条组合盖掉，用户在界面上选的字体就白选了。 */
+    --font-text-theme: var(--writeArea-text-font);
     --font-text-size: var(--writeArea-text-size);
-    --font-interface: var(--interface-text-font);
     --font-interface-theme: var(--interface-text-font);
-    --font-monospace: var(--code-block-text-font);
     --font-monospace-theme: var(--code-block-text-font);
     --font-small: .875em;
     --font-smaller: .8em;

@@ -71,7 +71,21 @@ console.log(`theme.css  ${(css.length / 1024).toFixed(1)} KB`)
 console.log(`自定义属性  定义 ${DEFINED.size} 个，引用 ${USED.size} 个`)
 console.log(`Obsidian 变量  接住 ${mapped.length} / ${OBSIDIAN_VARS.size}（${coverage}%）`)
 
+/*
+ * Obsidian 把字体变量分三层：
+ *   --font-text-override（用户在设置里选的）
+ *   --font-text-theme（主题该写的）
+ *   --font-text = override, theme, default（Obsidian 自己拼）
+ * 主题直接写 --font-text 会把用户的选择整个盖掉，且不报错。
+ */
+const FONT_COMPOSED = ['--font-text', '--font-interface', '--font-monospace']
+const fontOverreach = FONT_COMPOSED.filter((n) => DEFINED.has(n))
+
 report('引用了但没有定义（会静默失效）：', missing.map(([n, u]) => `${n}  ×${u.count}`))
+report(
+    '越权覆盖了 Obsidian 拼装的字体变量（应该写 -theme 那一层）：',
+    fontOverreach.map((n) => `${n}  → 应改为 ${n}-theme`)
+)
 report('定义了但没有引用（死变量）：', unused)
 report(
   '大括号配平：',
@@ -80,4 +94,6 @@ report(
     : [`未配平，depth=${depth}` + (unbalancedAt >= 0 ? `，第 ${line(unbalancedAt)} 行多余的 }` : '')]
 )
 
-process.exit(missing.length || unused.length || depth !== 0 ? 1 : 0)
+process.exit(
+  missing.length || unused.length || fontOverreach.length || depth !== 0 ? 1 : 0
+)

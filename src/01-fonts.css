@@ -3,16 +3,20 @@
 
    主题不带字体文件。装了霞鹜文楷就直接生效，没装则回退到系统无衬线，
    排版节奏不变，只是笔画换了副面孔。
+
+   这里一律读 Obsidian 自己的 --font-text / --font-interface / --font-monospace，
+   不直接读主题令牌 —— 那三个变量是「设置 → 外观 → 字体」写进去的。
+   主题只在 03-shell.css 里给它们一个默认值，用户在界面上改过就由用户说了算。
    ═══════════════════════════════════════════════════════════════════════ */
 
 
 /* 正文与标题 —— 楷体，长文读起来松快 */
 .markdown-rendered,
 .markdown-source-view.mod-cm6 .cm-content,
-.inline-title,
 .markdown-preview-view,
+.inline-title,
 .cm-s-obsidian {
-    font-family: var(--writeArea-text-font);
+    font-family: var(--font-text);
 }
 
 /* 界面外壳 —— 侧栏、菜单、设置面板等一切非正文的地方走无衬线。
@@ -36,7 +40,7 @@ body,
 .tree-item-self,
 .view-header,
 .tooltip {
-    font-family: var(--interface-text-font);
+    font-family: var(--font-interface);
 }
 
 /* 代码 —— 等宽 */
@@ -50,5 +54,5 @@ samp,
 .markdown-rendered code,
 .HyperMD-codeblock,
 .cm-s-obsidian .cm-table-widget {
-    font-family: var(--code-block-text-font);
+    font-family: var(--font-monospace);
 }

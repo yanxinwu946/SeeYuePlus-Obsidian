@@ -16,8 +16,13 @@
 /* 不随明暗变化，改这里等于换一版心情 */
 
 body {
-    /* 正文与标题字体。霞鹜文楷没装就依次回退 */
-    --writeArea-text-font: "霞鹜文楷", "LXGW WenKai", "Noto Sans SC", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+    /* 正文与标题字体。
+       霞鹜文楷有好几个发行版，家族名各不相同，少写一个就白装：
+         官方版      霞鹜文楷 / LXGW WenKai
+         屏幕阅读版  霞鹜文楷 屏幕阅读版 / LXGW WenKai Screen
+         GB 版       霞鹜文楷 GB / LXGW WenKai GB
+       CSS 的字体名要一字不差才匹配得上，不做模糊匹配，所以得逐个列全 */
+    --writeArea-text-font: "霞鹜文楷", "霞鹜文楷 屏幕阅读版", "霞鹜文楷 GB", "霞鹜文楷 GB 屏幕阅读版", "LXGW WenKai", "LXGW WenKai Screen", "LXGW WenKai GB", "LXGW WenKai GB Screen", "Noto Sans SC", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
     /* 界面外壳字体。正文用楷体，外壳用无衬线，两套各司其职 */
     --interface-text-font: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, "Segoe UI", sans-serif;
     /* 代码字体 */
