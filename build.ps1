@@ -77,6 +77,10 @@ function Build-Theme {
 
     $css = $banner + ($parts -join "`n")
 
+    # 统一成 LF。不这么做的话，Windows 上检出的是 CRLF，打包产物跟着变，
+    # 每台机器克隆下来都会看到一份假的 diff
+    $css = $css -replace "`r`n", "`n"
+
     if (-not (Test-Path $themeDir)) {
         New-Item -ItemType Directory -Path $themeDir | Out-Null
     }

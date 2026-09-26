@@ -1,0 +1,4 @@
+# 一律 LF。theme.css 是构建产物，源码换行符变了产物就跟着变，
+# 每次克隆都冒出一份假 diff，很烦。
+* text=auto eol=lf
+*.png binary
