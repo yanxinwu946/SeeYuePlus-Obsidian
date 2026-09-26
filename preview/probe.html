@@ -1,0 +1,50 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>标题计算值探针</title>
+<link rel="stylesheet" href="../SeeYuePlus/theme.css">
+<style>
+  /* Obsidian 的字体三层组合，见 harness.html 里的说明 */
+  body {
+    --font-text-override: ''; --font-interface-override: ''; --font-monospace-override: '';
+    --font-default: system-ui, sans-serif; --font-monospace-default: monospace;
+    --font-text: var(--font-text-override), var(--font-text-theme), var(--font-default);
+    --font-interface: var(--font-interface-override), var(--font-interface-theme), var(--font-default);
+    --font-monospace: var(--font-monospace-override), var(--font-monospace-theme), var(--font-monospace-default);
+    margin: 0; padding: 24px;
+  }
+  .markdown-rendered { padding: 0 40px; }
+  #out { font-family: ui-monospace, Consolas, monospace; font-size: 13px; line-height: 1.7;
+         white-space: pre-wrap; background: #000; color: #0f0; padding: 16px; margin-top: 24px; }
+</style>
+
+<div class="markdown-rendered">
+  <h2 id="h2">二级标题色阶</h2>
+  <p id="p">正文对照，同一段字。</p>
+  <strong id="strong">加粗文字</strong>
+</div>
+
+<pre id="out"></pre>
+
+<script>
+  const read = (el) => {
+    const cs = getComputedStyle(el)
+    return {
+      标签: el.tagName,
+      fontFamily: cs.fontFamily.slice(0, 46),
+      fontWeight: cs.fontWeight,
+      textStroke: cs.webkitTextStrokeWidth,
+      fontSize: cs.fontSize,
+    }
+  }
+  // 主题的尺寸、颜色、字重令牌都挂在 body.theme-* 下，不加这个类量出来全是默认值
+  document.body.classList.add('theme-dark')
+  const rows = ['h2', 'p', 'strong'].map((id) => read(document.getElementById(id)))
+  const bodyCS = getComputedStyle(document.body)
+  document.getElementById('out').textContent =
+    rows.map((r) => Object.entries(r).map(([k, v]) => `${k}: ${v}`).join('\n')).join('\n\n') +
+    '\n\n--- 变量 ---\n' +
+    'all-headline-weight: ' + bodyCS.getPropertyValue('--all-headline-weight').trim() + '\n' +
+    'headline-text-stroke: ' + bodyCS.getPropertyValue('--headline-text-stroke').trim() + '\n' +
+    'writeArea-text-font: ' + bodyCS.getPropertyValue('--writeArea-text-font').trim().slice(0, 60) + '\n' +
+    'font-text: ' + bodyCS.getPropertyValue('--font-text').trim().slice(0, 60)
+</script>

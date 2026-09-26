@@ -41,8 +41,14 @@ body {
 
     /* 标题字距 */
     --headline-text-letter-space: 2px;
-    /* 霞鹜文楷没有 Bold，靠描边补足粗细。设 0 关闭 */
-    --headline-text-stroke: .018em;
+    /* 标题字重。500 是刻意选的：
+       装了 Medium 就取 Medium，只装 Regular 时按 400 渲染而不触发合成加粗。
+       给 600 或 700 的话，只有 Regular 的机器上浏览器会把笔画往外糊一圈，
+       中文尤其难看。想要更重的标题，装了 Medium/Bold 再往上调 */
+    --all-headline-weight: 500;
+    /* 标题描边。Typora 版靠它给自带的 Medium 字重补粗细；
+       这里不带字体文件，合成加粗已经够重，再描一层就糊了。默认关 */
+    --headline-text-stroke: 0;
     /* 标题前的色块宽度，设 0 即关闭 */
     --headline-block-width: 4px;
     /* 色块与标题文字的距离 */
@@ -194,8 +200,8 @@ body.theme-light {
     /* ---- 行内元素 ---- */
     --bold-text-color: inherit;
     --bold-text-weight: bold;
-    /* 描边补足字重，霞鹜文楷没有 Bold */
-    --bold-text-stroke: 0.02em;
+    /* 描边同上，默认关 */
+    --bold-text-stroke: 0;
     --italic-text-size: inherit;
     /* 高亮：不用底色，用下半段色带 */
     --marked-text-bg-color: #d9dde4;
@@ -489,8 +495,8 @@ body.theme-dark {
     /* ---- 行内元素 ---- */
     --bold-text-color: inherit;
     --bold-text-weight: bold;
-    /* 描边补足字重，霞鹜文楷没有 Bold */
-    --bold-text-stroke: 0.02em;
+    /* 描边同上，默认关 */
+    --bold-text-stroke: 0;
     --italic-text-size: inherit;
     --marked-text-bg-color: #d87a16;
     --marked-text-bg-height: -0.85em;

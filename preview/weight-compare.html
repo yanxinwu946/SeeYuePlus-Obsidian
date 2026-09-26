@@ -1,0 +1,54 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>标题字重对比</title>
+<!--
+  霞鹜文楷只装了一个字重时，font-weight: bold 会触发浏览器的合成加粗。
+  中文的合成加粗是把笔画往外糊一圈，比西文难看得多。
+  主题原本还叠了一层 text-stroke（那是 Typora 版为它自带的 Medium 字重补的），
+  在只有一个字重的机器上就成了加粗两次。
+  这个页面把几种组合并排摆出来比。
+-->
+<style>
+  body {
+    margin: 0; padding: 32px 40px; background: #1a1d24; color: #eceff4;
+    font-family: "霞鹜文楷 屏幕阅读版", "霞鹜文楷", "Noto Sans SC", sans-serif;
+  }
+  h2 { font-size: 15px; letter-spacing: 2px; color: #60A5FA; margin: 0 0 18px;
+       border-left: 4px solid currentColor; padding-left: 12px; font-weight: 400; }
+  section { margin-bottom: 34px; }
+  .row { display: flex; align-items: baseline; gap: 24px; }
+  .sample { font-size: 1.7rem; color: #60A5FA; letter-spacing: 2px;
+            border-left: 4px solid currentColor; padding-left: 12px; line-height: 1.3; }
+  .tag { font-size: 12px; color: #8899aa; font-family: "Noto Sans SC", sans-serif;
+         min-width: 210px; text-align: right; letter-spacing: 0; }
+  .body { font-size: 16px; color: #eceff4; line-height: 1.8; margin: 8px 0 0 0; }
+  .w400 { font-weight: 400; }
+  .w500 { font-weight: 500; }
+  .w600 { font-weight: 600; }
+  .w700 { font-weight: 700; }
+  .s0    { -webkit-text-stroke: 0; }
+  .s018  { -webkit-text-stroke: .018em; }
+  .s035  { -webkit-text-stroke: .035em; }
+</style>
+
+<section>
+  <h2>当前主题的写法：bold + .018em 描边</h2>
+  <div class="row"><span class="sample w700 s018">二级标题色阶</span><span class="tag">w700 + stroke .018em</span></div>
+</section>
+
+<section>
+  <h2>去掉描边，只留 bold</h2>
+  <div class="row"><span class="sample w700 s0">二级标题色阶</span><span class="tag">w700，无描边</span></div>
+</section>
+
+<section>
+  <h2>降一档字重</h2>
+  <div class="row"><span class="sample w600 s0">二级标题色阶</span><span class="tag">w600，无描边</span></div>
+  <div class="row"><span class="sample w500 s0">二级标题色阶</span><span class="tag">w500，无描边（不触发合成加粗）</span></div>
+  <div class="row"><span class="sample w400 s0">二级标题色阶</span><span class="tag">w400，无描边</span></div>
+</section>
+
+<section>
+  <h2>正文对照（w400）</h2>
+  <p class="body">每一级标题前面都有一道跟着自己颜色的竖色块，色块外侧挂着等级图标。</p>
+</section>

@@ -31,12 +31,12 @@ body {
     --file-line-width: var(--writeArea-default-width);
 
     /* 标题。--h1-color / --h1-size 这些名字和 Typora 版一致，无需转接 */
-    --h1-weight: var(--bold-text-weight);
-    --h2-weight: var(--bold-text-weight);
-    --h3-weight: var(--bold-text-weight);
-    --h4-weight: var(--bold-text-weight);
-    --h5-weight: var(--bold-text-weight);
-    --h6-weight: var(--bold-text-weight);
+    --h1-weight: var(--all-headline-weight);
+    --h2-weight: var(--all-headline-weight);
+    --h3-weight: var(--all-headline-weight);
+    --h4-weight: var(--all-headline-weight);
+    --h5-weight: var(--all-headline-weight);
+    --h6-weight: var(--all-headline-weight);
     --h1-line-height: 1.4;
     --h2-line-height: 1.3;
     --h3-line-height: 1.3;
@@ -52,7 +52,7 @@ body {
     /* 文档大标题 */
     --inline-title-color: var(--h1-color);
     --inline-title-size: 2.2rem;
-    --inline-title-weight: var(--bold-text-weight);
+    --inline-title-weight: var(--all-headline-weight);
     --inline-title-font: var(--writeArea-text-font);
     --inline-title-line-height: 1.4;
     --inline-title-style: normal;

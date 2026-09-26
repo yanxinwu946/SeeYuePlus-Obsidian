@@ -16,7 +16,9 @@
 .markdown-preview-view,
 .inline-title,
 .cm-s-obsidian {
-    font-family: var(--font-text);
+    /* 回退值兜底：--font-text 是 Obsidian 自己拼的（见文件头），
+       主题只写 -theme 层。万一哪天那条组合不在了，也不至于整页没字体 */
+    font-family: var(--font-text, var(--writeArea-text-font));
 }
 
 /* 界面外壳 —— 侧栏、菜单、设置面板等一切非正文的地方走无衬线。
@@ -40,7 +42,7 @@ body,
 .tree-item-self,
 .view-header,
 .tooltip {
-    font-family: var(--font-interface);
+    font-family: var(--font-interface, var(--interface-text-font));
 }
 
 /* 代码 —— 等宽 */
@@ -54,5 +56,5 @@ samp,
 .markdown-rendered code,
 .HyperMD-codeblock,
 .cm-s-obsidian .cm-table-widget {
-    font-family: var(--font-monospace);
+    font-family: var(--font-monospace, var(--code-block-text-font));
 }

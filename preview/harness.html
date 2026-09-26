@@ -14,6 +14,22 @@
 -->
 <style>
   /* ── Obsidian 骨架的替身 ── */
+
+  /* 字体那套三层组合是 Obsidian 在 body 上定义的，原文取自 obsidian.asar：
+       --font-text: override（用户在设置里选的）, theme（主题写的）, default
+     验证台没有这条规则的话，主题里读 var(--font-text) 的地方会整个落空，
+     字体一律退回默认 —— 那样测出来的结论是假的。 */
+  body {
+    --font-text-override: '';
+    --font-interface-override: '';
+    --font-monospace-override: '';
+    --font-default: system-ui, sans-serif;
+    --font-monospace-default: monospace;
+    --font-text: var(--font-text-override), var(--font-text-theme), var(--font-default);
+    --font-interface: var(--font-interface-override), var(--font-interface-theme), var(--font-default);
+    --font-monospace: var(--font-monospace-override), var(--font-monospace-theme), var(--font-monospace-default);
+  }
+
   * { box-sizing: border-box; }
   body {
     margin: 0;

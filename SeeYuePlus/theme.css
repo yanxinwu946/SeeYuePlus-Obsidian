@@ -52,8 +52,14 @@ body {
 
     /* 标题字距 */
     --headline-text-letter-space: 2px;
-    /* 霞鹜文楷没有 Bold，靠描边补足粗细。设 0 关闭 */
-    --headline-text-stroke: .018em;
+    /* 标题字重。500 是刻意选的：
+       装了 Medium 就取 Medium，只装 Regular 时按 400 渲染而不触发合成加粗。
+       给 600 或 700 的话，只有 Regular 的机器上浏览器会把笔画往外糊一圈，
+       中文尤其难看。想要更重的标题，装了 Medium/Bold 再往上调 */
+    --all-headline-weight: 500;
+    /* 标题描边。Typora 版靠它给自带的 Medium 字重补粗细；
+       这里不带字体文件，合成加粗已经够重，再描一层就糊了。默认关 */
+    --headline-text-stroke: 0;
     /* 标题前的色块宽度，设 0 即关闭 */
     --headline-block-width: 4px;
     /* 色块与标题文字的距离 */
@@ -205,8 +211,8 @@ body.theme-light {
     /* ---- 行内元素 ---- */
     --bold-text-color: inherit;
     --bold-text-weight: bold;
-    /* 描边补足字重，霞鹜文楷没有 Bold */
-    --bold-text-stroke: 0.02em;
+    /* 描边同上，默认关 */
+    --bold-text-stroke: 0;
     --italic-text-size: inherit;
     /* 高亮：不用底色，用下半段色带 */
     --marked-text-bg-color: #d9dde4;
@@ -500,8 +506,8 @@ body.theme-dark {
     /* ---- 行内元素 ---- */
     --bold-text-color: inherit;
     --bold-text-weight: bold;
-    /* 描边补足字重，霞鹜文楷没有 Bold */
-    --bold-text-stroke: 0.02em;
+    /* 描边同上，默认关 */
+    --bold-text-stroke: 0;
     --italic-text-size: inherit;
     --marked-text-bg-color: #d87a16;
     --marked-text-bg-height: -0.85em;
@@ -753,7 +759,9 @@ body.theme-dark {
 .markdown-preview-view,
 .inline-title,
 .cm-s-obsidian {
-    font-family: var(--font-text);
+    /* 回退值兜底：--font-text 是 Obsidian 自己拼的（见文件头），
+       主题只写 -theme 层。万一哪天那条组合不在了，也不至于整页没字体 */
+    font-family: var(--font-text, var(--writeArea-text-font));
 }
 
 /* 界面外壳 —— 侧栏、菜单、设置面板等一切非正文的地方走无衬线。
@@ -777,7 +785,7 @@ body,
 .tree-item-self,
 .view-header,
 .tooltip {
-    font-family: var(--font-interface);
+    font-family: var(--font-interface, var(--interface-text-font));
 }
 
 /* 代码 —— 等宽 */
@@ -791,7 +799,7 @@ samp,
 .markdown-rendered code,
 .HyperMD-codeblock,
 .cm-s-obsidian .cm-table-widget {
-    font-family: var(--font-monospace);
+    font-family: var(--font-monospace, var(--code-block-text-font));
 }
 
 
@@ -868,12 +876,12 @@ body {
     --file-line-width: var(--writeArea-default-width);
 
     /* 标题。--h1-color / --h1-size 这些名字和 Typora 版一致，无需转接 */
-    --h1-weight: var(--bold-text-weight);
-    --h2-weight: var(--bold-text-weight);
-    --h3-weight: var(--bold-text-weight);
-    --h4-weight: var(--bold-text-weight);
-    --h5-weight: var(--bold-text-weight);
-    --h6-weight: var(--bold-text-weight);
+    --h1-weight: var(--all-headline-weight);
+    --h2-weight: var(--all-headline-weight);
+    --h3-weight: var(--all-headline-weight);
+    --h4-weight: var(--all-headline-weight);
+    --h5-weight: var(--all-headline-weight);
+    --h6-weight: var(--all-headline-weight);
     --h1-line-height: 1.4;
     --h2-line-height: 1.3;
     --h3-line-height: 1.3;
@@ -889,7 +897,7 @@ body {
     /* 文档大标题 */
     --inline-title-color: var(--h1-color);
     --inline-title-size: 2.2rem;
-    --inline-title-weight: var(--bold-text-weight);
+    --inline-title-weight: var(--all-headline-weight);
     --inline-title-font: var(--writeArea-text-font);
     --inline-title-line-height: 1.4;
     --inline-title-style: normal;
@@ -1524,11 +1532,13 @@ hr {
 
 /* ───────────────── 六级标题 ───────────────── */
 
-/* 基础：字重靠描边补足，霞鹜文楷没有 Bold，不补的话字体一加载标题就塌下去 */
+/* 基础。字重走 --all-headline-weight，默认 500 ——
+   只装了 Regular 的机器上不会触发合成加粗，装了 Medium 就取 Medium。
+   描边默认关，见 00-tokens.css 里的说明 */
 .markdown-rendered :is(h1, h2, h3, h4, h5, h6),
 .markdown-source-view.mod-cm6 .cm-line[class*="HyperMD-header"] {
     font-family: var(--writeArea-text-font);
-    font-weight: var(--bold-text-weight) !important;
+    font-weight: var(--all-headline-weight) !important;
     -webkit-text-stroke: var(--headline-text-stroke);
     letter-spacing: var(--headline-text-letter-space);
     line-height: 1.3;
@@ -1607,9 +1617,9 @@ hr {
     padding: 0;
 }
 
-/* 标题内的加粗与标题同为 700，字重分不出来，再加一档描边 */
+/* 标题内的加粗：两个描边值相加。默认都是 0，等于不动 */
 .markdown-rendered :is(h1, h2, h3, h4, h5, h6) strong {
-    -webkit-text-stroke: calc(var(--headline-text-stroke) + 0.012em);
+    -webkit-text-stroke: calc(var(--headline-text-stroke) + var(--bold-text-stroke));
 }
 
 /* 编辑态里 # 号的颜色 */
@@ -1686,7 +1696,7 @@ hr {
 .inline-title {
     font-family: var(--writeArea-text-font);
     font-size: var(--inline-title-size);
-    font-weight: var(--bold-text-weight);
+    font-weight: var(--all-headline-weight);
     line-height: var(--inline-title-line-height);
     color: var(--inline-title-color);
     -webkit-text-stroke: var(--headline-text-stroke);
