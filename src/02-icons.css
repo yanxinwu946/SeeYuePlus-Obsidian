@@ -1,0 +1,30 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   02 · 图标
+
+   Typora 版靠三份图标字体（iconfont / remixicon / its）画出引用块、标注、
+   列表符号和外链尾巴。Obsidian 这边不塞字体文件，改用 SVG 蒙版重画了同一批
+   形状 —— 体积为零，颜色跟着 currentColor 走，缩放到任何字号都不糊。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+body {
+    /* 外链尾部的小链条 */
+    --icon-link: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'><path d='M9.5 14.5a4.6 4.6 0 0 0 6.9.5l2.6-2.6a4.6 4.6 0 0 0-6.5-6.5l-1.5 1.5'/><path d='M14.5 9.5a4.6 4.6 0 0 0-6.9-.5l-2.6 2.6a4.6 4.6 0 0 0 6.5 6.5l1.5-1.5'/></svg>");
+    /* 引用块左上角的引号 */
+    --icon-quote: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><path d='M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z'/></svg>");
+
+    /* 六个标注图标 */
+    --icon-example: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9 6h11M9 12h11M9 18h11' stroke='black' stroke-width='2.1' stroke-linecap='round' fill='none'/><circle cx='4.6' cy='6' r='1.8' fill='black'/><circle cx='4.6' cy='12' r='1.8' fill='black'/><circle cx='4.6' cy='18' r='1.8' fill='black'/></svg>");
+    --icon-question: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M20.6 11.3a8.6 8.6 0 1 0-3.5 6.9l3.5 1.2-1.2-3.4'/><path d='M9.8 9.2a2.3 2.3 0 0 1 4.5.6c0 1.6-2.3 2.2-2.3 2.2'/><path d='M12 15.3h.01'/></svg>");
+    --icon-warning: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3.8 21.3 19.6H2.7z'/><path d='M12 9.6v4.2'/><path d='M12 17h.01'/></svg>");
+    --icon-reference: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M20.4 11.4 12 19.8a5.2 5.2 0 0 1-7.4-7.4l8-8a3.5 3.5 0 0 1 4.9 4.9l-8 8a1.7 1.7 0 0 1-2.5-2.4l7.4-7.4'/></svg>");
+    --icon-tips: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'><path d='M9.2 17.5a5.8 5.8 0 1 1 5.6 0'/><path d='M9.4 20.3h5.2'/><path d='M12 2.6v1.8M4.6 6.4l1.5.9M19.4 6.4l-1.5.9M3.4 13h1.8M18.8 13h1.8'/></svg>");
+    --icon-expand: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 3.2h8.4L19 7.8v13H6z'/><path d='M14 3.4v4.6h4.6'/><path d='M9 12h7M9 15.6h7'/></svg>");
+
+    /* 任务列表的勾 */
+    --icon-check: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M4.5 12.6 10 18 19.5 6.5'/></svg>");
+    /* 脚注冒号与回跳箭头 */
+    --icon-colon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><circle cx='12' cy='8.6' r='2.1'/><circle cx='12' cy='15.8' r='2.1'/></svg>");
+    --icon-back: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M11 5.5 5.5 11l5.5 5.5'/><path d='M5.5 11H19'/></svg>");
+    /* 网络图片角标 */
+    --icon-cloud: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M7 18.5h10.2a4.3 4.3 0 0 0 .5-8.6 6 6 0 0 0-11.5 1.2A3.8 3.8 0 0 0 7 18.5z'/></svg>");
+}

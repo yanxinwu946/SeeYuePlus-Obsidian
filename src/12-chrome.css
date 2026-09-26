@@ -1,0 +1,373 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   12 · 菜单、弹窗与设置面板
+
+   Typora 版的右键菜单是白底、无边框、8px 圆角、铺一层柔和投影，
+   行高 13px、悬浮换成浅灰药丸。这套语言在这里覆盖到 Obsidian 的
+   菜单、命令面板、自动补全、设置窗口 —— 凡是浮在内容之上的东西。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 右键菜单 ───────────────── */
+
+.menu {
+    background-color: var(--context-menu-bg-color);
+    border: none;
+    border-radius: var(--radius-l);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+    padding: 4px 6px;
+    font-family: var(--interface-text-font);
+    font-size: var(--context-menu-text-size);
+}
+
+.menu-item {
+    color: var(--context-menu-text-color);
+    border-radius: var(--radius-s);
+    padding: 4px 10px;
+    transition: all .3s ease;
+}
+
+.menu-item:hover,
+.menu-item.selected,
+.menu-item.is-active {
+    color: var(--hover-context-menu-list-line-text-color);
+    background-color: var(--hover-context-menu-list-line-bg-color);
+}
+
+.menu-item-icon {
+    color: inherit;
+    opacity: .8;
+}
+
+.menu-item.is-disabled,
+.menu-item.is-disabled:hover {
+    color: var(--filelist-path-time-text-color);
+    background-color: transparent;
+    opacity: .5;
+}
+
+.menu-separator {
+    border-top: 1px solid var(--border-hairline);
+    margin: 4px 0;
+}
+
+.menu-item-title {
+    color: inherit;
+}
+
+/* 快捷键提示 */
+.menu-item .menu-item-title + span,
+.menu-item[aria-keyshortcuts]::after {
+    color: var(--filelist-path-time-text-color);
+    font-size: 11px;
+    opacity: .7;
+}
+
+
+/* ───────────────── 弹窗 ───────────────── */
+
+.modal {
+    background-color: var(--pop-up-menu-bg-color);
+    border: none;
+    border-radius: var(--radius-l);
+    box-shadow: 0 8px 32px var(--liquid-glass-menu-shadow);
+    font-family: var(--interface-text-font);
+}
+
+.modal-title,
+.modal-close-button {
+    color: var(--pop-up-menu-text-color);
+}
+
+.modal-close-button {
+    border-radius: var(--radius-xs);
+}
+
+.modal-close-button:hover {
+    color: var(--color-red);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+.modal-content {
+    color: var(--pop-up-menu-text-color);
+}
+
+/* 底部按钮 */
+.modal button:not(.clickable-icon):not(.modal-close-button) {
+    border-radius: var(--radius-xs);
+    font-family: var(--interface-text-font);
+    box-shadow: none;
+    transition: all .3s ease;
+}
+
+.modal .mod-cta {
+    background-color: var(--menu-footer-OK-btn-bg-color);
+    color: var(--menu-footer-OK-btn-text-color);
+    border: none;
+}
+
+.modal .mod-cta:hover {
+    background-color: var(--hover-menu-footer-OK-btn-bg-color);
+}
+
+.modal .mod-cancel {
+    background-color: var(--menu-footer-other-btn-bg-color);
+    color: var(--menu-footer-other-btn-text-color);
+    border: none;
+}
+
+.modal .mod-cancel:hover {
+    background-color: var(--hover-menu-footer-other-btn-bg-color);
+}
+
+.modal-bg {
+    background-color: var(--background-modifier-cover);
+}
+
+
+/* ───────────────── 命令面板与自动补全 ───────────────── */
+
+.prompt {
+    background-color: var(--pop-up-menu-bg-color);
+    border: none;
+    border-radius: var(--radius-l);
+    box-shadow: 0 8px 32px var(--liquid-glass-menu-shadow);
+    font-family: var(--interface-text-font);
+}
+
+.prompt-input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-hairline);
+    border-radius: 0;
+    color: var(--pop-up-menu-text-color);
+    font-family: var(--interface-text-font);
+    box-shadow: none;
+}
+
+.prompt-input:focus {
+    border-bottom-color: var(--accent-color);
+    box-shadow: none;
+}
+
+.suggestion-container {
+    background-color: var(--context-menu-bg-color);
+    border: none;
+    border-radius: var(--radius-l);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+    font-family: var(--interface-text-font);
+}
+
+.suggestion-item {
+    color: var(--context-menu-text-color);
+    border-radius: var(--radius-s);
+    padding: 4px 10px;
+    transition: all .3s ease;
+}
+
+.suggestion-item.is-selected {
+    color: var(--hover-context-menu-list-line-text-color);
+    background-color: var(--hover-context-menu-list-line-bg-color);
+}
+
+.suggestion-item .suggestion-note,
+.suggestion-item .suggestion-flair {
+    color: var(--filelist-path-time-text-color);
+    font-size: 11px;
+}
+
+.suggestion-highlight {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* 编辑时弹出的 [[ 链接与 # 标签补全 */
+.cm-s-obsidian .cm-tooltip-autocomplete {
+    background-color: var(--context-menu-bg-color);
+    border: none;
+    border-radius: var(--radius-l);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+    overflow: hidden;
+}
+
+.cm-s-obsidian .cm-tooltip-autocomplete ul li {
+    color: var(--context-menu-text-color);
+    font-family: var(--interface-text-font);
+    padding: 3px 8px;
+}
+
+.cm-s-obsidian .cm-tooltip-autocomplete ul li[aria-selected] {
+    color: var(--hover-context-menu-list-line-text-color);
+    background-color: var(--hover-context-menu-list-line-bg-color);
+}
+
+
+/* ───────────────── 提示与通知 ───────────────── */
+
+.tooltip {
+    background-color: var(--btn-tooltip-bg-color);
+    color: var(--btn-tooltip-text-color);
+    border: none;
+    border-radius: var(--radius-s);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .18);
+    font-family: var(--interface-text-font);
+    font-size: 12px;
+}
+
+.notice {
+    background-color: var(--pop-up-menu-bg-color);
+    color: var(--pop-up-menu-text-color);
+    border: none;
+    border-radius: var(--radius-l);
+    box-shadow: 0 8px 32px var(--liquid-glass-menu-shadow);
+    font-family: var(--interface-text-font);
+}
+
+
+/* ───────────────── 设置面板 ───────────────── */
+
+.vertical-tab-header {
+    background-color: transparent;
+    border-right: 1px solid var(--border-hairline);
+}
+
+.vertical-tab-nav-item {
+    color: var(--sidebar-text-color);
+    border-radius: var(--radius-s);
+    padding: 5px 10px;
+    transition: all .3s ease;
+}
+
+.vertical-tab-nav-item:hover {
+    color: var(--filelist-filename-text-color);
+    background-color: var(--hover-sidebar-filelist-bg-color);
+}
+
+.vertical-tab-nav-item.is-active {
+    color: var(--active-filelist-text-color);
+    background-color: var(--active-sidebar-filelist-bg-color);
+    font-weight: 600;
+}
+
+.vertical-tab-content {
+    background-color: transparent;
+}
+
+.setting-item {
+    border-top: 1px solid var(--border-hairline);
+}
+
+.setting-item-name {
+    color: var(--filelist-filename-text-color);
+    font-weight: 600;
+}
+
+.setting-item-description {
+    color: var(--filelist-path-time-text-color);
+}
+
+.setting-item-heading .setting-item-name {
+    color: var(--accent-color);
+}
+
+/* 设置面板里的下拉框 */
+.dropdown {
+    background-color: var(--input-bg-color);
+    border: var(--input-border);
+    border-radius: var(--radius-s);
+    color: var(--writeArea-text-color);
+    font-family: var(--interface-text-font);
+    box-shadow: none;
+}
+
+.dropdown:hover {
+    border-color: var(--focus-ring-color);
+}
+
+/* 开关 */
+.checkbox-container {
+    background-color: var(--border-strong);
+    border: none;
+    box-shadow: none;
+    transition: background-color .3s ease;
+}
+
+.checkbox-container.is-enabled {
+    background-color: var(--accent-color);
+}
+
+.checkbox-container::after {
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+/* 滑块 */
+input[type="range"] {
+    background-color: var(--border-hairline);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    background-color: var(--accent-color);
+    border: none;
+    box-shadow: none;
+}
+
+/* 通用按钮 */
+button:not(.clickable-icon):not(.workspace-tab-header-inner-close-button) {
+    font-family: var(--interface-text-font);
+    border-radius: var(--radius-xs);
+    box-shadow: none;
+    transition: all .3s ease;
+}
+
+/* 图标按钮 */
+.clickable-icon {
+    color: var(--icon-default-color);
+    border-radius: var(--radius-xs);
+    transition: all .3s ease;
+}
+
+.clickable-icon:hover {
+    color: var(--icon-default-color-hover);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+
+/* ───────────────── 标签页右键菜单与拖拽 ───────────────── */
+
+.workspace-tab-header-inner-close-button:hover {
+    color: var(--color-red);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+.workspace-tab-header.is-dragging {
+    opacity: .7;
+}
+
+/* 拖拽分栏时的高亮提示 */
+.workspace-drop-overlay::before,
+.workspace-drop-overlay {
+    background-color: color-mix(in srgb, var(--accent-color) 25%, transparent);
+    border-radius: var(--radius-m);
+}
+
+
+/* ───────────────── 空状态 ───────────────── */
+
+.empty-state-title {
+    color: var(--filelist-filename-text-color);
+    font-family: var(--writeArea-text-font);
+}
+
+.empty-state-action {
+    color: var(--accent-color);
+}
+
+
+/* ───────────────── 图谱控件 ───────────────── */
+
+.graph-controls {
+    background-color: var(--pop-up-menu-bg-color);
+    border: none;
+    border-radius: var(--radius-l);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+}

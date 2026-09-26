@@ -1,0 +1,116 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   09 · 行内元素
+
+   加粗靠字重加描边 —— 霞鹜文楷没有 Bold，只给 font-weight 是没用的，
+   字体一加载标题和加粗就会塌下去。高亮不用底色，改用下半段色带，
+   像拿荧光笔在纸上划了一道，不挡字。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 加粗 ───────────────── */
+
+.markdown-rendered strong,
+.cm-s-obsidian .cm-strong {
+    font-weight: var(--bold-text-weight) !important;
+    color: var(--bold-text-color);
+    -webkit-text-stroke: var(--bold-text-stroke);
+    padding: 0 1px;
+}
+
+
+/* ───────────────── 斜体 ───────────────── */
+
+.markdown-rendered em,
+.cm-s-obsidian .cm-em {
+    color: inherit;
+    font-size: var(--italic-text-size);
+    padding: 0 3px 0 2px;
+}
+
+
+/* ───────────────── 高亮 ───────────────── */
+
+.markdown-rendered mark,
+.cm-s-obsidian .cm-highlight,
+.cm-s-obsidian .cm-highlightText {
+    background-color: transparent !important;
+    color: inherit;
+    /* 负的 y 偏移把内阴影顶上去，只留底下那一段色带 */
+    box-shadow: 0 var(--marked-text-bg-height) 0 0 var(--marked-text-bg-color) inset;
+    padding: 0 2px 1px;
+    margin: 0 1px;
+}
+
+
+/* ───────────────── 删除线 ───────────────── */
+
+.markdown-rendered del,
+.cm-s-obsidian .cm-strikethrough {
+    color: var(--deleted-text-color);
+    padding: 0 2px;
+}
+
+
+/* ───────────────── 下划线 ───────────────── */
+
+.markdown-rendered u {
+    color: inherit;
+    text-decoration: none;
+    /* 用下边框而不是 text-decoration，颜色和粗细才好控制 */
+    border-bottom: var(--text-underline);
+    padding-bottom: var(--text-bottom-border-distance);
+}
+
+
+/* ───────────────── 标签 ───────────────── */
+
+.markdown-rendered a.tag,
+.cm-s-obsidian .cm-hashtag {
+    color: var(--tag-text-color);
+    background-color: var(--tag-bg-color);
+    border: none;
+    border-radius: var(--tag-radius);
+    padding: 1px 6px;
+    font-size: var(--tag-size);
+    font-family: var(--interface-text-font);
+    font-weight: 500;
+    text-decoration: none;
+    transition: all .3s ease;
+}
+
+.markdown-rendered a.tag:hover,
+.cm-s-obsidian .cm-hashtag:hover {
+    color: var(--accent-contrast);
+    background-color: var(--accent-color);
+}
+
+/* 编辑态里 # 号本身不着色，只有标签名着色 */
+.cm-s-obsidian .cm-hashtag-begin,
+.cm-s-obsidian .cm-hashtag-end {
+    background-color: transparent;
+    color: var(--tag-text-color);
+    padding: 0;
+}
+
+
+/* ───────────────── 行内公式 ───────────────── */
+
+.markdown-rendered .math.math-inline,
+.cm-s-obsidian .cm-math {
+    font-size: 105%;
+    color: var(--writeArea-text-color);
+}
+
+/* 公式块与 HTML 块：鼠标移上去浮出一层浅底和工具条 */
+.markdown-rendered .math.math-block,
+.markdown-rendered .cm-html-embed,
+.markdown-rendered mjx-container[display="true"] {
+    border-radius: var(--radius-s);
+    padding: .3em .6em;
+    transition: background-color .3s ease;
+}
+
+.markdown-rendered .math.math-block:hover,
+.markdown-rendered .cm-html-embed:hover {
+    background-color: var(--hover-math-html-block-bg-color);
+}

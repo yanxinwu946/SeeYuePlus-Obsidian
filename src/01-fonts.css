@@ -1,0 +1,54 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   01 · 字体分配
+
+   主题不带字体文件。装了霞鹜文楷就直接生效，没装则回退到系统无衬线，
+   排版节奏不变，只是笔画换了副面孔。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* 正文与标题 —— 楷体，长文读起来松快 */
+.markdown-rendered,
+.markdown-source-view.mod-cm6 .cm-content,
+.inline-title,
+.markdown-preview-view,
+.cm-s-obsidian {
+    font-family: var(--writeArea-text-font);
+}
+
+/* 界面外壳 —— 侧栏、菜单、设置面板等一切非正文的地方走无衬线。
+   楷体在 12–13px 的小字号下笔画会糊，读列表反而不如黑体清爽 */
+body,
+.app-container,
+.workspace-leaf-content[data-type="file-explorer"],
+.workspace-leaf-content[data-type="outline"],
+.workspace-leaf-content[data-type="search"],
+.workspace-leaf-content[data-type="tag"],
+.workspace-leaf-content[data-type="bookmarks"],
+.workspace-leaf-content[data-type="backlink"],
+.workspace-leaf-content[data-type="outgoing-link"],
+.workspace-leaf-content[data-type="all-properties"],
+.menu,
+.modal,
+.prompt,
+.suggestion-container,
+.status-bar,
+.nav-files-container,
+.tree-item-self,
+.view-header,
+.tooltip {
+    font-family: var(--interface-text-font);
+}
+
+/* 代码 —— 等宽 */
+code,
+pre,
+kbd,
+samp,
+.cm-inline-code,
+.cm-line.HyperMD-codeblock,
+.markdown-rendered pre,
+.markdown-rendered code,
+.HyperMD-codeblock,
+.cm-s-obsidian .cm-table-widget {
+    font-family: var(--code-block-text-font);
+}

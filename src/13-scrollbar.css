@@ -1,0 +1,82 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   13 · 滚动条
+
+   6px 宽、4px 圆角、轨道全透明 —— 滚动条只在滚动时露面，不占视觉。
+   写作区、侧栏、代码块、表格各用各的颜色，深色底统一换成白色透明。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+    width: var(--scroll-thumb-width);
+    height: var(--scroll-thumb-width);
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+    border: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--writeArea-scroll-thumb-color);
+    border-radius: 4px;
+    border: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--hover-writeArea-scroll-thumb-color);
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+/* 拖动时不要让 Chromium 画那块灰底 */
+::-webkit-scrollbar:hover {
+    background-color: transparent;
+}
+
+
+/* ───────────────── 侧栏 ───────────────── */
+
+.workspace-split.mod-left-split ::-webkit-scrollbar-thumb,
+.workspace-split.mod-right-split ::-webkit-scrollbar-thumb {
+    background-color: var(--sidebar-scroll-thumb-color);
+}
+
+.workspace-split.mod-left-split ::-webkit-scrollbar-thumb:hover,
+.workspace-split.mod-right-split ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--hover-sidebar-scroll-thumb-color);
+}
+
+
+/* ───────────────── 代码块 ───────────────── */
+
+.markdown-rendered pre::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.markdown-rendered pre::-webkit-scrollbar-thumb {
+    background-color: var(--code-block-scroll-thumb-color);
+}
+
+.markdown-rendered pre::-webkit-scrollbar-thumb:hover {
+    background-color: var(--hover-code-block-scroll-thumb-color);
+}
+
+
+/* ───────────────── 表格 ───────────────── */
+
+.workspace-leaf-content[data-type="markdown"] .table-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.workspace-leaf-content[data-type="markdown"] .table-wrapper::-webkit-scrollbar-thumb {
+    background-color: var(--table-scroll-thumb-color);
+    border-radius: 3px;
+}
+
+.workspace-leaf-content[data-type="markdown"] .table-wrapper::-webkit-scrollbar-thumb:hover {
+    background-color: var(--hover-table-scroll-thumb-color);
+}

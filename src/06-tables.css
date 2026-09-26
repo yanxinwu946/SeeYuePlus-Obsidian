@@ -1,0 +1,122 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   06 · 表格
+
+   Typora 版把外框画成阴影而不是边框，四边和四角才好收干净。
+   这里照搬：单元格各管右边和下边，首行补上边、首列补左边，
+   外框交给 --table-outer-border-shadow —— 浅色是一圈实描边，深色是一片柔光。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.workspace-leaf-content[data-type="markdown"] table {
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: var(--table-bg-color);
+    border-radius: var(--table-bg-radius);
+    box-shadow: var(--table-outer-border-shadow);
+    word-break: initial;
+    margin: 0 auto;
+}
+
+/* ───────────────── 单元格 ───────────────── */
+
+.workspace-leaf-content[data-type="markdown"] :is(th, td) {
+    border-right: var(--table-all-cell-border);
+    border-bottom: var(--table-all-cell-border);
+    padding: var(--table-all-cell-padding);
+    background-color: transparent;
+    vertical-align: middle;
+}
+
+/* 首列补左边，首行补上边 —— 合起来就是一圈完整的格子线 */
+.workspace-leaf-content[data-type="markdown"] tr > :is(th, td):first-child {
+    border-left: var(--table-all-cell-border);
+}
+
+.workspace-leaf-content[data-type="markdown"] :is(thead tr:first-child, tbody:first-child tr:first-child) > :is(th, td) {
+    border-top: var(--table-all-cell-border);
+}
+
+/* 四角跟着表格圆角走 */
+.workspace-leaf-content[data-type="markdown"] :is(thead tr:first-child, tbody:first-child tr:first-child) > :first-child {
+    border-top-left-radius: var(--table-bg-radius);
+}
+
+.workspace-leaf-content[data-type="markdown"] :is(thead tr:first-child, tbody:first-child tr:first-child) > :last-child {
+    border-top-right-radius: var(--table-bg-radius);
+}
+
+.workspace-leaf-content[data-type="markdown"] tbody tr:last-child > :first-child {
+    border-bottom-left-radius: var(--table-bg-radius);
+}
+
+.workspace-leaf-content[data-type="markdown"] tbody tr:last-child > :last-child {
+    border-bottom-right-radius: var(--table-bg-radius);
+}
+
+
+/* ───────────────── 表头 ───────────────── */
+
+.workspace-leaf-content[data-type="markdown"] th {
+    background-color: var(--table-thead-bg-color) !important;
+    color: var(--table-thead-text-color) !important;
+    font-family: var(--writeArea-text-font);
+    font-weight: var(--bold-text-weight);
+    /* 表头下缘那道加粗的线，是表头与表体的分界 */
+    border-bottom: var(--table-thead-line-bottom-border);
+}
+
+
+/* ───────────────── 表体 ───────────────── */
+
+/* 隔行底色。浅色两套是 inherit，也就是不着色 */
+.workspace-leaf-content[data-type="markdown"] tbody tr:nth-child(2n) {
+    background-color: var(--table-tbody-evenNum-line-bg-color);
+}
+
+.workspace-leaf-content[data-type="markdown"] tbody tr:nth-child(2n-1) {
+    background-color: var(--table-tbody-oddNum-line-bg-color);
+}
+
+
+/* ───────────────── 编辑时的提示 ───────────────── */
+
+/* 光标所在单元格下缘那道彩色线，表头与表体用不同颜色区分 */
+.workspace-leaf-content[data-type="markdown"] .cm-table-widget td.cm-activeCell,
+.workspace-leaf-content[data-type="markdown"] .cm-table-widget th.cm-activeCell {
+    box-shadow: inset 0 -2px 0 0 var(--focus-table-tbody-td-bottom-line-color);
+}
+
+.workspace-leaf-content[data-type="markdown"] .cm-table-widget thead th.cm-activeCell {
+    box-shadow: inset 0 -2px 0 0 var(--focus-table-thead-td-bottom-line-color);
+}
+
+/* 表格上方的行列操作控件 */
+.table-row-drag-handle,
+.table-col-drag-handle,
+.table-cell-drag-handle {
+    color: var(--icon-default-color);
+}
+
+.table-add-row-button,
+.table-add-column-button,
+.table-controls button {
+    color: var(--icon-default-color);
+    border-radius: var(--radius-xs);
+    transition: all .3s ease;
+}
+
+.table-add-row-button:hover,
+.table-add-column-button:hover,
+.table-controls button:hover {
+    color: var(--accent-color);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+/* 编辑视图里源码形态的表格用等宽字对齐，读起来像一张表 */
+.cm-s-obsidian .HyperMD-table-row {
+    font-family: var(--code-block-text-font);
+    font-size: .92em;
+}
+
+.cm-s-obsidian .cm-table-widget {
+    background-color: transparent;
+}

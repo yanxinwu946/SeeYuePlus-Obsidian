@@ -1,0 +1,667 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   见月 · SeeYue Plus — Obsidian
+   00 · 设计令牌
+
+   想改主题，动这一个文件就够。
+   变量名沿用 Typora 版，两边的配置可以对着看：
+   节奏（字号、行距、圆角）三套配色共用，写在 body；
+   颜色分浅色 / 深色两组，分别在 .theme-light 与 .theme-dark 下。
+
+   浅色 = 见月 · 明亮，深色 = 见月 · 暗黑。
+   想要见月 · 护眼，另外挂 snippets/ 里那个片段。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────────────────── 排版节奏 ───────────────────────────── */
+/* 不随明暗变化，改这里等于换一版心情 */
+
+body {
+    /* 正文与标题字体。霞鹜文楷没装就依次回退 */
+    --writeArea-text-font: "霞鹜文楷", "LXGW WenKai", "Noto Sans SC", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+    /* 界面外壳字体。正文用楷体，外壳用无衬线，两套各司其职 */
+    --interface-text-font: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, "Segoe UI", sans-serif;
+    /* 代码字体 */
+    --code-block-text-font: "JetBrainsMono NF", "JetBrains Mono", "Cascadia Code", Consolas, "Microsoft YaHei", monospace;
+
+    /* 正文字号 */
+    --writeArea-text-size: 16px;
+    /* 正文行距 */
+    --writeArea-text-line-spacing: 1.8rem;
+    /* 段间距 */
+    --writeArea-text-paragraph-spacing: 1.2rem;
+    /* 正文对齐：initial 左对齐，justify 两端对齐 */
+    --writeArea-text-align-style: initial;
+    /* 正文栏宽。想要更适合阅读的窄栏，把 1500px 改小 */
+    --writeArea-default-width: min(1500px, 92%);
+
+    /* 标题字距 */
+    --headline-text-letter-space: 2px;
+    /* 霞鹜文楷没有 Bold，靠描边补足粗细。设 0 关闭 */
+    --headline-text-stroke: .018em;
+    /* 标题前的色块宽度，设 0 即关闭 */
+    --headline-block-width: 4px;
+    /* 色块与标题文字的距离 */
+    --headline-block-distance: 12px;
+    /* 色块圆角 */
+    --headline-block-radius: 2px;
+    /* 标题等级提示图标：inline-block 开启，none 关闭 */
+    --headline-rating-prompt-state: inline-block;
+    /* 等级图标的大小与颜色 */
+    --headline-rating-prompt-word-size: 12px;
+    --headline-rating-prompt-word-color: #999;
+
+    /* 正文分隔线 */
+    --writeArea-divider-height: 2.5px;
+    --writeArea-divider-top-bottom-margin: 2rem;
+
+    /* 列表缩进，一级一层 */
+    --unordered-list-level-indentation: 25px;
+    --orderly-list-level-indentation: 25px;
+    /* 无序列表符号大小 */
+    --unordered-list-symbol-size: .9em;
+    /* 有序列表序号徽章直径 */
+    --ol-badge-size: 16px;
+    --ol-badge-size-l2: 14px;
+    /* 层级竖线 */
+    --list-level-line-width: 1.5px;
+
+    /* 引用块 */
+    --blockquote-left-line-default-width: 4.5px;
+    --blockquote-left-line-default-color: #2e3440;
+    --admonitions-blockquote-left-line-width: 4.5px;
+    /* 标注标题字号 */
+    --admonitions-blockquote-title-size: 1.1rem;
+    /* 标注标题与正文的距离 */
+    --admonitions-blockquote-title-text-distance: 1.1rem;
+
+    /* 脚注：正文里的角标大小，与文末脚注区的字号 */
+    --writeArea-footnote-size: 9px;
+    --end-footnote-area-text-size: .8rem;
+
+    /* 输入框里的提示文字 */
+    --all-input-box-prompt-text-color: #aaa;
+
+    /* 行内代码。Typora 版里这套绿色是三套配色共用的，这里沿用 */
+    --inline-code-color: #81b29a;
+    --inline-code-bg-color: rgba(129, 178, 154, 0.14);
+    --inline-code-border-color: rgba(129, 178, 154, 0.32);
+    --inline-code-size: .88em;
+    --line-code-size: .9em;
+    --line-code-bg-radius: 7px;
+
+    /* 代码块 */
+    --code-block-text-size: 14.5px;
+    --code-block-line-height: 1.6;
+    --code-block-radius: 16px;
+    /* 窗口左上三个圆点的颜色 */
+    --code-block-topBar-left-redDot-color: #ff5f5a;
+    --code-block-topBar-left-yellowDot-color: #ffbe2e;
+    --code-block-topBar-left-greenDot-color: #2aca44;
+    /* 右上角语言角标 */
+    /* 顶栏高度，为三个圆点让出的空间 */
+    --code-block-top-bar-height: 2.8em;
+
+    /* 表格 */
+    --table-bg-radius: 3px;
+    --table-all-cell-padding: 6px 12px;
+
+    /* 图片 */
+    --image-radius: 4px;
+    --image-max-width: 85%;
+    --image-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+    /* 描边只有暗色主题要，浅色底上会显脏 */
+    --image-border: none;
+    /* 鼠标悬浮时放大的倍数，1 即不动 */
+    --hover-image-bigger-multiple: 1.02;
+
+    /* 链接 */
+    --link-animation-time: .5s;
+    /* 外链尾部图标的间距与大小 */
+    --tail-icon-and-text-distance: 5px;
+    --link-text-tail-icon-size: .8em;
+    --link-text-tail-icon-opacity: .7;
+
+    /* 圆角阶梯在 03-shell.css 里直接赋给 Obsidian 的 --radius-*，
+       这里只放主题自己的两档 */
+    /* 选中行右缘那根竖条 —— 本主题的招牌 */
+    --accent-pill-width: 4px;
+    --accent-pill-height: 22px;
+    --accent-pill-radius: 11px;
+    --accent-pill-right: 5px;
+
+    /* 毛玻璃：背景模糊度与饱和度 */
+    --frosted-glass-blur: 48px;
+    --liquid-glass-saturate: 180%;
+    /* 写作区玻璃卡片 */
+    --frosted-glass-writeArea-border-radius: 16px;
+    /* 菜单模糊度 */
+}
+
+
+/* ═════════════════════════ 见月 · 明亮（浅色） ═════════════════════════ */
+body.theme-light {
+    /* ---- 底色 ---- */
+    /* 玻璃卡片背后的渐变底色 */
+    --frosted-glass-interface-bg-color: #f0f4f8;
+    --frosted-glass-interface-bg-img:
+        radial-gradient(ellipse 1800px 1200px at 15% 10%, rgba(94, 129, 172, 0.06), transparent 70%),
+        radial-gradient(ellipse 1600px 1000px at 85% 25%, rgba(129, 178, 154, 0.04), transparent 65%),
+        radial-gradient(ellipse 1400px 900px at 50% 80%, rgba(180, 162, 193, 0.03), transparent 60%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, transparent 50%),
+        linear-gradient(135deg, #f0f4f8, #e5ecf2, #d9e2ec, #e5ecf2, #f0f4f8);
+    /* 界面底色 */
+    --interface-default-bg-color: #fff;
+    /* 写作区玻璃的底色与透明度 */
+    --frosted-glass-writeArea-bg-color: rgba(255, 255, 255, 0.42);
+    --frosted-glass-writeArea-border: 1px solid rgba(255, 255, 255, 0.6);
+    --frosted-glass-writeArea-shadow: 0 4px 24px rgba(100, 110, 140, 0.1), 0 12px 48px rgba(100, 110, 140, 0.08);
+    /* 侧栏玻璃 */
+    --frosted-glass-sidebar-bg-color: rgba(255, 255, 255, 0.4);
+    /* 玻璃的高光与内阴影 */
+    --liquid-glass-saturate: 200%;
+    --liquid-glass-highlight: rgba(255, 255, 255, 0.5);
+    --liquid-glass-highlight-side: rgba(255, 255, 255, 0.3);
+    --liquid-glass-shadow-inner: rgba(0, 0, 0, 0.04);
+    --liquid-glass-menu-shadow: rgba(0, 0, 0, 0.1);
+
+    /* ---- 正文 ---- */
+    --writeArea-text-color: #000;
+    --writeArea-selected-text-color: #fff;
+    --writeArea-selected-text-bg-color: #7caad2;
+    --writeArea-divider-color: #ccc;
+
+    /* ---- 六级标题色阶 ---- */
+    --h1-color: #9A3412;
+    --h2-color: #B45309;
+    --h3-color: #4D7C0F;
+    --h4-color: #0F766E;
+    --h5-color: #BE123C;
+    --h6-color: #57534E;
+    --h1-size: 2rem;
+    --h2-size: 1.7rem;
+    --h3-size: 1.5rem;
+    --h4-size: 1.3rem;
+    --h5-size: 1.2rem;
+    --h6-size: 1.1rem;
+    --h2-text-bottom-line-distance: 10px;
+
+    /* ---- 行内元素 ---- */
+    --bold-text-color: inherit;
+    --bold-text-weight: bold;
+    /* 描边补足字重，霞鹜文楷没有 Bold */
+    --bold-text-stroke: 0.02em;
+    --italic-text-size: inherit;
+    /* 高亮：不用底色，用下半段色带 */
+    --marked-text-bg-color: #d9dde4;
+    --marked-text-bg-height: -0.85em;
+    --deleted-text-color: #bbb;
+    --text-underline: 1.5px solid #999;
+    --text-bottom-border-distance: 1px;
+
+    /* ---- 行内代码 ---- */
+    --line-code-bg-color: #eceff4;
+    --table-line-code-bg-color: #eceff4;
+    --blockquote-line-code-bg-color: #eceff4;
+
+    /* ---- 链接 ---- */
+    --link-text-color: #5e81ac;
+    --hover-link-text-color: #5e81ac;
+    --link-text-font-weight: normal;
+    --link-text-tail-icon-color: rgba(94, 129, 172, .7);
+    --hover-link-tail-icon-color: #5e81ac;
+    /* 下划线由左向右长出的两端颜色 */
+    --hover-link-bottom-line-start-color: #5e81ac;
+    --hover-link-bottom-line-end-color: #5e81ac80;
+
+    /* ---- 引用块 ---- */
+    --blockquote-text-color: #999;
+    --blockquote-bg-color: #fff;
+    --blockquote-bg-radius: 3px;
+    --blockquote-text-size: inherit;
+    --blockquote-left-right-indent: 0;
+    --blockquote-top-left-icon-color: #2e3440;
+    --blockquote-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, .05), 0 0 0.05rem rgba(0, 0, 0, .1);
+
+    /* ---- 六种标注 ---- */
+    /* 标题栏的底色浓度：浅色底只需要一层薄薄的水洗，深色底要压得住 */
+    --admonitions-title-bg-mix: 18%;
+    --callout-example-color: #6a1b9a;
+    --callout-question-color: #2e7d32;
+    --callout-warning-color: #c62828;
+    --callout-reference-color: #3b83c1;
+    --callout-tips-color: #f9a825;
+    --callout-expand-color: #3abd7e;
+
+    /* ---- 列表 ---- */
+    --unordered-list-symbol-color: #5e81ac;
+    --orderly-list-symbol-color: #5e81ac;
+    --ol-badge-bg: #5e81ac;
+    --ol-badge-bg-l2: #5e81ac;
+    --ol-badge-text-color: #fff;
+    --ol-badge-shadow: rgba(94, 129, 172, 0.3);
+    /* 光标所在行的列表符号高亮 */
+    --focus-list-symbol-color: #fa541c;
+    /* 任务列表 */
+    --task-list-box-bg-color: #fff;
+    --task-list-box-border-color: #999;
+    --task-list-box-border: 1.5px solid var(--task-list-box-border-color);
+    --task-list-box-border-radius: 2.5px;
+    --task-list-box-size: 1.05em;
+    --task-list-checked-box-bg-color: #5e81ac;
+    --task-list-checked-tick-color: #fff;
+    --task-list-checked-tick-size: .8em;
+    --task-list-checked-text-color: #999;
+    --hover-task-list-box-bg-color: #eceff480;
+
+    /* ---- 代码块 ---- */
+    --code-block-bg-color: #f6f8fa;
+    --code-block-text-color: #000;
+    --code-block-line-number-color: #ccc;
+    --code-block-right-program-lang-text-color: #aaa;
+    --code-block-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 10px rgba(0, 0, 0, 0.04), 0 12px 24px rgba(0, 0, 0, 0.05);
+    --code-block-border: 1px solid rgba(129, 178, 154, 0.18);
+    /* 语法高亮 */
+    --hl-comment: #546e7a;
+    --hl-keyword: #8f08c4;
+    --hl-string: #50a14f;
+    --hl-number: #c18401;
+    --hl-function: #74531f;
+    --hl-property: #0184bc;
+    --hl-tag: #ff5370;
+    --hl-punctuation: #383a42;
+    --hl-operator: #36374c;
+    --hl-value: #a626a4;
+    --hl-important: #e96900;
+
+    /* ---- 表格 ---- */
+    --table-bg-color: #fff;
+    --table-all-cell-border: 1.5px solid #ddd;
+    --table-thead-bg-color: #fff;
+    --table-thead-text-color: #2e3440;
+    --table-thead-line-bottom-border: 2.5px solid #ccc;
+    --table-tbody-evenNum-line-bg-color: inherit;
+    --table-tbody-oddNum-line-bg-color: inherit;
+    --table-outer-border-shadow: 0 0 0 1.5px #ddd;
+    /* 光标所在单元格的下缘提示线 */
+    --focus-table-thead-td-bottom-line-color: #d08770;
+    --focus-table-tbody-td-bottom-line-color: #a3be8c;
+
+    /* ---- 脚注 ---- */
+    --writeArea-footnote-bg-color: #dfe4ea;
+    --writeArea-footnote-color: #516181;
+    --writeArea-footnote-size: 9px;
+    --end-footnote-area-text-color: #aaa;
+    --end-footnote-area-prompt-color: #808080;
+    --footnote-content-prompt-divider: 1.5px solid #aaa;
+    --footnote-content-end-hook-color: #1677ff;
+
+    /* ---- 界面外壳 ---- */
+    --sidebar-whole-bg-color: #fff;
+    --sidebar-text-color: #333;
+    --sidebar-text-size: 13px;
+    --topBar-content-bottom-line-color: #457b9d;
+    /* 文件树 */
+    --filetree-folder-left-icon-color: #a6a6a6;
+    --filetree-MD-TXT-file-icon-color: #999;
+    --sidebar-filetree-left-triangle-color: #aaa;
+    --hover-filetree-left-triangle-color: #999;
+    --filetree-folder-level-line-color: #ddd;
+    --filelist-filename-text-color: #000;
+    --filelist-file-type-text-color: #999;
+    --filelist-path-time-text-color: #999;
+    /* 行状态 */
+    --hover-sidebar-filelist-bg-color: #f3f3f3;
+    --active-sidebar-filelist-bg-color: #ecf1fc;
+    --active-sidebar-filelist-bg-radius: 6px;
+    --active-filelist-text-color: #1677ff;
+    /* 选中行右缘的竖条 */
+    --active-filename-endLine-color: #1677ff;
+    --active-headline-endLine-color: #1677ff;
+    --active-outline-headline-bg-color: #ecf1fc;
+    --active-outline-headline-color: #1677ff;
+    --hover-outline-headline-bg-color: #f3f3f3;
+
+    /* 菜单与弹窗 */
+    --context-menu-bg-color: #fff;
+    --context-menu-text-color: #333;
+    --context-menu-text-size: 13px;
+    --hover-context-menu-list-line-bg-color: #f3f3f3;
+    --hover-context-menu-list-line-text-color: #333;
+    --pop-up-menu-bg-color: #fff;
+    --pop-up-menu-text-color: #000;
+    --menu-footer-OK-btn-bg-color: #428bca;
+    --menu-footer-OK-btn-text-color: #fff;
+    --hover-menu-footer-OK-btn-bg-color: #4086c3;
+    --menu-footer-other-btn-bg-color: #eee;
+    --menu-footer-other-btn-text-color: #000;
+    --hover-menu-footer-other-btn-bg-color: #ddd;
+    --btn-tooltip-bg-color: #fff;
+    --btn-tooltip-text-color: #222;
+
+    /* 底部状态栏 */
+    --footer-text-color: #777;
+    --footer-text-size: .7rem;
+    --hover-footer-btn-icon-bg-color: #f3f3f3;
+    --hover-footer-btn-icon-color: #777;
+    --sidebar-footer-divider: 1px solid #ccc;
+
+    /* 搜索 */
+    --search-result-list-match-content-bg-color: rgba(252, 211, 77, .35);
+    --sidebar-outline-match-content-bg-color: rgba(252, 211, 77, .35);
+    --search-result-list-end-match-number-bg-color: #ddd;
+    --search-result-list-end-match-number-color: #333;
+
+    /* 滚动条 */
+    --writeArea-scroll-thumb-color: #ccc;
+    --hover-writeArea-scroll-thumb-color: #aaa;
+    --sidebar-scroll-thumb-color: #ccc;
+    --hover-sidebar-scroll-thumb-color: #aaa;
+    --table-scroll-thumb-color: #ccc;
+    --hover-table-scroll-thumb-color: #aaa;
+    --code-block-scroll-thumb-color: #ccc;
+    --hover-code-block-scroll-thumb-color: #aaa;
+    --scroll-thumb-width: 6px;
+
+    /* YAML / 属性面板 */
+    --yaml-front-matter-text-color: #7b8a99;
+    --yaml-front-matter-text-size: .9em;
+    --yaml-front-matter-bg-color: #f7f8fa;
+    --yaml-front-matter-border: 1px solid rgba(94, 129, 172, 0.2);
+    --yaml-front-matter-border-radius: 8px;
+    --yaml-front-matter-delimiter-color: #b0bec5;
+
+    /* 公式块与 HTML 块 */
+    --hover-math-html-block-bg-color: #f3f3f3;
+
+    /* ---- 导出 PDF ---- */
+    /* 页边距，上下 左右 */
+    --pdf-page-margin: 14mm 12mm;
+    /* 整页底色。浅色主题导出成浅色 PDF */
+    --pdf-page-bg-color: #FFFFFF;
+
+    /* ---- 界面细节 ---- */
+    /* 发丝分隔线，用在侧栏、标签栏、面板之间 */
+    --border-hairline: #e3e6ea;
+    --border-strong: #d0d5db;
+    /* 输入框 */
+    --input-bg-color: #fff;
+    --input-border: 1px solid #ddd;
+    --focus-ring-color: #428bca;
+    /* 界面强调色 */
+    --accent-color: #457b9d;
+    --accent-color-hover: #3d6d8c;
+    --accent-contrast: #fff;
+    /* 标签 */
+    --tag-bg-color: #eceff4;
+    --tag-text-color: #5e81ac;
+    /* 图标。不叫 --icon-color 是为了避开 Obsidian 的同名变量 */
+    --icon-default-color: #777;
+    --icon-default-color-hover: #333;
+
+    /* ---- 语义色 ---- */
+    /* Obsidian 的彩色标签、图谱、错误提示都从这里取色 */
+    --color-red: #f44336;
+    --color-orange: #d08770;
+    --color-yellow: #eec869;
+    --color-green: #37856b;
+    --color-cyan: #457b9d;
+    --color-blue: #428bca;
+    --color-purple: #6a1b9a;
+    --color-pink: #fd7c5e;
+}
+
+
+/* ═════════════════════════ 见月 · 暗黑（深色） ═════════════════════════ */
+body.theme-dark {
+    /* ---- 底色 ---- */
+    --frosted-glass-interface-bg-color: #1a1d24;
+    --frosted-glass-interface-bg-img:
+        radial-gradient(ellipse 1800px 1200px at 15% 10%, rgba(94, 129, 172, 0.08), transparent 70%),
+        radial-gradient(ellipse 1600px 1000px at 85% 25%, rgba(163, 190, 140, 0.05), transparent 65%),
+        radial-gradient(ellipse 1400px 900px at 50% 80%, rgba(180, 142, 173, 0.04), transparent 60%),
+        linear-gradient(180deg, rgba(46, 52, 64, 0.6) 0%, transparent 50%),
+        linear-gradient(135deg, #1a1d24, #222830, #2e3440, #222830, #1a1d24);
+    --interface-default-bg-color: #2e3440;
+    --frosted-glass-writeArea-bg-color: rgba(46, 52, 64, 0.55);
+    --frosted-glass-writeArea-border: 1px solid rgba(255, 255, 255, 0.08);
+    --frosted-glass-writeArea-shadow: 0 4px 24px rgba(0, 0, 0, 0.3), 0 12px 48px rgba(0, 0, 0, 0.2);
+    --frosted-glass-sidebar-bg-color: rgba(46, 52, 64, 0.5);
+    --liquid-glass-saturate: 180%;
+    --liquid-glass-highlight: rgba(255, 255, 255, 0.12);
+    --liquid-glass-highlight-side: rgba(255, 255, 255, 0.06);
+    --liquid-glass-shadow-inner: rgba(0, 0, 0, 0.15);
+    --liquid-glass-menu-shadow: rgba(0, 0, 0, 0.35);
+
+    /* ---- 正文 ---- */
+    --writeArea-text-color: #eceff4;
+    --writeArea-selected-text-color: #eceff4;
+    --writeArea-selected-text-bg-color: #5e81ac;
+    --writeArea-divider-color: rgba(255, 255, 255, 0.7);
+
+    /* ---- 六级标题色阶 ---- */
+    /* 深色底用 Tailwind 400 档保证亮度 */
+    --h1-color: #FB923C;
+    --h2-color: #60A5FA;
+    --h3-color: #34D399;
+    --h4-color: #A78BFA;
+    --h5-color: #22D3EE;
+    --h6-color: #94A3B8;
+    --h1-size: 2rem;
+    --h2-size: 1.7rem;
+    --h3-size: 1.5rem;
+    --h4-size: 1.3rem;
+    --h5-size: 1.2rem;
+    --h6-size: 1.1rem;
+    --h2-text-bottom-line-distance: 10px;
+
+    /* ---- 行内元素 ---- */
+    --bold-text-color: inherit;
+    --bold-text-weight: bold;
+    /* 描边补足字重，霞鹜文楷没有 Bold */
+    --bold-text-stroke: 0.02em;
+    --italic-text-size: inherit;
+    --marked-text-bg-color: #d87a16;
+    --marked-text-bg-height: -0.85em;
+    --deleted-text-color: #bbb;
+    --text-underline: 1.6px solid #d88b74;
+    --text-bottom-border-distance: 1px;
+
+    /* ---- 行内代码 ---- */
+    --line-code-bg-color: #24282f;
+    --table-line-code-bg-color: #424a57;
+    --blockquote-line-code-bg-color: #424a57;
+
+    /* ---- 链接 ---- */
+    --link-text-color: #a0bc88;
+    --hover-link-text-color: #a0bc88;
+    --link-text-font-weight: normal;
+    --link-text-tail-icon-color: rgba(163, 190, 140, .7);
+    --hover-link-tail-icon-color: rgba(163, 190, 140, 1);
+    --hover-link-bottom-line-start-color: rgba(163, 190, 140, 1);
+    --hover-link-bottom-line-end-color: rgba(163, 190, 140, .6);
+
+    /* ---- 引用块 ---- */
+    --blockquote-text-color: rgba(255, 255, 255, .75);
+    --blockquote-bg-color: #1d1f23;
+    --blockquote-bg-radius: 3px;
+    --blockquote-text-size: inherit;
+    --blockquote-left-right-indent: 0;
+    --blockquote-top-left-icon-color: rgba(255, 255, 255, .8);
+    --blockquote-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, .18), 0 0 0.05rem rgba(0, 0, 0, .3);
+
+    /* ---- 六种标注 ---- */
+    --admonitions-title-bg-mix: 35%;
+    --callout-example-color: #ebd7fa;
+    --callout-question-color: #b2e58b;
+    --callout-warning-color: #f89f9a;
+    --callout-reference-color: #a8c1f8;
+    --callout-tips-color: #f8f48b;
+    --callout-expand-color: #f8cf8d;
+
+    /* ---- 列表 ---- */
+    --unordered-list-symbol-color: rgba(163, 190, 140, .8);
+    --orderly-list-symbol-color: rgba(156, 181, 162, .85);
+    --ol-badge-bg: rgba(156, 181, 162, .85);
+    --ol-badge-bg-l2: rgba(156, 181, 162, .7);
+    --ol-badge-text-color: #1a1d24;
+    --ol-badge-shadow: rgba(0, 0, 0, 0.25);
+    --focus-list-symbol-color: #d08770;
+    --task-list-box-bg-color: #2e3440;
+    --task-list-box-border-color: #5e81ac;
+    --task-list-box-border: 1.5px solid var(--task-list-box-border-color);
+    --task-list-box-border-radius: 2px;
+    --task-list-box-size: 1.05em;
+    --task-list-checked-box-bg-color: #5e81ac;
+    --task-list-checked-tick-color: #eceff4;
+    --task-list-checked-tick-size: .8em;
+    --task-list-checked-text-color: #8899aa;
+    --hover-task-list-box-bg-color: #3b4252;
+
+    /* ---- 代码块 ---- */
+    --code-block-bg-color: #1d1f23;
+    --code-block-text-color: #d8dee9;
+    --code-block-line-number-color: #4c566a;
+    --code-block-right-program-lang-text-color: #81a1c1;
+    --code-block-shadow: 0 1px 2px rgba(0, 0, 0, 0.30), 0 4px 12px rgba(0, 0, 0, 0.26), 0 16px 32px rgba(0, 0, 0, 0.20);
+    --code-block-border: 1px solid rgba(129, 178, 154, 0.18);
+    --hl-comment: #4c566a;
+    --hl-keyword: #81A1C1;
+    --hl-string: #98C379;
+    --hl-number: #D19A66;
+    --hl-function: #8FBCBB;
+    --hl-property: #88C0D0;
+    --hl-tag: #bf616a;
+    --hl-punctuation: #7C8A99;
+    --hl-operator: #d8dee9;
+    --hl-value: #C678DD;
+    --hl-important: #d08770;
+
+    /* ---- 表格 ---- */
+    --table-bg-color: #2e3440;
+    --table-all-cell-border: 1px solid rgba(255, 255, 255, 0.1);
+    --table-thead-bg-color: #3b4252;
+    --table-thead-text-color: #eceff4;
+    --table-thead-line-bottom-border: 2px solid #5e81ac;
+    --table-tbody-evenNum-line-bg-color: rgba(255, 255, 255, 0.02);
+    --table-tbody-oddNum-line-bg-color: transparent;
+    --table-outer-border-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    --focus-table-thead-td-bottom-line-color: #d08770;
+    --focus-table-tbody-td-bottom-line-color: #a3be8c;
+
+    /* ---- 脚注 ---- */
+    --writeArea-footnote-bg-color: #434c5e;
+    --writeArea-footnote-color: #eceff4;
+    --writeArea-footnote-size: 9px;
+    --end-footnote-area-text-color: rgba(255, 255, 255, .7);
+    --end-footnote-area-prompt-color: rgba(255, 255, 255, .8);
+    --footnote-content-prompt-divider: 1.5px solid rgba(255, 255, 255, .8);
+    --footnote-content-end-hook-color: #1d59a8;
+
+    /* ---- 界面外壳 ---- */
+    --sidebar-whole-bg-color: #3b4252;
+    --sidebar-text-color: rgba(255, 255, 255, .8);
+    --sidebar-text-size: 13px;
+    --topBar-content-bottom-line-color: #5e81ac;
+    --filetree-folder-left-icon-color: rgba(255, 255, 255, .45);
+    --filetree-MD-TXT-file-icon-color: rgba(255, 255, 255, .8);
+    --sidebar-filetree-left-triangle-color: rgba(255, 255, 255, .8);
+    --hover-filetree-left-triangle-color: #a3be8c;
+    --filetree-folder-level-line-color: #4d576c;
+    --filelist-filename-text-color: rgba(255, 255, 255, .9);
+    --filelist-file-type-text-color: rgba(255, 255, 255, .5);
+    --filelist-path-time-text-color: rgba(255, 255, 255, .5);
+    --hover-sidebar-filelist-bg-color: #4c566a;
+    --active-sidebar-filelist-bg-color: #5e81ac;
+    --active-sidebar-filelist-bg-radius: 6px;
+    --active-filelist-text-color: rgba(255, 255, 255, .8);
+    --active-filename-endLine-color: #a3be8c;
+    --active-headline-endLine-color: #a3be8c;
+    --active-outline-headline-bg-color: #5e81ac;
+    --active-outline-headline-color: inherit;
+    --hover-outline-headline-bg-color: #4c566a;
+
+    /* 菜单与弹窗 */
+    --context-menu-bg-color: #3b4252;
+    --context-menu-text-color: #eceff4;
+    --context-menu-text-size: 13px;
+    --hover-context-menu-list-line-bg-color: #1f232a;
+    --hover-context-menu-list-line-text-color: #eceff4;
+    --pop-up-menu-bg-color: #3b4252;
+    --pop-up-menu-text-color: #eceff4;
+    --menu-footer-OK-btn-bg-color: #428bca;
+    --menu-footer-OK-btn-text-color: #fff;
+    --hover-menu-footer-OK-btn-bg-color: #4086c3;
+    --menu-footer-other-btn-bg-color: #eee;
+    --menu-footer-other-btn-text-color: #000;
+    --hover-menu-footer-other-btn-bg-color: #ddd;
+    --btn-tooltip-bg-color: #1f232a;
+    --btn-tooltip-text-color: #eceff4;
+
+    /* 底部状态栏 */
+    --footer-text-color: rgba(255, 255, 255, .7);
+    --footer-text-size: .7rem;
+    --hover-footer-btn-icon-bg-color: #1f232a;
+    --hover-footer-btn-icon-color: rgba(255, 255, 255, .9);
+    --sidebar-footer-divider: 1px solid #bbb;
+
+    /* 搜索 */
+    --search-result-list-match-content-bg-color: #ce7f68;
+    --sidebar-outline-match-content-bg-color: #d87a16;
+    --search-result-list-end-match-number-bg-color: #4c566a;
+    --search-result-list-end-match-number-color: rgba(255, 255, 255, .5);
+
+    /* 滚动条 */
+    --writeArea-scroll-thumb-color: rgba(255, 255, 255, 0.6);
+    --hover-writeArea-scroll-thumb-color: rgba(255, 255, 255, 0.4);
+    --sidebar-scroll-thumb-color: rgba(255, 255, 255, 0.6);
+    --hover-sidebar-scroll-thumb-color: rgba(255, 255, 255, 0.4);
+    --table-scroll-thumb-color: rgba(255, 255, 255, 0.4);
+    --hover-table-scroll-thumb-color: rgba(255, 255, 255, 0.6);
+    --code-block-scroll-thumb-color: rgba(255, 255, 255, 0.5);
+    --hover-code-block-scroll-thumb-color: rgba(255, 255, 255, 0.3);
+    --scroll-thumb-width: 6px;
+
+    /* YAML / 属性面板 */
+    --yaml-front-matter-text-color: #8899aa;
+    --yaml-front-matter-text-size: .9em;
+    --yaml-front-matter-bg-color: #1d1f23;
+    --yaml-front-matter-border: 1px solid rgba(94, 129, 172, 0.25);
+    --yaml-front-matter-border-radius: 8px;
+    --yaml-front-matter-delimiter-color: #5e81ac;
+
+    /* 公式块与 HTML 块 */
+    --hover-math-html-block-bg-color: #1d1f23;
+
+    /* ---- 导出 PDF ---- */
+    /* 深色主题导出成深色 PDF。想要白纸黑字，把下面那行改成 #FFFFFF */
+    --pdf-page-margin: 14mm 12mm;
+    --pdf-page-bg-color: #2E3440;
+
+    /* ---- 界面细节 ---- */
+    --border-hairline: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.14);
+    --input-bg-color: #1f232a;
+    --input-border: 1px solid #596b91;
+    --focus-ring-color: #687ca7;
+    --accent-color: #5e81ac;
+    --accent-color-hover: #6f92bd;
+    --accent-contrast: #eceff4;
+    --tag-bg-color: #434c5e;
+    --tag-text-color: #88c0d0;
+    --icon-default-color: rgba(255, 255, 255, .6);
+    --icon-default-color-hover: rgba(255, 255, 255, .9);
+
+    /* ---- 覆盖共用令牌 ---- */
+    /* 暗底上给图片描一道深边，浅色底不需要 */
+    --image-border: 1.5px solid #333;
+
+    /* ---- 语义色 ---- */
+    --color-red: #bf616a;
+    --color-orange: #d08770;
+    --color-yellow: #ebcb8b;
+    --color-green: #a3be8c;
+    --color-cyan: #88c0d0;
+    --color-blue: #5e81ac;
+    --color-purple: #b48ead;
+    --color-pink: #b48ead;
+}

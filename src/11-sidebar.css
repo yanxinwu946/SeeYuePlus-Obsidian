@@ -1,0 +1,373 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   11 · 侧栏
+
+   文件树、大纲、搜索、标签 —— 四张页面共用一套行样式：
+   悬浮铺一层浅底，选中换成白色药丸加主题色文字，
+   最右缘再竖一根 4×22 的圆角色条。这根色条是整套主题的招牌，
+   Typora 版里它出现在文件、大纲、最近目录三处。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 侧栏通用 ───────────────── */
+
+.workspace-split.mod-left-split .view-header,
+.workspace-split.mod-right-split .view-header {
+    border-bottom: 1px solid var(--border-hairline);
+}
+
+.nav-files-container,
+.outline,
+.search-result-container,
+.tag-container,
+.bookmark-container {
+    padding: 6px 8px 12px;
+    font-size: var(--sidebar-text-size);
+    color: var(--sidebar-text-color);
+}
+
+
+/* ───────────────── 文件树 ───────────────── */
+
+.nav-file-title,
+.nav-folder-title,
+.tree-item-self {
+    position: relative;
+    border-radius: var(--radius-s);
+    padding: 3px 8px;
+    color: var(--sidebar-text-color);
+    transition: background-color .3s ease, color .3s ease;
+}
+
+.nav-file-title:hover,
+.nav-folder-title:hover,
+.tree-item-self:hover {
+    background-color: var(--hover-sidebar-filelist-bg-color);
+    color: var(--filelist-filename-text-color);
+}
+
+/* 选中：白色药丸 + 主题色文字 */
+.nav-file-title.is-active,
+.nav-file-title.is-selected,
+.nav-folder-title.is-active {
+    background-color: var(--active-sidebar-filelist-bg-color);
+    border-radius: var(--active-sidebar-filelist-bg-radius);
+    color: var(--active-filelist-text-color);
+    font-weight: 600;
+}
+
+/* 右缘那根竖条 */
+.nav-file-title.is-active::after {
+    content: "";
+    position: absolute;
+    right: var(--accent-pill-right);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--accent-pill-width);
+    height: var(--accent-pill-height);
+    border-radius: var(--accent-pill-radius);
+    background-color: var(--active-filename-endLine-color);
+    pointer-events: none;
+}
+
+/* 悬浮时竖条融进底色，不再抢眼 */
+.nav-file-title.is-active:hover::after {
+    background-color: var(--hover-sidebar-filelist-bg-color);
+}
+
+/* 文件夹图标与折叠三角 */
+.nav-folder-collapse-indicator,
+.collapse-icon {
+    color: var(--sidebar-filetree-left-triangle-color);
+    transition: color .3s ease;
+}
+
+.nav-folder-title:hover .nav-folder-collapse-indicator,
+.tree-item-self:hover > .collapse-icon {
+    color: var(--hover-filetree-left-triangle-color);
+}
+
+.nav-folder-title-content {
+    color: inherit;
+}
+
+.nav-file-icon {
+    color: var(--filetree-MD-TXT-file-icon-color);
+    opacity: .9;
+}
+
+/* 文件夹图标比笔记图标淡一档，层级一眼分得开 */
+.nav-folder-icon {
+    color: var(--filetree-folder-left-icon-color);
+    opacity: 1;
+}
+
+/* 笔记标题里嵌的标签 */
+.nav-file-tag {
+    color: var(--filelist-file-type-text-color);
+    background-color: transparent;
+    font-size: .8em;
+    letter-spacing: 0;
+}
+
+/* 库名 */
+.nav-folder.mod-root > .nav-folder-title {
+    color: var(--vault-name-color);
+    font-weight: var(--vault-name-font-weight);
+    padding: var(--vault-name-padding);
+}
+
+/* 库名下方那条分隔线 */
+.nav-folder.mod-root > .nav-folder-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: var(--border-hairline);
+}
+
+/* 侧栏底部那排图标 */
+.nav-buttons-container {
+    border-top: var(--sidebar-footer-divider);
+    padding: 4px 6px;
+    gap: 2px;
+}
+
+.nav-action-button {
+    color: var(--icon-default-color);
+    border-radius: var(--radius-xs);
+    transition: all .3s ease;
+}
+
+.nav-action-button:hover {
+    color: var(--icon-default-color-hover);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+.nav-action-button.is-active {
+    color: var(--accent-color);
+}
+
+
+/* ───────────────── 大纲 ───────────────── */
+
+.outline .tree-item-self {
+    padding: 3px 8px;
+    line-height: 1.5;
+}
+
+.outline .tree-item-self.is-active,
+.outline .tree-item-self.is-selected {
+    background-color: var(--active-outline-headline-bg-color);
+    border-radius: var(--radius-s);
+    color: var(--active-outline-headline-color);
+    font-weight: 600;
+}
+
+/* 大纲页同样挂那根竖条，和文件树呼应 */
+.outline .tree-item-self.is-active::after {
+    content: "";
+    position: absolute;
+    right: var(--accent-pill-right);
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--accent-pill-width);
+    height: var(--accent-pill-height);
+    border-radius: var(--accent-pill-radius);
+    background-color: var(--active-headline-endLine-color);
+    pointer-events: none;
+}
+
+.outline .tree-item-self.is-active:hover::after {
+    background-color: var(--hover-outline-headline-bg-color);
+}
+
+/* 大纲里被搜到的字 */
+.outline .search-result-file-matched-text,
+.outline .tree-item-self .search-result-file-matched-text {
+    background-color: var(--sidebar-outline-match-content-bg-color);
+    border-radius: 2px;
+    padding: 0 2px;
+    color: inherit;
+}
+
+/* 各级标题的层级竖线 */
+.outline .tree-item-children {
+    border-left: var(--list-level-line-width) solid var(--filetree-folder-level-line-color);
+    margin-left: 8px;
+}
+
+
+/* ───────────────── 搜索 ───────────────── */
+
+.search-result-container .tree-item-self {
+    padding: 4px 8px;
+}
+
+.search-result-file-title {
+    color: var(--filelist-filename-text-color);
+    font-family: var(--writeArea-text-font);
+    font-weight: 600;
+}
+
+.search-result-file-matches {
+    color: var(--filelist-path-time-text-color);
+    font-size: .95em;
+}
+
+.search-result-file-match {
+    border-radius: var(--radius-xs);
+    padding: 2px 6px;
+    margin: 1px 0;
+    line-height: 1.5;
+    transition: all .3s ease;
+}
+
+.search-result-file-match:hover {
+    background-color: var(--hover-sidebar-filelist-bg-color);
+    color: var(--active-filelist-text-color);
+}
+
+.search-result-file-match.is-active,
+.search-result-file-match.is-selected {
+    background-color: var(--active-sidebar-filelist-bg-color);
+    color: var(--active-filelist-text-color);
+}
+
+/* 命中处那抹黄 */
+.search-result-file-matched-text {
+    background-color: var(--search-result-list-match-content-bg-color);
+    border-radius: 2px;
+    padding: 0 2px;
+    color: inherit;
+    font-weight: 600;
+}
+
+/* 命中条数徽章 */
+.search-result-file-match-renderer .search-result-file-match-count,
+.search-result-file-title .tree-item-flair {
+    background-color: var(--search-result-list-end-match-number-bg-color);
+    color: var(--search-result-list-end-match-number-color);
+    border-radius: 2px;
+    font-size: 9px;
+    padding: 0 4px;
+    line-height: 1.6;
+}
+
+/* 搜索框 */
+.search-input-container input,
+input[type="search"] {
+    background-color: var(--input-bg-color);
+    border: var(--input-border);
+    border-radius: var(--radius-s);
+    color: var(--writeArea-text-color);
+    font-family: var(--interface-text-font);
+}
+
+.search-input-container input:focus,
+input[type="search"]:focus {
+    border-color: var(--focus-ring-color);
+    box-shadow: none;
+}
+
+.search-input-container input::placeholder,
+input::placeholder {
+    color: var(--all-input-box-prompt-text-color, #aaa);
+}
+
+
+/* ───────────────── 标签页 ───────────────── */
+
+.tag-container .tree-item-self {
+    padding: 4px 8px;
+}
+
+.tag-pane-tag-count {
+    color: var(--filelist-file-type-text-color);
+    background-color: transparent;
+    font-size: .8em;
+}
+
+.tag-pane-tag:hover .tag-pane-tag-count {
+    color: var(--accent-color);
+}
+
+
+/* ───────────────── 书签 ───────────────── */
+
+.bookmark .tree-item-self {
+    padding: 4px 8px;
+}
+
+
+/* ───────────────── 反向链接与出链 ───────────────── */
+
+.backlink-pane .tree-item-self,
+.outgoing-link-pane .tree-item-self {
+    padding: 4px 8px;
+}
+
+.backlink-pane .tree-item-flair,
+.outgoing-link-pane .tree-item-flair {
+    background-color: var(--search-result-list-end-match-number-bg-color);
+    color: var(--search-result-list-end-match-number-color);
+    border-radius: 2px;
+    font-size: 9px;
+    padding: 0 4px;
+}
+
+/* 反向链接里引用到的上下文 */
+.backlink-pane .search-result-file-match {
+    border-left: 2px solid var(--border-hairline);
+    border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+    margin-left: 4px;
+}
+
+
+/* ───────────────── 属性面板（YAML） ───────────────── */
+
+.metadata-container {
+    background-color: var(--yaml-front-matter-bg-color);
+    border: var(--yaml-front-matter-border);
+    border-radius: var(--yaml-front-matter-border-radius);
+    padding: 10px 14px;
+    margin-bottom: 1.6em;
+    font-family: var(--code-block-text-font);
+    font-size: var(--yaml-front-matter-text-size);
+}
+
+.metadata-property-key,
+.metadata-property-key-input {
+    color: var(--yaml-front-matter-text-color);
+    font-family: var(--code-block-text-font);
+    font-size: var(--yaml-front-matter-text-size);
+}
+
+.metadata-property-value,
+.metadata-input-longtext {
+    color: var(--writeArea-text-color);
+    font-family: var(--code-block-text-font);
+    font-size: var(--yaml-front-matter-text-size);
+}
+
+.metadata-property-icon {
+    color: var(--yaml-front-matter-delimiter-color);
+}
+
+.metadata-add-button {
+    color: var(--yaml-front-matter-text-color);
+    font-family: var(--interface-text-font);
+}
+
+/* 编辑视图里的 YAML 源码 */
+.cm-s-obsidian .cm-hmd-frontmatter {
+    color: var(--yaml-front-matter-text-color);
+    background-color: var(--yaml-front-matter-bg-color);
+    font-family: var(--code-block-text-font);
+    font-size: var(--yaml-front-matter-text-size);
+}
+
+.cm-s-obsidian .cm-hmd-frontmatter.cm-def {
+    color: var(--yaml-front-matter-delimiter-color);
+}

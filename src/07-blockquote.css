@@ -1,0 +1,204 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   07 · 引用块与标注
+
+   Typora 版里，引用块的首行写成标题就变成提示块 —— 一级是例子、二级是问题、
+   三级是注意、四级是参考、五级是提示、六级是拓展。
+   Obsidian 有原生 callout，两套语言正好对上，这里把六种一一接过去，
+   剩下没对上的 callout 类型也各有归处，不会掉回默认的灰。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 引用块 ───────────────── */
+
+.markdown-rendered blockquote:not(.callout) {
+    background-color: var(--blockquote-bg-color);
+    color: var(--blockquote-text-color);
+    border-left: var(--blockquote-left-line-default-width) solid var(--blockquote-left-line-default-color);
+    border-radius: var(--blockquote-bg-radius);
+    padding: var(--blockquote-padding);
+    box-shadow: var(--blockquote-shadow);
+    font-size: var(--blockquote-text-size);
+    margin-inline: var(--blockquote-left-right-indent);
+}
+
+/* 左上角那对引号，跟着首段文字排，不另起一行 */
+.markdown-rendered blockquote:not(.callout) > p:first-child::before {
+    content: "";
+    display: inline-block;
+    width: .95em;
+    height: .95em;
+    margin-right: .3em;
+    vertical-align: -.1em;
+    -webkit-mask-image: var(--icon-quote);
+    mask-image: var(--icon-quote);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    background-color: var(--blockquote-top-left-icon-color);
+    opacity: .5;
+}
+
+.markdown-rendered blockquote:not(.callout) p {
+    margin-block: .5em;
+}
+
+/* 编辑视图 */
+.cm-s-obsidian .HyperMD-quote {
+    background-color: var(--blockquote-bg-color);
+    border-left: var(--blockquote-left-line-default-width) solid var(--blockquote-left-line-default-color);
+    color: var(--blockquote-text-color);
+}
+
+.cm-s-obsidian .cm-formatting-quote {
+    color: var(--blockquote-left-line-default-color);
+    opacity: .5;
+}
+
+
+/* ───────────────── 标注：类型 → 颜色与图标 ───────────────── */
+
+.callout {
+    --sy-callout-color: var(--callout-expand-color);
+    --sy-callout-icon: var(--icon-expand);
+    --callout-color: 94, 129, 172;
+    --callout-radius: var(--blockquote-bg-radius);
+    --callout-padding: 0;
+    --callout-border-width: 0;
+    --callout-border-opacity: 0;
+    --callout-title-padding: 10px 12px 10px 15px;
+    --callout-title-size: var(--admonitions-blockquote-title-size);
+    --callout-content-padding: 0 15px 4px;
+    --callout-blend-mode: normal;
+    background-color: var(--blockquote-bg-color);
+    border: none;
+    border-left: var(--admonitions-blockquote-left-line-width) solid var(--sy-callout-color);
+    box-shadow: var(--blockquote-shadow);
+    overflow: hidden;
+}
+
+.callout-title {
+    background-color: color-mix(in srgb, var(--sy-callout-color) var(--admonitions-title-bg-mix), transparent);
+    color: var(--sy-callout-color);
+    font-weight: var(--bold-text-weight);
+    letter-spacing: 1px;
+    gap: 8px;
+}
+
+.callout-title-inner {
+    color: inherit;
+    font-weight: inherit;
+}
+
+/* Obsidian 自带 SVG 图标，这里换成主题那套形状 */
+.callout-icon {
+    display: block;
+    width: 1.05em;
+    height: 1.05em;
+    flex: 0 0 auto;
+    -webkit-mask-image: var(--sy-callout-icon);
+    mask-image: var(--sy-callout-icon);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    background-color: currentColor;
+}
+
+.callout-icon svg {
+    display: none;
+}
+
+.callout-fold {
+    color: inherit;
+    opacity: .7;
+}
+
+.callout-content {
+    color: var(--writeArea-text-color);
+}
+
+.callout-content > :first-child {
+    margin-top: var(--admonitions-blockquote-title-text-distance);
+}
+
+.callout-content > :last-child {
+    margin-bottom: .8em;
+}
+
+/* 标注里的引用块不再叠一层底色 */
+.callout-content blockquote {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* —— 类型映射 —— */
+
+.callout[data-callout="example"] {
+    --sy-callout-color: var(--callout-example-color);
+    --sy-callout-icon: var(--icon-example);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"] {
+    --sy-callout-color: var(--callout-question-color);
+    --sy-callout-icon: var(--icon-question);
+}
+
+.callout[data-callout="warning"],
+.callout[data-callout="caution"],
+.callout[data-callout="attention"] {
+    --sy-callout-color: var(--callout-warning-color);
+    --sy-callout-icon: var(--icon-warning);
+}
+
+.callout[data-callout="quote"],
+.callout[data-callout="cite"] {
+    --sy-callout-color: var(--callout-reference-color);
+    --sy-callout-icon: var(--icon-reference);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-callout="important"] {
+    --sy-callout-color: var(--callout-tips-color);
+    --sy-callout-icon: var(--icon-tips);
+}
+
+/* 最常用的 note / info / todo 走蓝色。原本对应的是 Typora 版的六级「拓展」，
+   但那套沙色和 tip 的黄色挨得太近，一屏里放两个分不清，改用参考那支蓝 */
+.callout[data-callout="note"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"] {
+    --sy-callout-color: var(--callout-reference-color);
+    --sy-callout-icon: var(--icon-expand);
+}
+
+.callout[data-callout="abstract"],
+.callout[data-callout="summary"],
+.callout[data-callout="tldr"] {
+    --sy-callout-color: var(--callout-expand-color);
+    --sy-callout-icon: var(--icon-expand);
+}
+
+.callout[data-callout="success"],
+.callout[data-callout="check"],
+.callout[data-callout="done"] {
+    --sy-callout-color: var(--color-green);
+    --sy-callout-icon: var(--icon-check);
+}
+
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="failure"],
+.callout[data-callout="fail"],
+.callout[data-callout="missing"],
+.callout[data-callout="bug"] {
+    --sy-callout-color: var(--callout-warning-color);
+    --sy-callout-icon: var(--icon-warning);
+}

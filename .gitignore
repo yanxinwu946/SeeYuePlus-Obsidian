@@ -1,0 +1,4 @@
+# 验证页的截图产物，随时能重新生成
+preview/*.png
+
+node_modules/

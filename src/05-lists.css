@@ -1,0 +1,218 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   05 · 列表
+
+   无序列表三级用实心圆 / 空心圆 / 实心方 —— 正好是 disc、circle、square；
+   有序列表换成圆形徽章，二级小一号并压暗，三级起只留彩色数字。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 共同 ───────────────── */
+
+.markdown-rendered li > :is(ul, ol),
+.markdown-rendered li > p {
+    margin-block: .3em;
+}
+
+.markdown-rendered li {
+    margin-block: .15em;
+}
+
+/* 层级竖线由 Obsidian 自己画，这里只把粗细和颜色接上令牌 */
+
+
+/* ───────────────── 无序列表 ───────────────── */
+
+/* 阅读视图：三级符号形状与 Typora 版一致 */
+.markdown-rendered ul {
+    list-style-type: disc;
+}
+
+.markdown-rendered ul ul {
+    list-style-type: circle;
+}
+
+.markdown-rendered ul ul ul {
+    list-style-type: square;
+}
+
+.markdown-rendered ul > li::marker {
+    color: var(--unordered-list-symbol-color);
+    font-size: var(--unordered-list-symbol-size);
+}
+
+/* 编辑视图：Obsidian 用 .list-bullet::after 画圆点，逐级改成圆环与方块 */
+.cm-s-obsidian .list-bullet::after {
+    background-color: var(--unordered-list-symbol-color) !important;
+    border: none;
+    border-radius: 50%;
+}
+
+.cm-s-obsidian .HyperMD-list-line-2 .list-bullet::after {
+    background-color: transparent !important;
+    border: 2px solid var(--unordered-list-symbol-color);
+}
+
+.cm-s-obsidian .HyperMD-list-line-3 .list-bullet::after {
+    background-color: var(--unordered-list-symbol-color) !important;
+    border: none;
+    border-radius: 1px;
+}
+
+/* 光标所在行的符号提亮 */
+.cm-s-obsidian .cm-activeLine .list-bullet::after {
+    background-color: var(--focus-list-symbol-color) !important;
+    border-color: var(--focus-list-symbol-color);
+}
+
+
+/* ───────────────── 有序列表 ───────────────── */
+
+/* 阅读视图：隐藏原生序号，改用 counter 画圆形徽章 */
+.markdown-rendered ol {
+    list-style: none;
+    counter-reset: sy-ol;
+    padding-inline-start: var(--orderly-list-level-indentation);
+}
+
+.markdown-rendered ol > li {
+    counter-increment: sy-ol;
+    position: relative;
+}
+
+.markdown-rendered ol > li::marker {
+    content: "";
+    font-size: 0;
+}
+
+.markdown-rendered ol > li::before {
+    content: counter(sy-ol);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: calc(2px - var(--orderly-list-level-indentation));
+    top: calc(var(--writeArea-text-line-spacing) / 2 - var(--ol-badge-size) / 2);
+    width: var(--ol-badge-size);
+    height: var(--ol-badge-size);
+    border-radius: 50%;
+    background: var(--ol-badge-bg);
+    color: var(--ol-badge-text-color);
+    font-family: var(--interface-text-font);
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+    box-shadow: 0 1px 2px var(--ol-badge-shadow);
+}
+
+/* 二级：小一号，压暗一档 */
+.markdown-rendered ol ol > li::before {
+    width: var(--ol-badge-size-l2);
+    height: var(--ol-badge-size-l2);
+    top: calc(var(--writeArea-text-line-spacing) / 2 - var(--ol-badge-size-l2) / 2);
+    background: var(--ol-badge-bg-l2);
+    opacity: .65;
+    font-size: 9px;
+    box-shadow: none;
+}
+
+/* 三级及更深：只留彩色数字，不再铺底 */
+.markdown-rendered ol ol ol > li::before {
+    display: block;
+    width: auto;
+    height: var(--writeArea-text-line-spacing);
+    top: 0;
+    left: calc(2px - var(--orderly-list-level-indentation));
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    opacity: 1;
+    color: var(--orderly-list-symbol-color);
+    font-size: 11px;
+    line-height: var(--writeArea-text-line-spacing);
+}
+
+/* 编辑视图：序号是正文，不套徽章，只把它染成主题色 */
+.cm-s-obsidian .cm-formatting-list-ol {
+    color: var(--orderly-list-symbol-color);
+    font-family: var(--interface-text-font);
+    font-weight: 600;
+}
+
+.cm-s-obsidian .cm-activeLine .cm-formatting-list-ol {
+    color: var(--focus-list-symbol-color);
+}
+
+
+/* ───────────────── 任务列表 ───────────────── */
+
+.markdown-rendered li.task-list-item,
+.cm-s-obsidian .HyperMD-task-line {
+    list-style: none;
+}
+
+.markdown-rendered li.task-list-item::marker {
+    content: "";
+}
+
+/* 固定字号，--task-list-box-size 的 em 才有确定的分母 */
+input[type="checkbox"].task-list-item-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    font-size: var(--writeArea-text-size);
+    width: var(--task-list-box-size);
+    height: var(--task-list-box-size);
+    background-color: var(--task-list-box-bg-color) !important;
+    border: var(--task-list-box-border);
+    border-radius: var(--task-list-box-border-radius);
+    box-shadow: none;
+    transition: all .3s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+input[type="checkbox"].task-list-item-checkbox:hover {
+    background-color: var(--hover-task-list-box-bg-color) !important;
+}
+
+input[type="checkbox"].task-list-item-checkbox:checked {
+    background-color: var(--task-list-checked-box-bg-color) !important;
+    border-color: transparent;
+}
+
+input[type="checkbox"].task-list-item-checkbox:checked::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: var(--task-list-checked-tick-size);
+    height: var(--task-list-checked-tick-size);
+    -webkit-mask-image: var(--icon-check);
+    mask-image: var(--icon-check);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    background-color: var(--task-list-checked-tick-color);
+    transform: none;
+    box-shadow: none;
+}
+
+/* 已完成的行划掉并压暗 */
+.markdown-rendered li.task-list-item[data-task="x"],
+.markdown-rendered li.task-list-item[data-task="X"] {
+    color: var(--task-list-checked-text-color);
+    text-decoration: line-through;
+}
+
+.cm-s-obsidian .HyperMD-task-line[data-task="x"],
+.cm-s-obsidian .HyperMD-task-line[data-task="X"] {
+    color: var(--task-list-checked-text-color);
+    text-decoration: line-through;
+}
+
+/* 编辑视图里光标所在行的方框描边提亮 */
+.cm-s-obsidian .cm-activeLine input[type="checkbox"].task-list-item-checkbox:not(:checked) {
+    border-color: var(--focus-list-symbol-color);
+}

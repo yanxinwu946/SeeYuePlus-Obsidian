@@ -1,0 +1,369 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>见月 · Obsidian 渲染验证</title>
+<link rel="stylesheet" href="../SeeYuePlus/theme.css">
+<!-- ?salt=1 时打开，验证护眼片段 -->
+<link rel="stylesheet" href="../snippets/见月·护眼.css" id="salt" disabled>
+
+<!--
+  这不是 Obsidian，是照着它的 DOM 结构搭的一个台子。
+  目的只有一个：在没有 Obsidian 的机器上把 theme.css 真渲染一遍，
+  看选择器有没有写空、布局会不会塌、图标画不画得出来。
+  下面这段 <style> 模拟 Obsidian 自己 app.css 里提供的结构样式 ——
+  主题只负责配色和装饰，骨架是 Obsidian 给的，这里得先把它补齐。
+-->
+<style>
+  /* ── Obsidian 骨架的替身 ── */
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font-interface);
+    font-size: var(--font-text-size, 16px);
+    color: var(--text-normal);
+    overflow: hidden;
+  }
+  .app-container { display: flex; height: 100vh; }
+
+  .workspace-ribbon {
+    width: var(--ribbon-width, 42px);
+    display: flex; flex-direction: column; align-items: center;
+    padding: var(--ribbon-padding, 6px 4px); gap: 4px;
+    flex: 0 0 auto;
+  }
+  .side-dock-ribbon-action { width: 30px; height: 30px; display: flex;
+    align-items: center; justify-content: center; }
+
+  .workspace { display: flex; flex: 1; min-width: 0; }
+  .workspace-split { display: flex; }
+  .workspace-split.mod-left-split { width: 260px; flex: 0 0 auto; }
+  .workspace-split.mod-root { flex: 1; min-width: 0; }
+  .workspace-tabs { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .workspace-tab-header-container { display: flex; align-items: center; height: 36px; flex: 0 0 auto; }
+  .workspace-tab-header-container-inner { display: flex; flex: 1; min-width: 0; }
+  .workspace-tab-header { display: flex; align-items: center; padding: 0 12px;
+    height: 36px; font-size: var(--tab-font-size); cursor: pointer; }
+  .workspace-tab-container { display: flex; flex: 1; min-height: 0; }
+  .workspace-leaf { display: flex; flex: 1; min-width: 0; min-height: 0; }
+  .workspace-leaf-content { display: flex; flex-direction: column; flex: 1; min-width: 0; min-height: 0; }
+  .view-header { display: flex; align-items: center; height: 36px; padding: 0 12px; flex: 0 0 auto; gap: 8px; }
+  .view-header-title { flex: 1; }
+  .view-content { flex: 1; min-height: 0; overflow: hidden; position: relative; }
+
+  .markdown-reading-view, .markdown-preview-view { height: 100%; overflow-y: auto; }
+  .markdown-preview-sizer { max-width: var(--file-line-width); margin: 0 auto;
+    padding: 32px 40px 120px; }
+  .markdown-preview-section { min-height: 100%; }
+
+  .nav-files-container { overflow-y: auto; flex: 1; }
+  .tree-item { position: relative; }
+  .tree-item-self { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+  .tree-item-inner { flex: 1; min-width: 0; overflow: hidden;
+    text-overflow: ellipsis; white-space: nowrap; }
+  .tree-item-children { padding-inline-start: var(--nav-item-children-padding-start, 14px); }
+  .nav-folder-collapse-indicator, .collapse-icon { width: 12px; height: 12px;
+    display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+  .nav-file-icon, .nav-folder-icon { width: 16px; height: 16px; flex: 0 0 auto;
+    display: flex; align-items: center; justify-content: center; }
+  .nav-buttons-container { display: flex; gap: 4px; padding: 4px 6px; }
+  .nav-action-button { width: 24px; height: 24px; display: flex;
+    align-items: center; justify-content: center; }
+
+  .status-bar { display: flex; align-items: center; gap: 4px; height: 24px;
+    padding: 0 8px; position: absolute; right: 0; bottom: 0; z-index: 5; }
+
+  /* 表格 */
+  .table-wrapper { overflow-x: auto; margin: 1em 0; }
+  .markdown-rendered table { margin: 0 auto; }
+
+  /* 标注（callout）的骨架 */
+  .callout { display: block; }
+  .callout-title { display: flex; align-items: center; }
+  .callout-fold { margin-left: auto; }
+  .callout-content { display: block; }
+
+  /* 阅读视图里的列表缩进 */
+  .markdown-rendered ul, .markdown-rendered ol { padding-inline-start: var(--list-indent, 25px); }
+  .markdown-rendered ul ul, .markdown-rendered ol ol { margin-block: .2em; }
+  .markdown-rendered li > p { margin-block: .2em; }
+  .markdown-rendered .task-list-item { display: flex; align-items: baseline; gap: 6px; }
+  .markdown-rendered .task-list-item > * { margin-block: 0; }
+
+  /* 脚注 */
+  .footnotes ol { padding-inline-start: 1.4em; }
+  .footnotes li { margin-block: .3em; }
+
+  /* 占位图标，代替 Obsidian 的 SVG */
+  .ph { width: 16px; height: 16px; border-radius: 3px;
+        background: currentColor; opacity: .35; }
+</style>
+
+<div class="app-container">
+  <!-- 左侧竖条 -->
+  <div class="workspace-ribbon mod-left">
+    <div class="side-dock-ribbon-action"><div class="ph"></div></div>
+    <div class="side-dock-ribbon-action"><div class="ph"></div></div>
+    <div class="side-dock-ribbon-action"><div class="ph"></div></div>
+    <div class="side-dock-ribbon-action"><div class="ph"></div></div>
+  </div>
+
+  <div class="workspace">
+    <!-- 侧栏 -->
+    <div class="workspace-split mod-left-split">
+      <div class="workspace-tabs">
+        <div class="workspace-tab-header-container">
+          <div class="workspace-tab-header-container-inner">
+            <div class="workspace-tab-header is-active"><span>文件</span></div>
+            <div class="workspace-tab-header"><span>大纲</span></div>
+            <div class="workspace-tab-header"><span>搜索</span></div>
+          </div>
+        </div>
+        <div class="workspace-tab-container">
+          <div class="workspace-leaf">
+            <div class="workspace-leaf-content" data-type="file-explorer">
+              <div class="view-content">
+                <div class="nav-files-container">
+                  <div class="tree-item nav-folder mod-root">
+                    <div class="tree-item-self nav-folder-title">
+                      <span class="nav-folder-collapse-indicator">▾</span>
+                      <span class="tree-item-inner nav-folder-title-content">我的笔记库</span>
+                    </div>
+                    <div class="tree-item-children nav-folder-children">
+                      <div class="tree-item nav-folder">
+                        <div class="tree-item-self nav-folder-title">
+                          <span class="nav-folder-collapse-indicator">▾</span>
+                          <span class="nav-folder-icon"><div class="ph"></div></span>
+                          <span class="tree-item-inner">01 长文</span>
+                        </div>
+                        <div class="tree-item-children nav-folder-children">
+                          <div class="tree-item nav-file">
+                            <div class="tree-item-self nav-file-title is-active">
+                              <span class="nav-file-icon"><div class="ph"></div></span>
+                              <span class="tree-item-inner">排版秩序.md</span>
+                            </div>
+                          </div>
+                          <div class="tree-item nav-file">
+                            <div class="tree-item-self nav-file-title">
+                              <span class="nav-file-icon"><div class="ph"></div></span>
+                              <span class="tree-item-inner">关于液态玻璃的笔记.md</span>
+                            </div>
+                          </div>
+                          <div class="tree-item nav-file">
+                            <div class="tree-item-self nav-file-title">
+                              <span class="nav-file-icon"><div class="ph"></div></span>
+                              <span class="tree-item-inner">六级标题色阶.md</span>
+                              <span class="nav-file-tag">#设计</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tree-item nav-folder">
+                        <div class="tree-item-self nav-folder-title">
+                          <span class="nav-folder-collapse-indicator">▸</span>
+                          <span class="nav-folder-icon"><div class="ph"></div></span>
+                          <span class="tree-item-inner">02 素材</span>
+                        </div>
+                      </div>
+                      <div class="tree-item nav-file">
+                        <div class="tree-item-self nav-file-title">
+                          <span class="nav-file-icon"><div class="ph"></div></span>
+                          <span class="tree-item-inner">索引.md</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="nav-buttons-container">
+                <div class="nav-action-button"><div class="ph"></div></div>
+                <div class="nav-action-button"><div class="ph"></div></div>
+                <div class="nav-action-button"><div class="ph"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 正文 -->
+    <div class="workspace-split mod-root">
+      <div class="workspace-tabs">
+        <div class="workspace-tab-header-container">
+          <div class="workspace-tab-header-container-inner">
+            <div class="workspace-tab-header is-active"><span>排版秩序</span></div>
+            <div class="workspace-tab-header"><span>关于液态玻璃的笔记</span></div>
+          </div>
+        </div>
+        <div class="workspace-tab-container">
+          <div class="workspace-leaf mod-active">
+            <div class="workspace-leaf-content" data-type="markdown">
+              <div class="view-header">
+                <span class="view-header-title-parent">01 长文 /</span>
+                <span class="view-header-title">排版秩序</span>
+              </div>
+              <div class="view-content">
+                <div class="markdown-reading-view">
+                  <div class="markdown-preview-view markdown-rendered is-readable-line-width">
+                    <div class="markdown-preview-sizer markdown-preview-section">
+
+                      <div class="inline-title">给长文写作的一套排版秩序</div>
+
+                      <p>正文用<strong>霞鹜文楷</strong>排，行距 <code>1.8rem</code>，段间距 <code>1.2rem</code>。
+                      这是<em>斜体</em>，这是 <mark>高亮</mark>，这是 <del>删除线</del>，
+                      这是 <a href="#" class="internal-link">内部链接</a>，
+                      这是 <a href="https://example.com" class="external-link">外部链接</a>，
+                      还有一个标签 <a href="#" class="tag">#排版</a>。</p>
+
+                      <h1>一级标题居中，像一篇文章的扉页</h1>
+
+                      <h2>二级标题</h2>
+                      <p>每一级标题前面都有一道跟着自己颜色的竖色块，色块外侧挂着等级图标。</p>
+
+                      <h3>三级标题</h3>
+                      <p>六个色相从暖到冷，文章的骨架在余光里就能看清。</p>
+
+                      <h4>四级标题</h4>
+                      <h5>五级标题</h5>
+                      <h6>六级标题</h6>
+
+                      <blockquote>
+                        <p>引用块左侧一道竖线，左上角一对引号。底色比正文浅一档，浮在页面上。</p>
+                        <p>第二段也在这个块里。</p>
+                      </blockquote>
+
+                      <div class="callout" data-callout="note">
+                        <div class="callout-title">
+                          <div class="callout-icon"></div>
+                          <div class="callout-title-inner">Note</div>
+                          <div class="callout-fold">▾</div>
+                        </div>
+                        <div class="callout-content">
+                          <p>标注把引用块的首行标题接了过去，六种类型各有各的图标与颜色。</p>
+                        </div>
+                      </div>
+
+                      <div class="callout" data-callout="warning">
+                        <div class="callout-title">
+                          <div class="callout-icon"></div>
+                          <div class="callout-title-inner">Warning</div>
+                        </div>
+                        <div class="callout-content"><p>注意这里有个坑。</p></div>
+                      </div>
+
+                      <div class="callout" data-callout="tip">
+                        <div class="callout-title">
+                          <div class="callout-icon"></div>
+                          <div class="callout-title-inner">Tip</div>
+                        </div>
+                        <div class="callout-content"><p>一个提示。</p></div>
+                      </div>
+
+                      <h3>有序列表换成圆形徽章</h3>
+                      <ol>
+                        <li>一级第一条</li>
+                        <li>一级第二条
+                          <ol>
+                            <li>二级第一条</li>
+                            <li>二级第二条
+                              <ol>
+                                <li>三级起只留彩色数字</li>
+                              </ol>
+                            </li>
+                          </ol>
+                        </li>
+                        <li>一级第三条</li>
+                      </ol>
+
+                      <h3>无序列表三级：实心圆 / 空心圆 / 实心方</h3>
+                      <ul>
+                        <li>第一级</li>
+                        <li>第一级
+                          <ul>
+                            <li>第二级</li>
+                            <li>第二级
+                              <ul><li>第三级</li></ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+
+                      <h3>任务列表</h3>
+                      <ul>
+                        <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox">还没做</li>
+                        <li class="task-list-item" data-task="x"><input type="checkbox" class="task-list-item-checkbox" checked>已经做完</li>
+                      </ul>
+
+                      <h3>表格</h3>
+                      <div class="table-wrapper">
+                        <table>
+                          <thead>
+                            <tr><th>主题</th><th>底色</th><th>适用</th></tr>
+                          </thead>
+                          <tbody>
+                            <tr><td>见月 · 明亮</td><td><code>#f0f4f8</code></td><td>白天 · 校色</td></tr>
+                            <tr><td>见月 · 暗黑</td><td><code>#1a1d24</code></td><td>深夜 · 长文</td></tr>
+                            <tr><td>见月 · 护眼</td><td><code>#e4eddf</code></td><td>久读 · 缓冲</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <h3>代码块像一扇窗</h3>
+                      <pre><code class="language-js"><span class="token comment">// 红黄绿三点、圆角、右上角留给复制按钮</span>
+<span class="token keyword">export function</span> <span class="token function">seeYue</span>(<span class="token punctuation">{</span> theme <span class="token punctuation">}</span>) <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> heading <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'#9A3412'</span>, <span class="token string">'#B45309'</span>, <span class="token string">'#4D7C0F'</span><span class="token punctuation">]</span>
+  <span class="token keyword">return</span> <span class="token punctuation">{</span> theme, heading, count<span class="token punctuation">:</span> <span class="token number">6</span>, ok<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+
+                      <h3>脚注</h3>
+                      <p>正文里挂一个脚注<sup class="footnote-ref"><a href="#fn1" id="fnref1" class="footnote-link">1</a></sup>。</p>
+
+                      <section class="footnotes">
+                        <ol>
+                          <li id="fn1"><p>这是脚注内容。<a href="#fnref1" class="footnote-backref">↩</a></p></li>
+                        </ol>
+                      </section>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <span class="status-bar-item">1,204 字</span>
+    <span class="status-bar-item">42 词</span>
+  </div>
+</div>
+
+<script>
+  // ?theme=dark|light  切配色
+  // ?scroll=1200       把正文滚到指定位置，方便分段截图
+  // ?zoom=2            整体放大，用来看细节
+  const q = new URLSearchParams(location.search)
+  document.body.classList.add('theme-' + (q.get('theme') || 'light'))
+
+  if (q.get('salt') === '1') {
+    document.getElementById('salt').disabled = false
+  }
+
+  if (q.has('zoom')) {
+    document.documentElement.style.zoom = q.get('zoom')
+  }
+  // ?focus=.footnotes 把某个元素滚到视口顶部，比手算 scroll 值可靠
+  const focus = q.get('focus') || (q.has('scroll') ? null : null)
+  if (q.has('scroll')) {
+    addEventListener('load', () => {
+      document.querySelector('.markdown-preview-view').scrollTop = Number(q.get('scroll'))
+    })
+  }
+  if (focus) {
+    addEventListener('load', () => {
+      const el = document.querySelector(focus)
+      if (el) el.scrollIntoView({ block: 'start' })
+    })
+  }
+</script>

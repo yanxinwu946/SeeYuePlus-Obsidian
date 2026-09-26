@@ -1,0 +1,225 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   04 · 正文排版与六级标题
+
+   标题是这套主题的骨架：每一级一个色相，前面一道跟着标题自身颜色的竖色块，
+   色块外侧再挂一枚等级图标。文章的层次在余光里就能看清。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 正文 ───────────────── */
+
+.markdown-preview-view,
+.markdown-source-view.mod-cm6 .cm-content {
+    color: var(--writeArea-text-color);
+    text-align: var(--writeArea-text-align-style);
+    letter-spacing: 0;
+}
+
+.markdown-preview-section p,
+.markdown-rendered p,
+.cm-line {
+    line-height: var(--writeArea-text-line-spacing);
+}
+
+.markdown-preview-section :is(p, blockquote, ul, ol, dl, table, pre) {
+    margin-top: 1rem;
+    margin-bottom: var(--writeArea-text-paragraph-spacing);
+}
+
+/* 正文选中 */
+::selection {
+    color: var(--writeArea-selected-text-color) !important;
+    background-color: var(--writeArea-selected-text-bg-color) !important;
+}
+
+.markdown-rendered ::selection,
+.cm-s-obsidian ::selection {
+    color: var(--writeArea-selected-text-color) !important;
+    background-color: var(--writeArea-selected-text-bg-color) !important;
+}
+
+/* 分隔线 */
+.markdown-rendered hr,
+.cm-line hr,
+hr {
+    height: var(--writeArea-divider-height);
+    border: none;
+    background-color: var(--writeArea-divider-color);
+    margin: var(--writeArea-divider-top-bottom-margin) 0;
+}
+
+/* 光标 */
+.cm-s-obsidian .cm-cursor,
+.cm-s-obsidian .cm-dropCursor {
+    border-left-color: var(--accent-color);
+    border-left-width: 2px;
+}
+
+
+/* ───────────────── 六级标题 ───────────────── */
+
+/* 基础：字重靠描边补足，霞鹜文楷没有 Bold，不补的话字体一加载标题就塌下去 */
+.markdown-rendered :is(h1, h2, h3, h4, h5, h6),
+.markdown-source-view.mod-cm6 .cm-line[class*="HyperMD-header"] {
+    font-family: var(--writeArea-text-font);
+    font-weight: var(--bold-text-weight) !important;
+    -webkit-text-stroke: var(--headline-text-stroke);
+    letter-spacing: var(--headline-text-letter-space);
+    line-height: 1.3;
+}
+
+/* H1 居中，上下留足空白，像一篇文章的扉页 */
+.markdown-rendered h1 {
+    font-size: var(--h1-size);
+    color: var(--h1-color);
+    line-height: 1.4;
+    text-align: center;
+    padding-top: 2rem;
+    margin-bottom: 3rem;
+}
+
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-1 {
+    font-size: var(--h1-size);
+    color: var(--h1-color);
+    line-height: 1.4;
+    text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 1.5rem;
+}
+
+/* H2–H6：左侧一道竖色块，颜色跟着各级标题自己走。
+   色块用 border-left 而不是伪元素，标题盒长多高它就跟着多高，不必手工对齐 */
+.markdown-rendered :is(h2, h3, h4, h5, h6),
+.markdown-source-view.mod-cm6 .cm-line:is(.HyperMD-header-2, .HyperMD-header-3, .HyperMD-header-4, .HyperMD-header-5, .HyperMD-header-6) {
+    position: relative;
+    border-left: var(--headline-block-width) solid currentColor;
+    border-radius: var(--headline-block-radius) 0 0 var(--headline-block-radius);
+    padding-left: var(--headline-block-distance);
+    margin-top: 2rem;
+}
+
+.markdown-rendered h2,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-2 {
+    font-size: var(--h2-size);
+    color: var(--h2-color);
+    margin-bottom: calc(1rem + var(--h2-text-bottom-line-distance));
+}
+
+.markdown-rendered h3,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-3 {
+    font-size: var(--h3-size);
+    color: var(--h3-color);
+    margin-bottom: .6rem;
+}
+
+.markdown-rendered h4,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-4 {
+    font-size: var(--h4-size);
+    color: var(--h4-color);
+    margin-bottom: .6rem;
+}
+
+.markdown-rendered h5,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-5 {
+    font-size: var(--h5-size);
+    color: var(--h5-color);
+    margin-bottom: .6rem;
+}
+
+.markdown-rendered h6,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-6 {
+    font-size: var(--h6-size);
+    color: var(--h6-color);
+    margin-bottom: .6rem;
+}
+
+/* 标题里的行内代码不该把标题撑大 */
+.markdown-rendered :is(h1, h2, h3, h4, h5, h6) code,
+.markdown-source-view.mod-cm6 .cm-line[class*="HyperMD-header"] .cm-inline-code {
+    font-size: inherit !important;
+    background-color: transparent;
+    padding: 0;
+}
+
+/* 标题内的加粗与标题同为 700，字重分不出来，再加一档描边 */
+.markdown-rendered :is(h1, h2, h3, h4, h5, h6) strong {
+    -webkit-text-stroke: calc(var(--headline-text-stroke) + 0.012em);
+}
+
+/* 编辑态里 # 号的颜色 */
+.cm-s-obsidian .cm-formatting-header {
+    color: color-mix(in srgb, currentColor 45%, transparent);
+}
+
+
+/* ───────────────── 标题等级图标 ───────────────── */
+
+/* 挂在色块外侧，占 ::after 以免和色块争位 */
+.markdown-rendered > :is(h2, h3, h4, h5, h6)::after,
+.markdown-rendered .markdown-preview-section > :is(h2, h3, h4, h5, h6)::after,
+.markdown-source-view.mod-cm6 .cm-line:is(.HyperMD-header-2, .HyperMD-header-3, .HyperMD-header-4, .HyperMD-header-5, .HyperMD-header-6)::after {
+    display: var(--headline-rating-prompt-state);
+    position: absolute;
+    right: calc(100% + var(--headline-block-width) + 6px);
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--interface-text-font);
+    font-size: var(--headline-rating-prompt-word-size) !important;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--headline-rating-prompt-word-color) !important;
+    -webkit-text-stroke: 0;
+    pointer-events: none;
+}
+
+.markdown-rendered h2::after,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-2::after {
+    content: "H2";
+}
+
+.markdown-rendered h3::after,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-3::after {
+    content: "H3";
+}
+
+.markdown-rendered h4::after,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-4::after {
+    content: "H4";
+}
+
+.markdown-rendered h5::after,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-5::after {
+    content: "H5";
+}
+
+.markdown-rendered h6::after,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-6::after {
+    content: "H6";
+}
+
+/* 正文栏太窄时图标会挤到屏幕外，索性收起来 */
+@media (max-width: 900px) {
+    .markdown-rendered > :is(h2, h3, h4, h5, h6)::after,
+    .markdown-rendered .markdown-preview-section > :is(h2, h3, h4, h5, h6)::after,
+    .markdown-source-view.mod-cm6 .cm-line:is(.HyperMD-header-2, .HyperMD-header-3, .HyperMD-header-4, .HyperMD-header-5, .HyperMD-header-6)::after {
+        display: none;
+    }
+}
+
+
+/* ───────────────── 文档大标题 ───────────────── */
+
+/* 字号字重在这里再写一遍：Obsidian 的 app.css 会用 --inline-title-* 去套，
+   但主题不该指望别人，自己写全，换版本也不会塌 */
+.inline-title {
+    font-family: var(--writeArea-text-font);
+    font-size: var(--inline-title-size);
+    font-weight: var(--bold-text-weight);
+    line-height: var(--inline-title-line-height);
+    color: var(--inline-title-color);
+    -webkit-text-stroke: var(--headline-text-stroke);
+    letter-spacing: var(--headline-text-letter-space);
+    text-align: center;
+    margin-bottom: var(--inline-title-margin-bottom);
+}

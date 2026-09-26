@@ -1,0 +1,345 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   08 · 行内代码与代码块
+
+   代码块是一扇 Mac 窗口：左上三点、圆角、右上角留给复制按钮。
+   阅读视图里 pre 是个完整元素，窗口画得规整；编辑视图里代码块是一串
+   .cm-line，只能把三点挂在首行上，圆角拆给首尾两行。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 行内代码 ───────────────── */
+
+.markdown-rendered :is(code, tt):not(pre code),
+.cm-s-obsidian .cm-inline-code:not(.cm-formatting) {
+    display: inline;
+    padding: .2em .45em;
+    margin: 0 2px;
+    font-family: var(--code-block-text-font);
+    font-size: var(--inline-code-size);
+    font-weight: 600;
+    color: var(--inline-code-color);
+    background-color: var(--inline-code-bg-color);
+    border: 1px solid var(--inline-code-border-color);
+    border-radius: var(--line-code-bg-radius);
+    line-height: normal;
+    vertical-align: baseline;
+    /* 跨行断开时每段各自画出完整的框，而不是被拦腰切开 */
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
+
+/* 引用块与表格里的行内代码换个底，免得和容器撞色 */
+.markdown-rendered blockquote code:not(pre code) {
+    background-color: var(--blockquote-line-code-bg-color);
+}
+
+.markdown-rendered table :is(code, tt) {
+    display: inline-block;
+    line-height: 1.4;
+    vertical-align: middle;
+    margin: 1px 2px;
+    background-color: var(--table-line-code-bg-color);
+}
+
+/* 编辑态里 ``` 那三个反引号不该被当成行内代码染色 */
+.cm-s-obsidian .cm-formatting-code {
+    color: var(--code-comment);
+    background-color: transparent;
+    border: none;
+}
+
+
+/* ───────────────── 代码块 · 阅读视图 ───────────────── */
+
+.markdown-rendered pre {
+    position: relative;
+    background-color: var(--code-block-bg-color);
+    color: var(--code-block-text-color);
+    border: var(--code-block-border);
+    border-radius: var(--code-block-radius);
+    padding: var(--code-block-top-bar-height) 1.4em 1.2em;
+    box-shadow: var(--code-block-shadow);
+    font-family: var(--code-block-text-font);
+    font-size: var(--code-block-text-size);
+    line-height: var(--code-block-line-height);
+    tab-size: 4;
+    -moz-tab-size: 4;
+}
+
+.markdown-rendered pre code {
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    border: none;
+    font-size: inherit;
+    font-weight: normal;
+}
+
+/* 左上三点，用 box-shadow 复制出后两个，省两个伪元素 */
+.markdown-rendered pre::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--code-block-topBar-left-redDot-color);
+    box-shadow:
+        18px 0 0 var(--code-block-topBar-left-yellowDot-color),
+        36px 0 0 var(--code-block-topBar-left-greenDot-color);
+    z-index: 2;
+}
+
+
+/* ───────────────── 代码块 · 编辑视图 ───────────────── */
+
+.cm-s-obsidian .cm-line.HyperMD-codeblock {
+    font-family: var(--code-block-text-font);
+    font-size: var(--code-block-text-size);
+    line-height: var(--code-block-line-height);
+    color: var(--code-block-text-color);
+    tab-size: 4;
+}
+
+.cm-s-obsidian .cm-line.HyperMD-codeblock-bg {
+    background-color: var(--code-block-bg-color);
+    border-left: var(--code-block-border);
+    border-right: var(--code-block-border);
+}
+
+/* 首行：为三点让出顶栏，并收上圆角 */
+.cm-s-obsidian .cm-line.HyperMD-codeblock-begin {
+    position: relative;
+    border-top: var(--code-block-border);
+    border-radius: var(--code-block-radius) var(--code-block-radius) 0 0;
+    padding-top: var(--code-block-top-bar-height);
+}
+
+.cm-s-obsidian .cm-line.HyperMD-codeblock-begin::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--code-block-topBar-left-redDot-color);
+    box-shadow:
+        18px 0 0 var(--code-block-topBar-left-yellowDot-color),
+        36px 0 0 var(--code-block-topBar-left-greenDot-color);
+    z-index: 2;
+}
+
+/* 末行：收下圆角与阴影 */
+.cm-s-obsidian .cm-line.HyperMD-codeblock-end {
+    border-bottom: var(--code-block-border);
+    border-radius: 0 0 var(--code-block-radius) var(--code-block-radius);
+    box-shadow: var(--code-block-shadow);
+}
+
+.cm-s-obsidian .HyperMD-codeblock .cm-formatting-code-block {
+    color: var(--code-block-right-program-lang-text-color);
+    opacity: .7;
+}
+
+
+/* ───────────────── 复制按钮 ───────────────── */
+
+.markdown-rendered .copy-code-button,
+.copy-code-button {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    padding: 4px 12px;
+    font-family: var(--interface-text-font);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--code-block-right-program-lang-text-color);
+    background-color: transparent;
+    border: 1px solid var(--border-hairline);
+    border-radius: 999px;
+    box-shadow: none;
+    opacity: 0;
+    transform: translateY(-2px);
+    transition: opacity .15s ease, transform .15s ease, background-color .15s ease;
+}
+
+.markdown-rendered pre:hover .copy-code-button {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.markdown-rendered .copy-code-button:hover {
+    color: var(--accent-color);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+    border-color: var(--accent-color);
+}
+
+
+/* ───────────────── 语法高亮 · 阅读视图（Prism） ───────────────── */
+
+.markdown-rendered .token.comment,
+.markdown-rendered .token.prolog,
+.markdown-rendered .token.doctype,
+.markdown-rendered .token.cdata {
+    color: var(--code-comment);
+}
+
+.markdown-rendered .token.keyword,
+.markdown-rendered .token.control,
+.markdown-rendered .token.directive {
+    color: var(--code-keyword);
+    font-weight: 700;
+}
+
+.markdown-rendered .token.string,
+.markdown-rendered .token.char,
+.markdown-rendered .token.attr-value {
+    color: var(--code-string);
+}
+
+.markdown-rendered .token.number,
+.markdown-rendered .token.unit {
+    color: var(--code-number);
+}
+
+.markdown-rendered .token.function,
+.markdown-rendered .token.function-name {
+    color: var(--code-function);
+}
+
+.markdown-rendered .token.property,
+.markdown-rendered .token.attr-name,
+.markdown-rendered .token.constant {
+    color: var(--code-property);
+}
+
+.markdown-rendered .token.tag,
+.markdown-rendered .token.selector,
+.markdown-rendered .token.deleted {
+    color: var(--code-tag);
+}
+
+.markdown-rendered .token.punctuation,
+.markdown-rendered .token.bracket {
+    color: var(--code-punctuation);
+}
+
+.markdown-rendered .token.operator,
+.markdown-rendered .token.entity,
+.markdown-rendered .token.url {
+    color: var(--code-operator);
+}
+
+.markdown-rendered .token.boolean,
+.markdown-rendered .token.atom,
+.markdown-rendered .token.symbol {
+    color: var(--code-value);
+}
+
+.markdown-rendered .token.important,
+.markdown-rendered .token.regex {
+    color: var(--code-important);
+}
+
+.markdown-rendered .token.bold {
+    font-weight: 700;
+}
+
+.markdown-rendered .token.italic {
+    font-style: italic;
+}
+
+
+/* ───────────────── 语法高亮 · 编辑视图（CodeMirror） ───────────────── */
+
+.cm-s-obsidian .cm-comment {
+    color: var(--code-comment);
+}
+
+.cm-s-obsidian .cm-keyword,
+.cm-s-obsidian .cm-builtin {
+    color: var(--code-keyword);
+}
+
+.cm-s-obsidian .cm-string,
+.cm-s-obsidian .cm-string-2 {
+    color: var(--code-string);
+}
+
+.cm-s-obsidian .cm-number {
+    color: var(--code-number);
+}
+
+.cm-s-obsidian .cm-def {
+    color: var(--code-function);
+}
+
+.cm-s-obsidian .cm-property,
+.cm-s-obsidian .cm-attribute {
+    color: var(--code-property);
+}
+
+.cm-s-obsidian .cm-tag {
+    color: var(--code-tag);
+}
+
+.cm-s-obsidian .cm-bracket {
+    color: var(--code-punctuation);
+}
+
+.cm-s-obsidian .cm-operator {
+    color: var(--code-operator);
+}
+
+.cm-s-obsidian .cm-atom {
+    color: var(--code-value);
+}
+
+.cm-s-obsidian .cm-variable,
+.cm-s-obsidian .cm-variable-2,
+.cm-s-obsidian .cm-variable-3 {
+    color: var(--code-block-text-color);
+}
+
+/* cmd 这类模式不认中文与反引号，会把整片打成 cm-error 染红，不填背景 */
+.cm-s-obsidian .cm-error {
+    color: var(--code-important);
+    background-color: transparent;
+}
+
+.cm-s-obsidian .cm-meta {
+    color: var(--code-important);
+}
+
+/* 行号 */
+.cm-s-obsidian .cm-gutters .cm-lineNumbers .cm-gutterElement {
+    color: var(--code-block-line-number-color);
+    font-family: var(--code-block-text-font);
+    font-size: var(--code-block-text-size);
+}
+
+/* diff 视图，仿 GitHub */
+.cm-s-obsidian .cm-negative,
+.markdown-rendered .cm-negative {
+    color: #82071e;
+    background-color: #ffebe9;
+}
+
+.cm-s-obsidian .cm-positive,
+.markdown-rendered .cm-positive {
+    color: #116329;
+    background-color: #dafbe1;
+}
+
+body.theme-dark .cm-s-obsidian .cm-negative {
+    color: #ffd8d3;
+    background-color: #78191b;
+}
+
+body.theme-dark .cm-s-obsidian .cm-positive {
+    color: #b4f1b4;
+    background-color: #1b4721;
+}

@@ -1,0 +1,661 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   03 · 界面外壳与液态玻璃
+
+   先把 00-tokens 里的令牌接到 Obsidian 自己的变量上 —— 这一步做完，
+   设置面板、图谱、菜单、提示框这些没单独写规则的地方也会自动跟着换色。
+   再单独处理玻璃：Typora 版里写作区和侧栏是浮在渐变背景上的两块玻璃，
+   Obsidian 这边要在 .view-content 和侧栏分栏上重建。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 一、把令牌交给 Obsidian ───────────────── */
+
+body {
+    /* 字体 */
+    --font-text: var(--writeArea-text-font);
+    --font-text-size: var(--writeArea-text-size);
+    --font-interface: var(--interface-text-font);
+    --font-interface-theme: var(--interface-text-font);
+    --font-monospace: var(--code-block-text-font);
+    --font-monospace-theme: var(--code-block-text-font);
+    --font-small: .875em;
+    --font-smaller: .8em;
+    --font-smallest: .7em;
+
+    /* 排版 */
+    --line-height-normal: 1.8;
+    --line-height-tight: 1.4;
+    --p-spacing: var(--writeArea-text-paragraph-spacing);
+    --file-line-width: var(--writeArea-default-width);
+
+    /* 标题。--h1-color / --h1-size 这些名字和 Typora 版一致，无需转接 */
+    --h1-weight: var(--bold-text-weight);
+    --h2-weight: var(--bold-text-weight);
+    --h3-weight: var(--bold-text-weight);
+    --h4-weight: var(--bold-text-weight);
+    --h5-weight: var(--bold-text-weight);
+    --h6-weight: var(--bold-text-weight);
+    --h1-line-height: 1.4;
+    --h2-line-height: 1.3;
+    --h3-line-height: 1.3;
+    --h4-line-height: 1.3;
+    --h5-line-height: 1.3;
+    --h6-line-height: 1.3;
+    --h1-font: var(--writeArea-text-font);
+    --h2-font: var(--writeArea-text-font);
+    --h3-font: var(--writeArea-text-font);
+    --h4-font: var(--writeArea-text-font);
+    --h5-font: var(--writeArea-text-font);
+    --h6-font: var(--writeArea-text-font);
+    /* 文档大标题 */
+    --inline-title-color: var(--h1-color);
+    --inline-title-size: 2.2rem;
+    --inline-title-weight: var(--bold-text-weight);
+    --inline-title-font: var(--writeArea-text-font);
+    --inline-title-line-height: 1.4;
+    --inline-title-style: normal;
+    --inline-title-variant: normal;
+    --inline-title-margin-bottom: 1.4em;
+
+    /* 底色 */
+    --background-primary: var(--interface-default-bg-color);
+    --background-primary-alt: var(--interface-default-bg-color);
+    --background-secondary: var(--sidebar-whole-bg-color);
+    --background-secondary-alt: var(--sidebar-whole-bg-color);
+    --background-modifier-border: var(--border-hairline);
+    --background-modifier-border-hover: var(--border-strong);
+    --background-modifier-border-focus: var(--focus-ring-color);
+    --background-modifier-hover: var(--hover-sidebar-filelist-bg-color);
+    --background-modifier-active-hover: var(--active-sidebar-filelist-bg-color);
+    --background-modifier-form-field: var(--input-bg-color);
+    --background-modifier-form-field-highlighted: var(--input-bg-color);
+    --background-modifier-box-shadow: rgba(0, 0, 0, .15);
+    --background-modifier-success: var(--color-green);
+    --background-modifier-error: var(--color-red);
+    --background-modifier-error-rgb: 244, 67, 54;
+    --background-modifier-error-hover: var(--color-red);
+    --background-modifier-cover: rgba(0, 0, 0, .5);
+
+    /* 文字。中间两档由正文色兑出来，两套配色各自算各自的 */
+    --text-normal: var(--writeArea-text-color);
+    --text-muted: color-mix(in srgb, var(--writeArea-text-color) 62%, transparent);
+    --text-faint: color-mix(in srgb, var(--writeArea-text-color) 38%, transparent);
+    --text-on-accent: var(--accent-contrast);
+    --text-on-accent-inverted: var(--writeArea-text-color);
+    --text-accent: var(--accent-color);
+    --text-accent-hover: var(--accent-color-hover);
+    --text-selection: var(--writeArea-selected-text-bg-color);
+    --text-highlight-bg: var(--search-result-list-match-content-bg-color);
+    --text-highlight-bg-active: var(--search-result-list-match-content-bg-color);
+    --text-error: var(--color-red);
+    --text-success: var(--color-green);
+    --text-warning: var(--color-orange);
+    --text-error-hover: var(--color-red);
+    --text-max-width: var(--writeArea-default-width);
+
+    /* 控件 */
+    --interactive-normal: var(--input-bg-color);
+    --interactive-hover: var(--hover-sidebar-filelist-bg-color);
+    --interactive-accent: var(--accent-color);
+    --interactive-accent-hover: var(--accent-color-hover);
+    --interactive-success: var(--color-green);
+    --color-accent: var(--accent-color);
+    --color-accent-1: var(--accent-color);
+    --color-accent-2: var(--accent-color-hover);
+    --color-red-rgb: 244, 67, 54;
+    --color-orange-rgb: 208, 135, 112;
+    --color-yellow-rgb: 238, 200, 105;
+    --color-green-rgb: 55, 133, 107;
+    --color-cyan-rgb: 69, 123, 157;
+    --color-blue-rgb: 66, 139, 202;
+    --color-purple-rgb: 106, 27, 154;
+    --color-pink-rgb: 253, 124, 94;
+
+    /* 圆角阶梯。整套主题只用这五档，直接赋给 Obsidian 的同名变量 */
+    --radius-xs: 3px;
+    --radius-s: 4px;
+    --radius-m: 6px;
+    --radius-l: 8px;
+    --radius-xl: 12px;
+    --border-width: 1px;
+    --shadow-s: 0 1px 2px rgba(0, 0, 0, .06);
+    --shadow-l: 0 4px 20px rgba(0, 0, 0, .15);
+
+    /* 输入框 */
+    --input-height: 30px;
+    --input-radius: var(--radius-s);
+    --input-border-width: 1px;
+    --input-padding: 4px 10px;
+    --input-shadow: none;
+    --input-shadow-hover: none;
+    --input-font-weight: normal;
+
+    /* 标签 */
+    --tag-background: var(--tag-bg-color);
+    --tag-background-hover: var(--tag-bg-color);
+    --tag-color: var(--tag-text-color);
+    --tag-color-hover: var(--tag-text-color);
+    --tag-border-color: transparent;
+    --tag-border-width: 0;
+    --tag-radius: var(--radius-xs);
+    --tag-padding-x: 6px;
+    --tag-padding-y: 1px;
+    --tag-size: .85em;
+
+    /* 图标 */
+    --icon-color: var(--icon-default-color);
+    --icon-color-hover: var(--icon-default-color-hover);
+    --icon-color-active: var(--accent-color);
+    --icon-color-focused: var(--accent-color);
+    --icon-opacity: 1;
+    --icon-s: 16px;
+    --icon-m: 18px;
+    --icon-l: 18px;
+
+    /* 侧栏 */
+    --nav-item-color: var(--sidebar-text-color);
+    --nav-item-color-hover: var(--filelist-filename-text-color);
+    --nav-item-color-active: var(--active-filelist-text-color);
+    --nav-item-color-selected: var(--active-filelist-text-color);
+    --nav-item-color-highlighted: var(--accent-color);
+    --nav-item-background-hover: var(--hover-sidebar-filelist-bg-color);
+    --nav-item-background-active: var(--active-sidebar-filelist-bg-color);
+    --nav-item-background-selected: var(--active-sidebar-filelist-bg-color);
+    --nav-item-size: var(--sidebar-text-size);
+    --nav-item-weight: 400;
+    --nav-item-weight-hover: 400;
+    --nav-item-weight-active: 600;
+    --nav-item-white-space: nowrap;
+    --nav-item-padding: 4px 8px;
+    --nav-item-parent-padding: 4px 8px;
+    --nav-item-children-padding-start: 14px;
+    --nav-item-children-margin-start: 10px;
+    --nav-collapse-icon-color: var(--sidebar-filetree-left-triangle-color);
+    --nav-collapse-icon-color-collapsed: var(--sidebar-filetree-left-triangle-color);
+    --nav-indentation-guide-color: var(--filetree-folder-level-line-color);
+    --nav-indentation-guide-width: var(--list-level-line-width);
+    --nav-tag-color: var(--filelist-file-type-text-color);
+    --nav-tag-color-hover: var(--filelist-file-type-text-color);
+    --nav-tag-background: transparent;
+
+    /* 标签页 */
+    --tab-text-color: var(--filelist-path-time-text-color);
+    --tab-text-color-active: var(--filelist-filename-text-color);
+    --tab-text-color-focused: var(--filelist-path-time-text-color);
+    --tab-text-color-focused-active: var(--filelist-filename-text-color);
+    --tab-text-color-focused-active-current: var(--active-filelist-text-color);
+    --tab-background-active: transparent;
+    --tab-container-background: transparent;
+    --tab-outline-color: var(--border-hairline);
+    --tab-outline-width: 0;
+    --tab-divider-color: transparent;
+    --tab-curve: 0;
+    --tab-radius: 0;
+    --tab-radius-active: 0;
+    --tab-font-size: var(--font-ui-small, 13px);
+    --tab-font-weight: 500;
+    --tab-width: 160px;
+    --tab-max-width: 240px;
+
+    /* Ribbon 左侧竖条 */
+    --ribbon-background: transparent;
+    --ribbon-background-collapsed: transparent;
+    --ribbon-width: 42px;
+    --ribbon-padding: 6px 4px;
+
+    /* 状态栏 */
+    --status-bar-background: transparent;
+    --status-bar-border-color: var(--border-strong);
+    --status-bar-border-width: 1px;
+    --status-bar-font-size: var(--footer-text-size);
+    --status-bar-position: fixed;
+    --status-bar-radius: 0;
+    --status-bar-text-color: var(--footer-text-color);
+
+    /* 弹窗 */
+    --modal-background: var(--pop-up-menu-bg-color);
+    --modal-border-color: transparent;
+    --modal-border-width: 0;
+    --modal-radius: var(--radius-l);
+    --modal-shadow: var(--frosted-glass-writeArea-shadow);
+
+    /* 菜单 */
+    --menu-background: var(--context-menu-bg-color);
+    --menu-border-color: transparent;
+    --menu-border-width: 0;
+    --menu-radius: var(--radius-l);
+    --menu-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+    --menu-item-color: var(--context-menu-text-color);
+    --menu-item-background-hover: var(--hover-context-menu-list-line-bg-color);
+    --menu-item-background-active: var(--hover-context-menu-list-line-bg-color);
+    --menu-item-radius: var(--radius-s);
+    --menu-item-padding: 4px 10px;
+    --menu-item-icon-color: var(--context-menu-text-color);
+    --menu-item-icon-color-hover: var(--hover-context-menu-list-line-text-color);
+    --menu-item-icon-size: 15px;
+
+    /* 提示框 */
+    --tooltip-background: var(--btn-tooltip-bg-color);
+    --tooltip-color: var(--btn-tooltip-text-color);
+    --tooltip-radius: var(--radius-s);
+
+    /* 分隔线 */
+    --divider-color: var(--border-hairline);
+    --divider-color-hover: var(--border-strong);
+    --divider-width: 1px;
+    --divider-width-hover: 2px;
+    --divider-vertical-height: 100%;
+    --hr-color: var(--writeArea-divider-color);
+    --hr-thickness: var(--writeArea-divider-height);
+
+    /* 嵌入块 */
+    --embed-background: transparent;
+    --embed-border-left: 2px solid var(--accent-color);
+    --embed-border-right: none;
+    --embed-border-top: none;
+    --embed-border-bottom: none;
+    --embed-padding: 0 0 0 12px;
+    --embed-radius: var(--radius-s);
+    --embed-max-height: 4000px;
+
+    /* 属性面板（YAML） */
+    --metadata-background: var(--yaml-front-matter-bg-color);
+    --metadata-border-color: transparent;
+    --metadata-divider-color: transparent;
+    --metadata-padding: 10px 14px;
+    --metadata-radius: var(--yaml-front-matter-border-radius);
+    --metadata-label-text-color: var(--yaml-front-matter-text-color);
+    --metadata-label-text-size: var(--yaml-front-matter-text-size);
+    --metadata-input-text-color: var(--writeArea-text-color);
+    --metadata-input-background: transparent;
+    --metadata-input-background-hover: transparent;
+    --metadata-input-background-active: transparent;
+    --metadata-property-background: transparent;
+    --metadata-property-background-hover: transparent;
+    --metadata-property-background-active: transparent;
+    --metadata-property-radius: var(--radius-xs);
+    --metadata-property-padding: 2px 6px;
+    --metadata-input-height: 26px;
+
+    /* 搜索 */
+    --search-result-background: transparent;
+    --search-result-border: transparent;
+    --search-result-file-matched-text-background: var(--search-result-list-match-content-bg-color);
+    --search-result-file-title-color: var(--filelist-filename-text-color);
+    --search-result-file-matches: transparent;
+    --search-clear-button-color: var(--icon-color);
+    --search-icon-color: var(--icon-color);
+
+    /* 滚动条 */
+    --scrollbar-bg: transparent;
+    --scrollbar-thumb-bg: var(--writeArea-scroll-thumb-color);
+    --scrollbar-active-thumb-bg: var(--hover-writeArea-scroll-thumb-color);
+    --scrollbar-width: var(--scroll-thumb-width);
+
+    /* 复选框 */
+    --checkbox-size: 16px;
+    --checkbox-radius: var(--task-list-box-border-radius);
+    --checkbox-border-color: var(--task-list-box-border-color);
+    --checkbox-border-color-hover: var(--focus-list-symbol-color);
+    --checkbox-color: var(--task-list-checked-box-bg-color);
+    --checkbox-color-hover: var(--focus-list-symbol-color);
+    --checkbox-marker-color: var(--task-list-checked-tick-color);
+    --checkbox-margin-inline-start: .4em;
+
+    /* 列表 */
+    --list-marker-color: var(--unordered-list-symbol-color);
+    --list-marker-color-hover: var(--focus-list-symbol-color);
+    --list-marker-color-collapsed: var(--focus-list-symbol-color);
+    --list-bullet-border: none;
+    --list-bullet-radius: 50%;
+    --list-bullet-size: .42em;
+    --list-bullet-transform: none;
+    --list-indent: var(--unordered-list-level-indentation);
+    --list-spacing: .25em;
+    --indentation-guide-color: var(--filetree-folder-level-line-color);
+    --indentation-guide-color-active: var(--accent-color);
+    --indentation-guide-width: var(--list-level-line-width);
+    --indentation-guide-width-active: var(--list-level-line-width);
+
+    /* 引用块 */
+    --blockquote-background-color: var(--blockquote-bg-color);
+    --blockquote-border-color: var(--blockquote-left-line-default-color);
+    --blockquote-border-thickness: var(--blockquote-left-line-default-width);
+    --blockquote-color: var(--blockquote-text-color);
+    --blockquote-font-style: normal;
+    --blockquote-padding: 10px 10px 10px 15px;
+
+    /* 表格 */
+    --table-background: var(--table-bg-color);
+    --table-border-width: 1px;
+    --table-border-color: transparent;
+    --table-white-space: normal;
+    --table-header-background: var(--table-thead-bg-color);
+    --table-header-background-hover: var(--table-thead-bg-color);
+    --table-header-color: var(--table-thead-text-color);
+    --table-header-border-width: 0;
+    --table-header-border-color: transparent;
+    --table-header-font: var(--writeArea-text-font);
+    --table-header-size: inherit;
+    --table-header-weight: var(--bold-text-weight);
+    --table-text-size: inherit;
+    --table-text-color: inherit;
+    --table-line-height: 1.5;
+    --table-cell-vertical-alignment: middle;
+    --table-column-min-width: 60px;
+    --table-column-max-width: none;
+    --table-column-alt-background: var(--table-tbody-oddNum-line-bg-color);
+    --table-row-alt-background: var(--table-tbody-evenNum-line-bg-color);
+    --table-row-alt-background-hover: var(--table-tbody-evenNum-line-bg-color);
+    --table-row-background-hover: transparent;
+    --table-cell-border-width: 0;
+    --table-cell-border-color: transparent;
+    --table-selection: var(--writeArea-selected-text-bg-color);
+    --table-selection-border-color: var(--accent-color);
+    --table-drag-handle-background: var(--accent-color);
+    --table-drag-handle-color: var(--accent-contrast);
+    --table-add-button-background: transparent;
+    --table-add-button-border-color: var(--border-hairline);
+    --table-add-button-border-width: 1px;
+
+    /* 代码 */
+    --code-background: var(--line-code-bg-color);
+    --code-normal: var(--code-block-text-color);
+    /* 左边是 Obsidian 自己的语法变量，右边是 00-tokens 里那套配色 */
+    --code-comment: var(--hl-comment);
+    --code-function: var(--hl-function);
+    --code-important: var(--hl-important);
+    --code-keyword: var(--hl-keyword);
+    --code-property: var(--hl-property);
+    --code-punctuation: var(--hl-punctuation);
+    --code-string: var(--hl-string);
+    --code-tag: var(--hl-tag);
+    --code-value: var(--hl-value);
+    /* 这两个 Obsidian 没有原生变量，但主题自己的规则要用 */
+    --code-number: var(--hl-number);
+    --code-operator: var(--hl-operator);
+    --code-size: var(--line-code-size);
+    --code-white-space: pre-wrap;
+
+    /* 链接 */
+    --link-color: var(--link-text-color);
+    --link-color-hover: var(--hover-link-text-color);
+    --link-decoration: none;
+    --link-decoration-hover: none;
+    --link-decoration-thickness: 0;
+    --link-external-color: var(--link-text-color);
+    --link-external-color-hover: var(--hover-link-text-color);
+    --link-external-decoration: none;
+    --link-external-decoration-hover: none;
+    --link-unresolved-color: var(--color-red);
+    --link-unresolved-opacity: .75;
+    --link-unresolved-decoration-color: transparent;
+    --link-unresolved-filter: none;
+
+    /* 加粗与斜体 */
+    --bold-color: var(--bold-text-color);
+    --bold-weight: var(--bold-text-weight);
+    --bold-modifier: 200;
+    --italic-color: inherit;
+    --italic-weight: inherit;
+
+    /* 文件树 */
+    --vault-name-color: var(--filelist-filename-text-color);
+    --vault-name-font-size: var(--sidebar-text-size);
+    --vault-name-font-weight: 600;
+    --vault-name-padding: 6px 0;
+    --vault-profile-color: var(--filelist-filename-text-color);
+    --vault-profile-color-hover: var(--active-filelist-text-color);
+
+    /* 窗口标题栏 */
+    --titlebar-background: transparent;
+    --titlebar-background-focused: transparent;
+    --titlebar-border-width: 0;
+    --titlebar-border-color: transparent;
+    --titlebar-text-color: var(--filelist-filename-text-color);
+    --titlebar-text-color-focused: var(--filelist-filename-text-color);
+    --titlebar-text-weight: 600;
+
+    /* 提示 / 建议列表 */
+    --suggestion-background: var(--context-menu-bg-color);
+    --prompt-background: var(--pop-up-menu-bg-color);
+    --prompt-border-color: transparent;
+    --prompt-border-width: 0;
+    --prompt-radius: var(--radius-l);
+    --prompt-shadow: 0 8px 32px var(--liquid-glass-menu-shadow);
+    --prompt-input-height: 40px;
+}
+
+
+/* ───────────────── 二、渐变背景 ───────────────── */
+
+body {
+    background: var(--frosted-glass-interface-bg-img) !important;
+    background-color: var(--frosted-glass-interface-bg-color) !important;
+    background-size: cover !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* 外壳全部让开，渐变才能透上来 */
+.app-container,
+.horizontal-main-container,
+.workspace,
+.workspace-split,
+.workspace-tabs,
+.workspace-tab-container,
+.workspace-leaf,
+.workspace-leaf-content,
+.view-content,
+.view-header,
+.titlebar,
+.titlebar-inner {
+    background-color: transparent;
+}
+
+
+/* ───────────────── 三、液态玻璃 · 写作区 ───────────────── */
+
+.workspace-split.mod-root .workspace-leaf-content[data-type="markdown"] .view-content {
+    background: var(--frosted-glass-writeArea-bg-color);
+    backdrop-filter: blur(var(--frosted-glass-blur)) saturate(var(--liquid-glass-saturate));
+    -webkit-backdrop-filter: blur(var(--frosted-glass-blur)) saturate(var(--liquid-glass-saturate));
+    border-radius: var(--frosted-glass-writeArea-border-radius);
+    border: var(--frosted-glass-writeArea-border);
+    /* 外阴影让卡片浮起来，四道内阴影是光从左上来时玻璃边缘的折射 */
+    box-shadow:
+        var(--frosted-glass-writeArea-shadow),
+        inset 0 1px 0 0 var(--liquid-glass-highlight),
+        inset 1px 0 0 0 var(--liquid-glass-highlight-side),
+        inset 0 -1px 0 0 var(--liquid-glass-shadow-inner),
+        inset -1px 0 0 0 var(--liquid-glass-shadow-inner);
+    margin: 20px 14px;
+}
+
+/* 玻璃里面的每一层都得是透明的，否则会盖住模糊 */
+.workspace-leaf-content[data-type="markdown"] .markdown-source-view,
+.workspace-leaf-content[data-type="markdown"] .markdown-reading-view,
+.workspace-leaf-content[data-type="markdown"] .markdown-preview-view,
+.workspace-leaf-content[data-type="markdown"] .markdown-preview-sizer,
+.workspace-leaf-content[data-type="markdown"] .cm-editor,
+.workspace-leaf-content[data-type="markdown"] .cm-scroller,
+.workspace-leaf-content[data-type="markdown"] .cm-sizer,
+.workspace-leaf-content[data-type="markdown"] .cm-contentContainer,
+.workspace-leaf-content[data-type="markdown"] .cm-gutters {
+    background-color: transparent;
+}
+
+/* 非 Markdown 的视图（图谱、画布、PDF、图片…）保持实底，否则读不清 */
+.workspace-split.mod-root .workspace-leaf-content:not([data-type="markdown"]) > .view-content {
+    background-color: var(--background-primary);
+    border-radius: var(--radius-m);
+    margin: 8px;
+}
+
+
+/* ───────────────── 四、液态玻璃 · 侧栏 ───────────────── */
+
+.workspace-split.mod-left-split,
+.workspace-split.mod-right-split {
+    background: var(--frosted-glass-sidebar-bg-color);
+    backdrop-filter: blur(var(--frosted-glass-blur)) saturate(var(--liquid-glass-saturate));
+    -webkit-backdrop-filter: blur(var(--frosted-glass-blur)) saturate(var(--liquid-glass-saturate));
+}
+
+/* 侧栏与正文之间那道高光线 */
+.workspace-split.mod-left-split {
+    border-right: 1px solid var(--liquid-glass-highlight-side);
+}
+
+.workspace-split.mod-right-split {
+    border-left: 1px solid var(--liquid-glass-highlight-side);
+}
+
+.workspace-split.mod-left-split .workspace-leaf-content,
+.workspace-split.mod-right-split .workspace-leaf-content,
+.workspace-split.mod-left-split .view-content,
+.workspace-split.mod-right-split .view-content {
+    background-color: transparent;
+}
+
+/* 拖动分栏时的把手 */
+.workspace-leaf-resize-handle {
+    background-color: transparent;
+    border-color: transparent;
+    transition: background-color .2s ease;
+}
+
+.workspace-leaf-resize-handle:hover {
+    background-color: var(--accent-color);
+}
+
+
+/* ───────────────── 五、标签页 ───────────────── */
+
+.workspace-tab-header-container {
+    border-bottom: 1px solid var(--border-hairline);
+    padding-left: 6px;
+}
+
+.workspace-tab-header {
+    position: relative;
+    border-radius: 0;
+    color: var(--tab-text-color);
+    transition: color .3s ease;
+}
+
+.workspace-tab-header:hover {
+    color: var(--tab-text-color-active);
+}
+
+.workspace-tab-header.is-active {
+    color: var(--tab-text-color-focused-active-current);
+    background-color: transparent;
+}
+
+/* 选中标签下缘那道 4px 短线，取自侧栏分页指示条 */
+.workspace-tab-header.is-active::after {
+    content: "";
+    position: absolute;
+    left: 14%;
+    right: 14%;
+    bottom: 0;
+    height: 4px;
+    border-radius: 2px;
+    background-color: var(--topBar-content-bottom-line-color);
+    transition: all .5s ease;
+}
+
+/* 标签页的新建 / 更多按钮 */
+.workspace-tab-header-new-tab,
+.workspace-tab-header-tab-list {
+    color: var(--icon-color);
+}
+
+.workspace-tab-header-new-tab:hover,
+.workspace-tab-header-tab-list:hover {
+    color: var(--icon-color-hover);
+}
+
+
+/* ───────────────── 六、左侧 Ribbon ───────────────── */
+
+.workspace-ribbon.mod-left {
+    border-right: 1px solid var(--liquid-glass-highlight-side);
+}
+
+.workspace-ribbon.mod-left.is-collapsed {
+    border-right-color: transparent;
+}
+
+.side-dock-ribbon-action {
+    color: var(--icon-color);
+    border-radius: var(--radius-s);
+    transition: all .3s ease;
+}
+
+.side-dock-ribbon-action:hover {
+    color: var(--icon-color-hover);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+.workspace-ribbon-collapse-btn {
+    color: var(--icon-color);
+}
+
+
+/* ───────────────── 七、视图标题栏 ───────────────── */
+
+.view-header {
+    border-bottom: 1px solid var(--border-hairline);
+}
+
+.workspace-leaf.mod-active .view-header {
+    border-bottom-color: transparent;
+}
+
+.view-header-title {
+    font-family: var(--interface-text-font);
+    font-size: 13px;
+    color: var(--filelist-filename-text-color);
+}
+
+.view-header-title-parent {
+    color: var(--filelist-path-time-text-color);
+}
+
+.view-header-breadcrumb {
+    color: var(--filelist-path-time-text-color);
+}
+
+.view-action {
+    color: var(--icon-color);
+    border-radius: var(--radius-xs);
+}
+
+.view-action:hover {
+    color: var(--icon-color-hover);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}
+
+
+/* ───────────────── 八、状态栏 ───────────────── */
+
+.status-bar {
+    border-top: var(--sidebar-footer-divider);
+    font-size: var(--footer-text-size);
+    color: var(--footer-text-color);
+}
+
+.status-bar-item {
+    color: var(--footer-text-color);
+    border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+    padding: 0 6px;
+    transition: all .3s ease;
+}
+
+.status-bar-item:hover {
+    color: var(--hover-footer-btn-icon-color);
+    background-color: var(--hover-footer-btn-icon-bg-color);
+}

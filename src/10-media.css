@@ -1,0 +1,285 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   10 · 链接、图片、脚注、嵌入
+
+   链接的 hover 是这套主题里最轻的一笔：下划线不用 text-decoration，
+   而是一条从左向右长出来的渐变线，跨行的链接也能连着画。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────── 链接 ───────────────── */
+
+.markdown-rendered a.internal-link,
+.markdown-rendered a.external-link,
+.markdown-rendered a.footnote-link {
+    color: var(--link-text-color);
+    font-weight: var(--link-text-font-weight);
+    text-decoration: none;
+    cursor: pointer;
+    padding-bottom: 2px;
+    /* 下划线做成一条可伸缩的渐变线，宽度从 0 长到 100% */
+    background-image: linear-gradient(to right, var(--hover-link-bottom-line-start-color), var(--hover-link-bottom-line-end-color));
+    background-size: 0% 1.5px;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    transition: background-size var(--link-animation-time) ease, color .3s ease;
+}
+
+.markdown-rendered a.internal-link:hover,
+.markdown-rendered a.external-link:hover,
+.markdown-rendered a.footnote-link:hover {
+    color: var(--hover-link-text-color);
+    background-size: 100% 1.5px;
+}
+
+/* 外链尾巴上挂一枚链条 */
+.markdown-rendered a.external-link::after {
+    content: "";
+    display: inline-block;
+    width: var(--link-text-tail-icon-size);
+    height: var(--link-text-tail-icon-size);
+    margin-left: var(--tail-icon-and-text-distance);
+    vertical-align: -.06em;
+    -webkit-mask-image: var(--icon-link);
+    mask-image: var(--icon-link);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    background-color: var(--link-text-tail-icon-color);
+    opacity: var(--link-text-tail-icon-opacity);
+    transition: all .5s ease;
+}
+
+.markdown-rendered a.external-link:hover::after {
+    background-color: var(--hover-link-tail-icon-color);
+    opacity: 1;
+}
+
+/* 还没建的笔记 */
+.markdown-rendered a.is-unresolved {
+    color: var(--color-red);
+    opacity: .75;
+}
+
+/* 编辑视图 */
+.cm-s-obsidian .cm-link,
+.cm-s-obsidian .cm-url,
+.cm-s-obsidian .cm-hmd-internal-link,
+.cm-s-obsidian .cm-hmd-external-link {
+    color: var(--link-text-color);
+    text-decoration: none;
+}
+
+.cm-s-obsidian .cm-url {
+    color: color-mix(in srgb, var(--link-text-color) 65%, transparent);
+}
+
+.cm-s-obsidian .cm-link:hover,
+.cm-s-obsidian .cm-hmd-internal-link:hover {
+    color: var(--hover-link-text-color);
+}
+
+
+/* ───────────────── 图片 ───────────────── */
+
+.markdown-rendered img,
+.markdown-rendered .internal-embed.image-embed img {
+    border-radius: var(--image-radius);
+    border: var(--image-border);
+    box-shadow: var(--image-shadow);
+    max-width: var(--image-max-width);
+    height: auto;
+    transition: transform .4s ease;
+}
+
+.markdown-rendered img:hover {
+    transform: scale(var(--hover-image-bigger-multiple));
+}
+
+/* 图片下方那行 alt 文字 */
+.markdown-rendered .image-embed::after,
+.markdown-rendered figcaption {
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-size: 12px;
+    font-family: var(--writeArea-text-font);
+    color: var(--filelist-path-time-text-color);
+}
+
+/* 图片加载失败 */
+.markdown-rendered .image-embed.is-unresolved,
+.markdown-rendered img.is-unresolved {
+    color: var(--color-red);
+    opacity: .7;
+}
+
+
+/* ───────────────── 脚注 ───────────────── */
+
+/* 正文里的脚注序号 */
+.markdown-rendered sup.footnote-ref a,
+.markdown-rendered a.footnote-link {
+    font-family: var(--writeArea-text-font);
+    font-size: var(--writeArea-footnote-size);
+    background-color: var(--writeArea-footnote-bg-color);
+    color: var(--writeArea-footnote-color);
+    border-radius: var(--radius-xs);
+    padding: 1px 4px;
+    text-decoration: none;
+    background-image: none;
+}
+
+.markdown-rendered sup.footnote-ref a:hover {
+    color: var(--accent-contrast);
+    background-color: var(--accent-color);
+}
+
+/* 文末脚注区 */
+.markdown-rendered .footnotes,
+.markdown-rendered section.footnotes {
+    margin-top: 2rem;
+    padding-top: 12px;
+    border-top: var(--footnote-content-prompt-divider);
+    font-size: var(--end-footnote-area-text-size, .9em);
+    color: var(--end-footnote-area-text-color);
+    line-height: 2;
+}
+
+.markdown-rendered .footnotes::before {
+    content: "Footnotes";
+    display: block;
+    text-align: right;
+    font-size: .8em;
+    color: var(--end-footnote-area-prompt-color);
+    margin-bottom: .4em;
+}
+
+.markdown-rendered .footnotes ol {
+    padding-inline-start: 1.4em;
+}
+
+.markdown-rendered .footnotes ol,
+.markdown-rendered section.footnotes ol {
+    /* 脚注区也是 ol，但这里要的是编号，不是正文那套圆形徽章 */
+    list-style: decimal;
+    counter-reset: none;
+    padding-inline-start: 1.8em;
+}
+
+.markdown-rendered .footnotes li {
+    counter-increment: none;
+}
+
+.markdown-rendered .footnotes li::marker {
+    color: var(--end-footnote-area-prompt-color);
+    font-size: .85em;
+}
+
+/* 脚注编号与内容之间的冒号 */
+.markdown-rendered .footnotes li::before {
+    content: "";
+    display: inline-block;
+    width: .8em;
+    height: .8em;
+    margin-right: .3em;
+    vertical-align: -.06em;
+    -webkit-mask-image: var(--icon-colon);
+    mask-image: var(--icon-colon);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    background-color: var(--footnote-content-end-hook-color);
+}
+
+/* 回到正文的那枚箭头 */
+.markdown-rendered .footnotes a.footnote-backref,
+.markdown-rendered .footnotes .footnote-backref {
+    display: inline-block;
+    width: .9em;
+    height: .9em;
+    margin-left: .4em;
+    font-size: 0;
+    vertical-align: -.06em;
+    -webkit-mask-image: var(--icon-back);
+    mask-image: var(--icon-back);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    background-color: var(--footnote-content-end-hook-color);
+    text-decoration: none;
+    transition: all .3s ease;
+}
+
+.markdown-rendered .footnotes a.footnote-backref:hover {
+    background-color: var(--accent-color);
+}
+
+/* 编辑视图里的脚注 */
+.cm-s-obsidian .cm-footref,
+.cm-s-obsidian .cm-footnote {
+    color: var(--writeArea-footnote-color);
+    background-color: var(--writeArea-footnote-bg-color);
+    border-radius: var(--radius-xs);
+    padding: 0 3px;
+}
+
+
+/* ───────────────── 嵌入的笔记与块 ───────────────── */
+
+.markdown-rendered .internal-embed:not(.image-embed) {
+    border-left: var(--embed-border-left);
+    background-color: transparent;
+    border-radius: var(--embed-radius);
+    padding: var(--embed-padding);
+}
+
+.markdown-rendered .markdown-embed-title {
+    font-family: var(--writeArea-text-font);
+    font-weight: var(--bold-text-weight);
+    color: var(--h3-color);
+    letter-spacing: var(--headline-text-letter-space);
+}
+
+.markdown-rendered .file-embed-title {
+    font-family: var(--writeArea-text-font);
+    color: var(--h4-color);
+}
+
+
+/* ───────────────── 网络图片角标 ───────────────── */
+
+/* 外链图片在右上角挂一朵云，一眼看出它不是本地文件 */
+.markdown-rendered .image-embed[src*="http"]::before,
+.markdown-rendered img[src*="http"]::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    right: 8%;
+    width: 1.1em;
+    height: 1.1em;
+    -webkit-mask-image: var(--icon-cloud);
+    mask-image: var(--icon-cloud);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    background-color: var(--filelist-path-time-text-color);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.markdown-rendered .image-embed[src*="http"] {
+    position: relative;
+    display: inline-block;
+}

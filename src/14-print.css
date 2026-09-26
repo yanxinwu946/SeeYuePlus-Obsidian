@@ -1,0 +1,128 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   14 · 导出 PDF
+
+   屏幕上的玻璃在打印时全部让位：模糊、阴影、圆角、半透明底色一律去掉，
+   否则 PDF 里会糊成一团。分页规则接管剩下的活 —— 标题不落在页脚、
+   引用块与图片不被拦腰切断、表头在每一页重印。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+@media print {
+
+    @page {
+        margin: var(--pdf-page-margin);
+    }
+
+    html,
+    body {
+        background: var(--pdf-page-bg-color) !important;
+        background-image: none !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* 玻璃让位 */
+    .workspace-leaf-content[data-type="markdown"] .view-content,
+    .workspace-leaf-content[data-type="markdown"] .markdown-reading-view,
+    .workspace-leaf-content[data-type="markdown"] .markdown-preview-view {
+        background: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* 界面外壳不进纸面 */
+    .workspace-split.mod-left-split,
+    .workspace-split.mod-right-split,
+    .workspace-ribbon,
+    .workspace-tab-header-container,
+    .view-header,
+    .status-bar,
+    .titlebar,
+    .copy-code-button,
+    .heading-collapse-indicator,
+    .markdown-embed-link,
+    .collapse-indicator,
+    .edit-block-button {
+        display: none !important;
+    }
+
+    /* 标题等级图标是屏幕上的路标，纸上不需要 */
+    .markdown-rendered :is(h2, h3, h4, h5, h6)::after {
+        display: none !important;
+    }
+
+    /* 图片的悬浮放大在纸上没有意义 */
+    .markdown-rendered img:hover {
+        transform: none;
+    }
+
+    .markdown-rendered img {
+        max-width: 100%;
+    }
+
+    /* ── 分页 ── */
+
+    /* 标题不与后文分家 */
+    .markdown-preview-view :is(h1, h2, h3, h4, h5, h6) {
+        break-after: avoid;
+        break-inside: avoid;
+    }
+
+    /* 这些块整体挪到下一页，不被切开 */
+    .markdown-preview-view :is(blockquote, img, figure, li, tr) {
+        break-inside: avoid;
+    }
+
+    /* 段落至少留两行在页尾、两行在页首，避免孤字 */
+    .markdown-preview-view :is(p, blockquote, ul, ol, dl) {
+        orphans: 2;
+        widows: 2;
+    }
+
+    /* 长表格和长代码允许跨页，但表头每页重印 */
+    .markdown-preview-view table {
+        break-inside: auto;
+        width: 100%;
+    }
+
+    .markdown-preview-view thead {
+        display: table-header-group;
+    }
+
+    .markdown-preview-view pre {
+        break-inside: auto;
+    }
+
+    /* 代码块在纸上不需要滚动，也不需要顶栏那三点 */
+    .markdown-rendered pre {
+        overflow: visible !important;
+        box-shadow: none !important;
+        padding-top: 1.2em;
+    }
+
+    .markdown-rendered pre::before {
+        display: none;
+    }
+
+    /* 引用块在纸上不铺底色，只留左边那道竖线 */
+    .markdown-rendered blockquote:not(.callout) {
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    /* 脚注区与正文之间的分隔线 */
+    .markdown-rendered .footnotes,
+    .markdown-rendered section.footnotes {
+        margin-top: 1.5em;
+        padding-top: 10px;
+    }
+
+    /* 外链在纸上点不动，把尾巴图标收起来 */
+    .markdown-rendered a.external-link::after {
+        display: none;
+    }
+}
