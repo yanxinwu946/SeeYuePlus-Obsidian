@@ -29,14 +29,7 @@
     height: .95em;
     margin-right: .3em;
     vertical-align: -.1em;
-    -webkit-mask-image: var(--icon-quote);
-    mask-image: var(--icon-quote);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
+    mask: var(--icon-quote) center / contain no-repeat;
     background-color: var(--blockquote-top-left-icon-color);
     opacity: .5;
 }
@@ -98,14 +91,7 @@
     width: 1.05em;
     height: 1.05em;
     flex: 0 0 auto;
-    -webkit-mask-image: var(--sy-callout-icon);
-    mask-image: var(--sy-callout-icon);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
+    mask: var(--sy-callout-icon) center / contain no-repeat;
     background-color: currentColor;
 }
 

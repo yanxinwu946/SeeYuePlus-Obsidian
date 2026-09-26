@@ -138,14 +138,6 @@ body {
     --tag-size: .85em;
 
     /* 图标 */
-    --icon-color: var(--icon-default-color);
-    --icon-color-hover: var(--icon-default-color-hover);
-    --icon-color-active: var(--accent-color);
-    --icon-color-focused: var(--accent-color);
-    --icon-opacity: 1;
-    --icon-s: 16px;
-    --icon-m: 18px;
-    --icon-l: 18px;
 
     /* 侧栏 */
     --nav-item-color: var(--sidebar-text-color);
@@ -215,11 +207,6 @@ body {
     --modal-shadow: var(--frosted-glass-writeArea-shadow);
 
     /* 菜单 */
-    --menu-background: var(--context-menu-bg-color);
-    --menu-border-color: transparent;
-    --menu-border-width: 0;
-    --menu-radius: var(--radius-l);
-    --menu-shadow: 0 5px 15px rgba(0, 0, 0, .15);
 
     /* 提示框 */
 
@@ -235,8 +222,6 @@ body {
     /* 嵌入块 */
     --embed-background: transparent;
     --embed-border-left: 2px solid var(--accent-color);
-    --embed-border-top: none;
-    --embed-border-bottom: none;
     --embed-padding: 0 0 0 12px;
     --embed-radius: var(--radius-s);
     --embed-max-height: 4000px;
@@ -259,9 +244,6 @@ body {
     --metadata-input-height: 26px;
 
     /* 搜索 */
-    --search-result-background: transparent;
-    --search-clear-button-color: var(--icon-color);
-    --search-icon-color: var(--icon-color);
 
     /* 滚动条 */
     --scrollbar-bg: transparent;
@@ -304,14 +286,10 @@ body {
 
     /* 表格 */
     --table-background: var(--table-bg-color);
-    --table-border-width: 1px;
-    --table-border-color: transparent;
     --table-white-space: normal;
     --table-header-background: var(--table-thead-bg-color);
     --table-header-background-hover: var(--table-thead-bg-color);
     --table-header-color: var(--table-thead-text-color);
-    --table-header-border-width: 0;
-    --table-header-border-color: transparent;
     --table-header-font: var(--writeArea-text-font);
     --table-header-size: inherit;
     --table-header-weight: var(--bold-text-weight);
@@ -378,8 +356,6 @@ body {
     --vault-name-color: var(--filelist-filename-text-color);
     --vault-name-font-weight: 600;
     --vault-name-padding: 6px 0;
-    --vault-profile-color: var(--filelist-filename-text-color);
-    --vault-profile-color-hover: var(--active-filelist-text-color);
 
     /* 窗口标题栏 */
     --titlebar-background: transparent;
@@ -412,10 +388,6 @@ body {
 
     /* 提示 / 建议列表 */
     --suggestion-background: var(--context-menu-bg-color);
-    --prompt-background: var(--pop-up-menu-bg-color);
-    --prompt-border-color: transparent;
-    --prompt-border-width: 0;
-    --prompt-input-height: 40px;
 }
 
 
@@ -452,7 +424,6 @@ body {
 .workspace-split.mod-root .workspace-leaf-content[data-type="markdown"] .view-content {
     background: var(--frosted-glass-writeArea-bg-color);
     backdrop-filter: blur(var(--frosted-glass-blur)) saturate(var(--liquid-glass-saturate));
-    -webkit-backdrop-filter: blur(var(--frosted-glass-blur)) saturate(var(--liquid-glass-saturate));
     border-radius: var(--frosted-glass-writeArea-border-radius);
     border: var(--frosted-glass-writeArea-border);
     /* 外阴影让卡片浮起来，四道内阴影是光从左上来时玻璃边缘的折射 */
@@ -492,7 +463,6 @@ body {
 .workspace-split.mod-right-split {
     background: var(--frosted-glass-sidebar-bg-color);
     backdrop-filter: blur(var(--frosted-glass-blur)) saturate(var(--liquid-glass-saturate));
-    -webkit-backdrop-filter: blur(var(--frosted-glass-blur)) saturate(var(--liquid-glass-saturate));
 }
 
 /* 侧栏与正文之间那道高光线 */

@@ -16,7 +16,6 @@
     body {
         background: var(--pdf-page-bg-color) !important;
         background-image: none !important;
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
@@ -26,7 +25,6 @@
     .workspace-leaf-content[data-type="markdown"] .markdown-preview-view {
         background: transparent !important;
         backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
         box-shadow: none !important;
         border: none !important;
         border-radius: 0 !important;

@@ -157,7 +157,6 @@
 /* 固定字号，--task-list-box-size 的 em 才有确定的分母 */
 input[type="checkbox"].task-list-item-checkbox {
     appearance: none;
-    -webkit-appearance: none;
     font-size: var(--writeArea-text-size);
     width: var(--task-list-box-size);
     height: var(--task-list-box-size);
@@ -188,11 +187,8 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
     margin: auto;
     width: var(--task-list-checked-tick-size);
     height: var(--task-list-checked-tick-size);
-    -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
-    -webkit-mask-position: center;
     mask-position: center;
-    -webkit-mask-size: contain;
     mask-size: contain;
     background-color: var(--task-list-checked-tick-color);
     transform: none;
@@ -204,7 +200,6 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
    方框有的直接挂在 li 下、有的多包一层 p，所以两种都写 */
 :is(li.task-list-item, .HyperMD-task-line)[data-task="x"] input.task-list-item-checkbox:checked::after,
 :is(li.task-list-item, .HyperMD-task-line)[data-task="X"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-check);
     mask-image: var(--icon-check);
 }
 
@@ -213,7 +208,6 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
 }
 
 :is(li.task-list-item, .HyperMD-task-line)[data-task="-"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-minus);
     mask-image: var(--icon-minus);
 }
 
@@ -222,7 +216,6 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
 }
 
 :is(li.task-list-item, .HyperMD-task-line)[data-task="?"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-question);
     mask-image: var(--icon-question);
 }
 
@@ -231,17 +224,14 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
 }
 
 :is(li.task-list-item, .HyperMD-task-line)[data-task="!"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-warning);
     mask-image: var(--icon-warning);
 }
 
 :is(li.task-list-item, .HyperMD-task-line)[data-task="/"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-dot);
     mask-image: var(--icon-dot);
 }
 
 :is(li.task-list-item, .HyperMD-task-line)[data-task=">"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-arrow-right);
     mask-image: var(--icon-arrow-right);
 }
 
@@ -250,7 +240,6 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
 }
 
 :is(li.task-list-item, .HyperMD-task-line)[data-task="*"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-star);
     mask-image: var(--icon-star);
 }
 

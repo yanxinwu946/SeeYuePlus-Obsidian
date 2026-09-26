@@ -378,8 +378,9 @@ body {
 
     /* ───────────────── 设置面板 ───────────────── */
 
-    --setting-items-border-width: 0;
-    --setting-items-divider-width: 1px;
+    /* 注意：--setting-items-border-width 不控制设置项之间的分隔线 ——
+       实测设成 1px 之后 .setting-item 的 border-top-width 仍是 0。
+       分隔线由 12-chrome.css 里那条直接规则画。 */
     --setting-items-radius: var(--radius-m);
     --setting-items-padding-x: 0;
     --setting-items-padding-y: 0;

@@ -424,6 +424,11 @@ body.theme-light {
     --accent-color: #457b9d;
     --accent-color-hover: #3d6d8c;
     --accent-contrast: #fff;
+    /* Obsidian 用这三个 HSL 分量派生强调色 —— 只设 --color-accent 不够，
+       设置面板里的主题色圆点、选中的导航项都从这儿取色 */
+    --accent-h: 203;
+    --accent-s: 39%;
+    --accent-l: 44%;
     /* 标签 */
     --tag-bg-color: #eceff4;
     --tag-text-color: #5e81ac;
@@ -699,6 +704,9 @@ body.theme-dark {
     --accent-color: #5e81ac;
     --accent-color-hover: #6f92bd;
     --accent-contrast: #eceff4;
+    --accent-h: 213;
+    --accent-s: 32%;
+    --accent-l: 52%;
     --tag-bg-color: #434c5e;
     --tag-text-color: #88c0d0;
     --icon-default-color: rgba(255, 255, 255, .6);
@@ -958,14 +966,6 @@ body {
     --tag-size: .85em;
 
     /* 图标 */
-    --icon-color: var(--icon-default-color);
-    --icon-color-hover: var(--icon-default-color-hover);
-    --icon-color-active: var(--accent-color);
-    --icon-color-focused: var(--accent-color);
-    --icon-opacity: 1;
-    --icon-s: 16px;
-    --icon-m: 18px;
-    --icon-l: 18px;
 
     /* 侧栏 */
     --nav-item-color: var(--sidebar-text-color);
@@ -1035,11 +1035,6 @@ body {
     --modal-shadow: var(--frosted-glass-writeArea-shadow);
 
     /* 菜单 */
-    --menu-background: var(--context-menu-bg-color);
-    --menu-border-color: transparent;
-    --menu-border-width: 0;
-    --menu-radius: var(--radius-l);
-    --menu-shadow: 0 5px 15px rgba(0, 0, 0, .15);
 
     /* 提示框 */
 
@@ -1055,8 +1050,6 @@ body {
     /* 嵌入块 */
     --embed-background: transparent;
     --embed-border-left: 2px solid var(--accent-color);
-    --embed-border-top: none;
-    --embed-border-bottom: none;
     --embed-padding: 0 0 0 12px;
     --embed-radius: var(--radius-s);
     --embed-max-height: 4000px;
@@ -1079,9 +1072,6 @@ body {
     --metadata-input-height: 26px;
 
     /* 搜索 */
-    --search-result-background: transparent;
-    --search-clear-button-color: var(--icon-color);
-    --search-icon-color: var(--icon-color);
 
     /* 滚动条 */
     --scrollbar-bg: transparent;
@@ -1124,14 +1114,10 @@ body {
 
     /* 表格 */
     --table-background: var(--table-bg-color);
-    --table-border-width: 1px;
-    --table-border-color: transparent;
     --table-white-space: normal;
     --table-header-background: var(--table-thead-bg-color);
     --table-header-background-hover: var(--table-thead-bg-color);
     --table-header-color: var(--table-thead-text-color);
-    --table-header-border-width: 0;
-    --table-header-border-color: transparent;
     --table-header-font: var(--writeArea-text-font);
     --table-header-size: inherit;
     --table-header-weight: var(--bold-text-weight);
@@ -1198,8 +1184,6 @@ body {
     --vault-name-color: var(--filelist-filename-text-color);
     --vault-name-font-weight: 600;
     --vault-name-padding: 6px 0;
-    --vault-profile-color: var(--filelist-filename-text-color);
-    --vault-profile-color-hover: var(--active-filelist-text-color);
 
     /* 窗口标题栏 */
     --titlebar-background: transparent;
@@ -1232,10 +1216,6 @@ body {
 
     /* 提示 / 建议列表 */
     --suggestion-background: var(--context-menu-bg-color);
-    --prompt-background: var(--pop-up-menu-bg-color);
-    --prompt-border-color: transparent;
-    --prompt-border-width: 0;
-    --prompt-input-height: 40px;
 }
 
 
@@ -1272,7 +1252,6 @@ body {
 .workspace-split.mod-root .workspace-leaf-content[data-type="markdown"] .view-content {
     background: var(--frosted-glass-writeArea-bg-color);
     backdrop-filter: blur(var(--frosted-glass-blur)) saturate(var(--liquid-glass-saturate));
-    -webkit-backdrop-filter: blur(var(--frosted-glass-blur)) saturate(var(--liquid-glass-saturate));
     border-radius: var(--frosted-glass-writeArea-border-radius);
     border: var(--frosted-glass-writeArea-border);
     /* 外阴影让卡片浮起来，四道内阴影是光从左上来时玻璃边缘的折射 */
@@ -1312,7 +1291,6 @@ body {
 .workspace-split.mod-right-split {
     background: var(--frosted-glass-sidebar-bg-color);
     backdrop-filter: blur(var(--frosted-glass-blur)) saturate(var(--liquid-glass-saturate));
-    -webkit-backdrop-filter: blur(var(--frosted-glass-blur)) saturate(var(--liquid-glass-saturate));
 }
 
 /* 侧栏与正文之间那道高光线 */
@@ -1868,7 +1846,6 @@ hr {
 /* 固定字号，--task-list-box-size 的 em 才有确定的分母 */
 input[type="checkbox"].task-list-item-checkbox {
     appearance: none;
-    -webkit-appearance: none;
     font-size: var(--writeArea-text-size);
     width: var(--task-list-box-size);
     height: var(--task-list-box-size);
@@ -1899,11 +1876,8 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
     margin: auto;
     width: var(--task-list-checked-tick-size);
     height: var(--task-list-checked-tick-size);
-    -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
-    -webkit-mask-position: center;
     mask-position: center;
-    -webkit-mask-size: contain;
     mask-size: contain;
     background-color: var(--task-list-checked-tick-color);
     transform: none;
@@ -1915,7 +1889,6 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
    方框有的直接挂在 li 下、有的多包一层 p，所以两种都写 */
 :is(li.task-list-item, .HyperMD-task-line)[data-task="x"] input.task-list-item-checkbox:checked::after,
 :is(li.task-list-item, .HyperMD-task-line)[data-task="X"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-check);
     mask-image: var(--icon-check);
 }
 
@@ -1924,7 +1897,6 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
 }
 
 :is(li.task-list-item, .HyperMD-task-line)[data-task="-"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-minus);
     mask-image: var(--icon-minus);
 }
 
@@ -1933,7 +1905,6 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
 }
 
 :is(li.task-list-item, .HyperMD-task-line)[data-task="?"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-question);
     mask-image: var(--icon-question);
 }
 
@@ -1942,17 +1913,14 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
 }
 
 :is(li.task-list-item, .HyperMD-task-line)[data-task="!"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-warning);
     mask-image: var(--icon-warning);
 }
 
 :is(li.task-list-item, .HyperMD-task-line)[data-task="/"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-dot);
     mask-image: var(--icon-dot);
 }
 
 :is(li.task-list-item, .HyperMD-task-line)[data-task=">"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-arrow-right);
     mask-image: var(--icon-arrow-right);
 }
 
@@ -1961,7 +1929,6 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
 }
 
 :is(li.task-list-item, .HyperMD-task-line)[data-task="*"] input.task-list-item-checkbox:checked::after {
-    -webkit-mask-image: var(--icon-star);
     mask-image: var(--icon-star);
 }
 
@@ -2149,14 +2116,7 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
     height: .95em;
     margin-right: .3em;
     vertical-align: -.1em;
-    -webkit-mask-image: var(--icon-quote);
-    mask-image: var(--icon-quote);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
+    mask: var(--icon-quote) center / contain no-repeat;
     background-color: var(--blockquote-top-left-icon-color);
     opacity: .5;
 }
@@ -2218,14 +2178,7 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
     width: 1.05em;
     height: 1.05em;
     flex: 0 0 auto;
-    -webkit-mask-image: var(--sy-callout-icon);
-    mask-image: var(--sy-callout-icon);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
+    mask: var(--sy-callout-icon) center / contain no-repeat;
     background-color: currentColor;
 }
 
@@ -2353,7 +2306,6 @@ input[type="checkbox"].task-list-item-checkbox:checked::after {
     vertical-align: baseline;
     /* 跨行断开时每段各自画出完整的框，而不是被拦腰切开 */
     box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
 }
 
 /* 引用块与表格里的行内代码换个底，免得和容器撞色 */
@@ -2836,14 +2788,7 @@ body.theme-dark .cm-s-obsidian .cm-positive {
     height: var(--link-text-tail-icon-size);
     margin-left: var(--tail-icon-and-text-distance);
     vertical-align: -.06em;
-    -webkit-mask-image: var(--icon-link);
-    mask-image: var(--icon-link);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
+    mask: var(--icon-link) center / contain no-repeat;
     background-color: var(--link-text-tail-icon-color);
     opacity: var(--link-text-tail-icon-opacity);
     transition: all .5s ease;
@@ -3004,14 +2949,7 @@ body.theme-dark .cm-s-obsidian .cm-positive {
     margin-left: .4em;
     font-size: 0;
     vertical-align: -.06em;
-    -webkit-mask-image: var(--icon-back);
-    mask-image: var(--icon-back);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
+    mask: var(--icon-back) center / contain no-repeat;
     background-color: var(--footnote-content-end-hook-color);
     text-decoration: none;
     transition: all .3s ease;
@@ -3064,14 +3002,7 @@ body.theme-dark .cm-s-obsidian .cm-positive {
     right: 8%;
     width: 1.1em;
     height: 1.1em;
-    -webkit-mask-image: var(--icon-cloud);
-    mask-image: var(--icon-cloud);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
+    mask: var(--icon-cloud) center / contain no-repeat;
     background-color: var(--filelist-path-time-text-color);
     z-index: 2;
     pointer-events: none;
@@ -3723,6 +3654,10 @@ input::placeholder {
     background-color: transparent;
 }
 
+/* 开关、滑块、下拉框的外观走 18-obsidian-vars.css 里的原生变量，
+   这里不再重复写选择器 —— 实机量过，Obsidian 确实认那几个变量 */
+
+/* 设置项之间的分隔线得自己画：--setting-items-border-width 管不着它 */
 .setting-item {
     border-top: 1px solid var(--border-hairline);
 }
@@ -3740,46 +3675,15 @@ input::placeholder {
     color: var(--accent-color);
 }
 
-/* 设置面板里的下拉框 */
+/* 下拉框的边框和字体变量没覆盖到，留一条 */
 .dropdown {
-    background-color: var(--input-bg-color);
     border: var(--input-border);
-    border-radius: var(--radius-s);
-    color: var(--writeArea-text-color);
     font-family: var(--interface-text-font);
     box-shadow: none;
 }
 
 .dropdown:hover {
     border-color: var(--focus-ring-color);
-}
-
-/* 开关 */
-.checkbox-container {
-    background-color: var(--border-strong);
-    border: none;
-    box-shadow: none;
-    transition: background-color .3s ease;
-}
-
-.checkbox-container.is-enabled {
-    background-color: var(--accent-color);
-}
-
-.checkbox-container::after {
-    background-color: #fff;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
-}
-
-/* 滑块 */
-input[type="range"] {
-    background-color: var(--border-hairline);
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    background-color: var(--accent-color);
-    border: none;
-    box-shadow: none;
 }
 
 /* 通用按钮 */
@@ -3986,7 +3890,6 @@ button:not(.clickable-icon):not(.workspace-tab-header-inner-close-button) {
     body {
         background: var(--pdf-page-bg-color) !important;
         background-image: none !important;
-        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
 
@@ -3996,7 +3899,6 @@ button:not(.clickable-icon):not(.workspace-tab-header-inner-close-button) {
     .workspace-leaf-content[data-type="markdown"] .markdown-preview-view {
         background: transparent !important;
         backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
         box-shadow: none !important;
         border: none !important;
         border-radius: 0 !important;
@@ -4291,7 +4193,6 @@ body.is-phone .workspace-drawer,
 body.is-mobile .workspace-drawer {
     background-color: var(--sidebar-whole-bg-color);
     backdrop-filter: none;
-    -webkit-backdrop-filter: none;
 }
 
 body.is-phone .workspace-drawer-header {
@@ -4969,8 +4870,9 @@ body {
 
     /* ───────────────── 设置面板 ───────────────── */
 
-    --setting-items-border-width: 0;
-    --setting-items-divider-width: 1px;
+    /* 注意：--setting-items-border-width 不控制设置项之间的分隔线 ——
+       实测设成 1px 之后 .setting-item 的 border-top-width 仍是 0。
+       分隔线由 12-chrome.css 里那条直接规则画。 */
     --setting-items-radius: var(--radius-m);
     --setting-items-padding-x: 0;
     --setting-items-padding-y: 0;

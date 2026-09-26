@@ -55,18 +55,33 @@ Obsidian 一个主题文件夹只装得下一份 `theme.css`，三套配色塞�
 ```powershell
 .\build.ps1          # 打包一次
 .\build.ps1 -Watch   # 常驻监听，改 src/ 就重新打包
-node .\lint.mjs      # 查悬空引用、死变量、括号配平
 ```
 
 `SeeYuePlus/theme.css` 是 `src/` 拼出来的产物，不要直接改它。
 
-## 目录
+### 自检
+
+```bash
+node lint.mjs                 # 悬空引用、死变量、括号配平、变量覆盖率
+node tools/find-dupes.mjs     # 同一选择器下被定义两次的变量
+```
+
+`lint.mjs` 会拿 `preview/obsidian-vars.json` 做参照 —— 那是在真 Obsidian 里
+把主题关掉、扫描它全部样式表 dump 出来的 1097 个原生变量名。
+
+这份表很要紧：Obsidian 的变量名写错不会报错，只是静默不生效。
+`--menu-item-color`、`--tooltip-background`、`--prompt-radius`、
+`--table-cell-border-width` 这些看着很像的名字，1.13 里一个都没有。
+
+### 目录
 
 ```
 src/                 分片源码，改这里
 SeeYuePlus/          可安装的主题文件夹（theme.css 由 build.ps1 生成）
 snippets/            见月 · 护眼片段
 preview/harness.html 本地渲染验证页，没有 Obsidian 也能看效果
+preview/obsidian-vars.json  Obsidian 原生变量表，lint 用
+tools/               一次性小工具
 ```
 
 ## 反馈

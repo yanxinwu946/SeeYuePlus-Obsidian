@@ -413,6 +413,11 @@ body.theme-light {
     --accent-color: #457b9d;
     --accent-color-hover: #3d6d8c;
     --accent-contrast: #fff;
+    /* Obsidian 用这三个 HSL 分量派生强调色 —— 只设 --color-accent 不够，
+       设置面板里的主题色圆点、选中的导航项都从这儿取色 */
+    --accent-h: 203;
+    --accent-s: 39%;
+    --accent-l: 44%;
     /* 标签 */
     --tag-bg-color: #eceff4;
     --tag-text-color: #5e81ac;
@@ -688,6 +693,9 @@ body.theme-dark {
     --accent-color: #5e81ac;
     --accent-color-hover: #6f92bd;
     --accent-contrast: #eceff4;
+    --accent-h: 213;
+    --accent-s: 32%;
+    --accent-l: 52%;
     --tag-bg-color: #434c5e;
     --tag-text-color: #88c0d0;
     --icon-default-color: rgba(255, 255, 255, .6);

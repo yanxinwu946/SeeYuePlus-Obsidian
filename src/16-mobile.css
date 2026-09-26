@@ -32,7 +32,6 @@ body.is-phone .workspace-drawer,
 body.is-mobile .workspace-drawer {
     background-color: var(--sidebar-whole-bg-color);
     backdrop-filter: none;
-    -webkit-backdrop-filter: none;
 }
 
 body.is-phone .workspace-drawer-header {

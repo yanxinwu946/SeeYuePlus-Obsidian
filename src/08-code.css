@@ -25,7 +25,6 @@
     vertical-align: baseline;
     /* 跨行断开时每段各自画出完整的框，而不是被拦腰切开 */
     box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
 }
 
 /* 引用块与表格里的行内代码换个底，免得和容器撞色 */

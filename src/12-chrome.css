@@ -252,6 +252,10 @@
     background-color: transparent;
 }
 
+/* 开关、滑块、下拉框的外观走 18-obsidian-vars.css 里的原生变量，
+   这里不再重复写选择器 —— 实机量过，Obsidian 确实认那几个变量 */
+
+/* 设置项之间的分隔线得自己画：--setting-items-border-width 管不着它 */
 .setting-item {
     border-top: 1px solid var(--border-hairline);
 }
@@ -269,46 +273,15 @@
     color: var(--accent-color);
 }
 
-/* 设置面板里的下拉框 */
+/* 下拉框的边框和字体变量没覆盖到，留一条 */
 .dropdown {
-    background-color: var(--input-bg-color);
     border: var(--input-border);
-    border-radius: var(--radius-s);
-    color: var(--writeArea-text-color);
     font-family: var(--interface-text-font);
     box-shadow: none;
 }
 
 .dropdown:hover {
     border-color: var(--focus-ring-color);
-}
-
-/* 开关 */
-.checkbox-container {
-    background-color: var(--border-strong);
-    border: none;
-    box-shadow: none;
-    transition: background-color .3s ease;
-}
-
-.checkbox-container.is-enabled {
-    background-color: var(--accent-color);
-}
-
-.checkbox-container::after {
-    background-color: #fff;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
-}
-
-/* 滑块 */
-input[type="range"] {
-    background-color: var(--border-hairline);
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    background-color: var(--accent-color);
-    border: none;
-    box-shadow: none;
 }
 
 /* 通用按钮 */
