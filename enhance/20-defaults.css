@@ -1,0 +1,26 @@
+/* 没装 Style Settings 时，AnuPpuccin 的 Force Custom Accents 不会往 body 加 class。
+   这里把强调色接到 Catppuccin；装了插件后换 mauve / peach 等仍然生效。 */
+
+body {
+    --ctp-accent: var(--ctp-mauve);
+    --color-accent: rgb(var(--ctp-accent));
+    --color-accent-1: rgb(var(--ctp-accent));
+    --color-accent-2: rgba(var(--ctp-accent), 0.9);
+    --text-selection: rgba(var(--ctp-accent), 0.25);
+    --interactive-accent: rgb(var(--ctp-accent));
+    --interactive-accent-hover: rgba(var(--ctp-accent), 0.9);
+    --text-accent: rgb(var(--ctp-accent));
+    --text-accent-hover: rgb(var(--ctp-accent));
+    --interactive-accent-rgb: var(--ctp-accent);
+    --blockquote-border-color: rgb(var(--ctp-accent));
+    --background-modifier-active: rgba(var(--ctp-accent), 0.1);
+    --background-modifier-active-hover: rgba(var(--ctp-accent), 0.15);
+    --nav-item-background-selected: rgba(var(--ctp-accent), 0.16);
+    --heading-formatting: rgb(var(--ctp-accent));
+    --icon-color-focused: rgb(var(--ctp-accent));
+    --tag-background: rgba(var(--ctp-accent), 0.12);
+    --tag-background-hover: rgba(var(--ctp-accent), 0.2);
+    --tag-color: rgb(var(--ctp-accent));
+    --checkbox-color: rgb(var(--ctp-accent));
+    --checkbox-color-hover: rgb(var(--ctp-accent));
+}

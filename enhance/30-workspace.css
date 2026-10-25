@@ -1,0 +1,174 @@
+/* 工作区 chrome：菜单玻璃、标签、滚动条、设置与搜索。 */
+
+/* ── 菜单 / 弹窗 / 命令面板 ── */
+
+body:not(.sy-off-glass):not(.is-translucent) :is(.menu, .modal, .prompt, .popover.hover-popover, .suggestion-container, .workspace-leaf-resize-handle + .menu) {
+    background-color: var(--sy-glass-bg);
+    backdrop-filter: blur(var(--sy-glass-blur)) saturate(var(--sy-glass-saturate));
+    -webkit-backdrop-filter: blur(var(--sy-glass-blur)) saturate(var(--sy-glass-saturate));
+    box-shadow: var(--sy-elev-2), inset 0 1px 0 0 var(--sy-glass-inset);
+    border: 1px solid var(--sy-pane-border);
+}
+
+body:not(.sy-off-glass) .menu {
+    border-radius: var(--sy-radius-lg);
+    padding: 6px;
+}
+
+body:not(.sy-off-glass) .menu .menu-item {
+    border-radius: var(--sy-radius-sm);
+}
+
+body:not(.sy-off-glass) .modal {
+    border-radius: var(--sy-radius-xl);
+}
+
+body:not(.sy-off-glass) .tooltip {
+    background-color: var(--tooltip-background);
+    color: var(--tooltip-color);
+    border-radius: var(--tooltip-radius, var(--sy-radius-md));
+    box-shadow: var(--sy-elev-1);
+}
+
+body:not(.sy-off-glass) .notice {
+    background-color: var(--notice-background);
+    color: var(--notice-text-color);
+    border-radius: var(--sy-radius-lg);
+    box-shadow: var(--sy-elev-1);
+}
+
+
+/* ── 标签页 ── */
+
+.workspace .mod-root .workspace-tab-header {
+    border-radius: var(--tab-radius) var(--tab-radius) 0 0;
+}
+
+.workspace .mod-root .workspace-tab-header.is-active .workspace-tab-header-inner {
+    background-color: var(--tab-inner-background-active, var(--background-modifier-hover));
+}
+
+.mod-left-split .workspace-tab-header.is-active,
+.mod-right-split .workspace-tab-header.is-active {
+    color: rgb(var(--ctp-accent, var(--ctp-mauve)));
+}
+
+.workspace-tab-header-inner-title {
+    font-weight: 500;
+}
+
+.workspace .mod-root .workspace-tab-header.is-active .workspace-tab-header-inner-title {
+    font-weight: 600;
+}
+
+
+/* ── 快捷键胶囊 ── */
+
+.setting-hotkey,
+kbd,
+.prompt-instruction-command {
+    background-color: var(--hotkey-background, rgba(var(--ctp-surface1), 0.9));
+    color: var(--hotkey-color, rgb(var(--ctp-subtext1)));
+    border-radius: var(--hotkey-radius, var(--sy-radius-sm));
+    border: 1px solid rgb(var(--ctp-surface0));
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* ── 滚动条 ── */
+
+body:not(.anp-toggle-scrollbars)::-webkit-scrollbar-thumb,
+body:not(.anp-toggle-scrollbars) *::-webkit-scrollbar-thumb {
+    background-color: rgba(var(--ctp-overlay0), 0.55);
+    border-radius: var(--sy-radius-pill);
+}
+
+body:not(.anp-toggle-scrollbars)::-webkit-scrollbar-thumb:hover,
+body:not(.anp-toggle-scrollbars) *::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(var(--ctp-overlay1), 0.75);
+}
+
+
+/* ── 状态栏 / 丝带 ── */
+
+.status-bar {
+    border-top: 1px solid rgb(var(--ctp-surface0));
+    font-size: 12px;
+}
+
+.workspace-ribbon.mod-left:before {
+    border-right-color: rgb(var(--ctp-surface0));
+}
+
+.side-dock-ribbon-action:hover {
+    background-color: var(--background-modifier-hover);
+    border-radius: var(--sy-radius-sm);
+}
+
+
+/* ── 设置页 ── */
+
+.vertical-tab-header-group-title {
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: rgb(var(--ctp-overlay1));
+}
+
+.vertical-tab-nav-item.is-active {
+    background-color: rgba(var(--ctp-accent, var(--ctp-mauve)), 0.14);
+    color: rgb(var(--ctp-accent, var(--ctp-mauve)));
+    border-radius: var(--sy-radius-sm);
+}
+
+.setting-item {
+    border-color: rgb(var(--ctp-surface0));
+}
+
+.setting-item-name {
+    font-weight: 500;
+}
+
+
+/* ── 搜索结果 ── */
+
+.search-result-file-title {
+    font-weight: 600;
+    color: rgb(var(--ctp-text));
+}
+
+.search-result-file-match {
+    border-radius: var(--sy-radius-sm);
+}
+
+.search-result-file-match:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+.search-result-file-match .search-result-file-matched-text {
+    background-color: var(--text-highlight-bg);
+    border-radius: 2px;
+    color: inherit;
+}
+
+
+/* ── 空状态 / 建议 ── */
+
+.empty-state-title {
+    color: rgb(var(--ctp-text));
+    font-weight: 600;
+}
+
+.empty-state-action {
+    color: rgb(var(--ctp-accent, var(--ctp-mauve)));
+}
+
+.suggestion-item.is-selected {
+    background-color: rgba(var(--ctp-accent, var(--ctp-mauve)), 0.14);
+    border-radius: var(--sy-radius-sm);
+}
+
+.suggestion-highlight {
+    color: rgb(var(--ctp-accent, var(--ctp-mauve)));
+    font-weight: 600;
+}

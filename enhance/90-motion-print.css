@@ -1,0 +1,47 @@
+/* 动效、焦点、打印。 */
+
+body:not(.sy-off-glass) :is(.menu, .modal, .prompt, .popover, .bases-cards-item, .kanban-plugin__item) {
+    transition:
+        background-color var(--sy-ease),
+        box-shadow var(--sy-ease),
+        transform var(--sy-ease),
+        border-color var(--sy-ease);
+}
+
+:is(button, .clickable-icon, .nav-file-title, .nav-folder-title, .workspace-tab-header, .side-dock-ribbon-action):focus-visible,
+:is(input, textarea, select, .dropdown):focus-visible {
+    outline: 2px solid rgb(var(--ctp-accent, var(--ctp-mauve)));
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .bases-cards-item:hover {
+        transform: none;
+    }
+}
+
+@media print {
+    body {
+        --sy-glass-blur: 0px;
+    }
+
+    * {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
+    }
+
+    .markdown-rendered pre {
+        overflow: visible;
+        box-shadow: 0 0 0 1px rgb(var(--ctp-surface1)) !important;
+    }
+}

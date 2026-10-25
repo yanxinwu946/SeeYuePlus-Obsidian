@@ -1,0 +1,12 @@
+{
+  "name": "seeyueplus-obsidian",
+  "private": true,
+  "description": "AnuPpuccin 二改：见月的写作秩序叠在 Catppuccin 底盘上。",
+  "scripts": {
+    "build": "pwsh -File ./build.ps1",
+    "watch": "pwsh -File ./build.ps1 -Watch"
+  },
+  "devDependencies": {
+    "sass": "^1.80.0"
+  }
+}

@@ -1,0 +1,116 @@
+/* @settings
+
+name: 见月 · 增强
+id: seeyue-plus-enhance
+settings:
+-
+    id: sy-enhance-info
+    title: 见月
+    description: "只补长文阅读需要的那一层。AnuPpuccin 本身请用上面那一组。"
+    type: heading
+    level: 1
+    collapsed: false
+-
+    id: sy-writing-header
+    title: 写作
+    type: heading
+    level: 2
+    collapsed: false
+-
+    id: sy-heading-colors
+    title: 六级标题分色
+    description: "H1 到 H6 各一个色相，跟着当前 flavor 走。若已打开 AnuPpuccin 的 Header color，见月会让路。"
+    type: class-select
+    allowEmpty: false
+    default: sy-on-heading-colors
+    options:
+    -
+        label: 开启
+        value: sy-on-heading-colors
+    -
+        label: 关闭
+        value: sy-off-heading-colors
+-
+    id: sy-tables
+    title: 表格表头
+    description: "打开 AnuPpuccin 自己的 Table styling 时，见月会让路。"
+    type: class-select
+    allowEmpty: false
+    default: sy-on-tables
+    options:
+    -
+        label: 开启
+        value: sy-on-tables
+    -
+        label: 关闭
+        value: sy-off-tables
+-
+    id: sy-code-header
+    title: 代码
+    type: heading
+    level: 2
+    collapsed: false
+-
+    id: sy-code-window
+    title: 代码窗三点
+    description: "只出现在阅读视图。实时预览保持上游原样。"
+    type: class-select
+    allowEmpty: false
+    default: sy-on-code-window
+    options:
+    -
+        label: 开启
+        value: sy-on-code-window
+    -
+        label: 关闭
+        value: sy-off-code-window
+-
+    id: sy-ui-header
+    title: 界面
+    type: heading
+    level: 2
+    collapsed: false
+-
+    id: sy-glass
+    title: 菜单玻璃
+    type: class-select
+    allowEmpty: false
+    default: sy-on-glass
+    options:
+    -
+        label: 开启
+        value: sy-on-glass
+    -
+        label: 关闭
+        value: sy-off-glass
+-
+    id: sy-glass-blur
+    title: 玻璃模糊
+    type: variable-number-slider
+    default: 18
+    min: 0
+    max: 40
+    step: 2
+    format: px
+-
+    id: sy-font-header
+    title: 字体
+    type: heading
+    level: 2
+    collapsed: false
+-
+    id: sy-cjk-font
+    title: 中文字体栈
+    description: "正文接霞鹜文楷，界面接系统黑体。「外观 → 字体」里选的字体仍然优先。"
+    type: class-select
+    allowEmpty: false
+    default: sy-on-cjk-font
+    options:
+    -
+        label: 开启
+        value: sy-on-cjk-font
+    -
+        label: 关闭
+        value: sy-off-cjk-font
+
+*/

@@ -1,0 +1,244 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   见月增强 · Obsidian 1.14 / 1.15
+   把 AnuPpuccin 的 Catppuccin 色板接到新版官方变量上。
+   不改上游选择器，只填官方新增的洞。
+   ═══════════════════════════════════════════════════════════════════════ */
+
+body {
+    /* 1.14 彩色高亮。官方默认用 --highlight-opacity + color-mix(in oklch)。
+       AnuPpuccin 的 --color-red 等已经是 rgb(var(--ctp-*))，可以直接混。 */
+    --highlight-opacity: 32%;
+    --highlight-background: var(--text-highlight-bg, var(--highlight-background-yellow));
+    --highlight-background-red: color-mix(in oklch, var(--color-red) var(--highlight-opacity), transparent);
+    --highlight-background-orange: color-mix(in oklch, var(--color-orange) var(--highlight-opacity), transparent);
+    --highlight-background-yellow: color-mix(in oklch, var(--color-yellow) var(--highlight-opacity), transparent);
+    --highlight-background-green: color-mix(in oklch, var(--color-green) var(--highlight-opacity), transparent);
+    --highlight-background-blue: color-mix(in oklch, var(--color-blue) var(--highlight-opacity), transparent);
+    --highlight-background-purple: color-mix(in oklch, var(--color-purple) var(--highlight-opacity), transparent);
+    --highlight-bg-color: var(--highlight-background);
+    --highlight-selected-bg-color: color-mix(in oklch, var(--color-accent) 45%, transparent);
+
+    /* 1.14 chrome 变量前缀：--tooltip- / --notice- / --hotkey / --tab-inner- / --tab-container- */
+    --tooltip-background: rgb(var(--ctp-surface0));
+    --tooltip-color: rgb(var(--ctp-text));
+    --tooltip-radius: 8px;
+    --tooltip-shadow: var(--shadow-s);
+    --notice-background: rgb(var(--ctp-surface0));
+    --notice-text-color: rgb(var(--ctp-text));
+    --hotkey-background: rgba(var(--ctp-surface1), 0.9);
+    --hotkey-color: rgb(var(--ctp-subtext1));
+    --hotkey-radius: 6px;
+    --tab-inner-background: transparent;
+    --tab-inner-background-hover: rgba(var(--ctp-text), 0.05);
+    --tab-inner-background-active: rgba(var(--ctp-text), 0.08);
+    --tab-inner-background-focused: rgba(var(--ctp-accent, var(--ctp-mauve)), 0.12);
+    --tab-container-background: rgb(var(--ctp-mantle));
+
+    /* Bases：官方已经用这些变量画表格 / 卡片 / 分组。Kanban 走同一套卡片变量。 */
+    --bases-cards-background: rgb(var(--ctp-base));
+    --bases-cards-container-background: rgb(var(--ctp-mantle));
+    --bases-cards-cover-background: rgb(var(--ctp-surface0));
+    --bases-cards-shadow: 0 1px 2px rgba(var(--ctp-crust), 0.18);
+    --bases-cards-shadow-hover: var(--shadow-s);
+    --bases-cards-radius: 12px;
+    --bases-embed-border-color: rgb(var(--ctp-surface0));
+    --bases-embed-border-radius: 12px;
+    --bases-filter-input-background: rgba(var(--ctp-crust), 0.35);
+    --bases-group-heading-property-color: rgb(var(--ctp-overlay1));
+    --bases-group-heading-value-weight: 600;
+    --bases-table-border-color: rgb(var(--ctp-surface0));
+    --bases-table-header-background: rgb(var(--ctp-mantle));
+    --bases-table-header-background-hover: rgb(var(--ctp-surface0));
+    --bases-table-header-color: rgb(var(--ctp-subtext1));
+    --bases-table-group-background: rgb(var(--ctp-crust));
+    --bases-table-row-background-hover: rgba(var(--ctp-text), 0.05);
+    --bases-table-cell-background-active: rgb(var(--ctp-base));
+    --bases-table-cell-background-selected: rgba(var(--ctp-accent, var(--ctp-mauve)), 0.16);
+    --bases-table-summary-background: rgb(var(--ctp-mantle));
+    --bases-table-container-border-radius: 12px;
+
+    /* 1.15 Pele / --mermaid-*。公开版 1.14 忽略这些变量，Catalyst 会用。 */
+    --mermaid-font-family: var(--font-text);
+    --pele-bg: rgb(var(--ctp-base));
+    --pele-fg: rgb(var(--ctp-text));
+    --pele-muted: rgb(var(--ctp-overlay1));
+    --pele-line: rgb(var(--ctp-overlay0));
+    --pele-surface: rgb(var(--ctp-surface0));
+    --pele-surface-alt: rgb(var(--ctp-mantle));
+    --pele-border: rgb(var(--ctp-surface1));
+    --pele-accent: rgb(var(--ctp-accent, var(--ctp-blue)));
+    --pele-critical: rgb(var(--ctp-red));
+    --pele-error: rgb(var(--ctp-red));
+    --pele-font: var(--font-text);
+    --pele-font-mono: var(--font-monospace);
+    --pele-title-weight: var(--bold-weight, 700);
+    --pele-heading-weight: var(--bold-weight, 700);
+    --pele-bold-weight: var(--bold-weight, 700);
+    --pele-radius: 8px;
+    --pele-series-1: rgb(var(--ctp-blue));
+    --pele-series-2: rgb(var(--ctp-peach));
+    --pele-series-3: rgb(var(--ctp-green));
+    --pele-series-4: rgb(var(--ctp-red));
+    --pele-series-5: rgb(var(--ctp-teal));
+    --pele-series-6: rgb(var(--ctp-yellow));
+    --pele-series-7: rgb(var(--ctp-mauve));
+    --pele-series-8: rgb(var(--ctp-flamingo));
+}
+
+
+/* ── 彩色高亮：阅读 / 实时预览 / 行内色块 ── */
+
+.markdown-rendered mark,
+.markdown-reading-view mark,
+.cm-s-obsidian span.cm-highlight {
+    background-color: var(--highlight-background);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    border-radius: 4px;
+    padding: 0.05em 0.22em;
+}
+
+/* Live Preview 光标落在高亮里时出现的色板 */
+.cm-s-obsidian span.cm-highlight-color-widget {
+    border-radius: 4px;
+    vertical-align: middle;
+}
+
+/* 六色走官方变量。emoji 被官方转成对应 --highlight-background-* */
+mark[data-highlight-color="red"],
+.cm-highlight[data-highlight-color="red"] { --highlight-background: var(--highlight-background-red); }
+mark[data-highlight-color="orange"],
+.cm-highlight[data-highlight-color="orange"] { --highlight-background: var(--highlight-background-orange); }
+mark[data-highlight-color="yellow"],
+.cm-highlight[data-highlight-color="yellow"] { --highlight-background: var(--highlight-background-yellow); }
+mark[data-highlight-color="green"],
+.cm-highlight[data-highlight-color="green"] { --highlight-background: var(--highlight-background-green); }
+mark[data-highlight-color="blue"],
+.cm-highlight[data-highlight-color="blue"] { --highlight-background: var(--highlight-background-blue); }
+mark[data-highlight-color="purple"],
+.cm-highlight[data-highlight-color="purple"] { --highlight-background: var(--highlight-background-purple); }
+
+
+/* ── Bases：表格 / 卡片 / 看板共用官方 class ── */
+
+.bases-cards-item {
+    border: 1px solid rgb(var(--ctp-surface0));
+    transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+
+.bases-cards-item:hover {
+    border-color: rgb(var(--ctp-surface1));
+    box-shadow: var(--bases-cards-shadow-hover);
+    transform: translateY(-1px);
+}
+
+.bases-cards-label {
+    color: rgb(var(--ctp-overlay1));
+}
+
+.bases-group-heading,
+.bases-table-group-header {
+    letter-spacing: 0.01em;
+}
+
+/* 分组折叠：官方给 heading 加 .is-collapsed */
+.bases-group.is-collapsed .bases-group-heading,
+.bases-table-group.is-collapsed {
+    opacity: 0.78;
+}
+
+/* 看板：官方复用卡片，列容器可能是 group 或 view-type */
+.bases-view[data-view-type="kanban"],
+.workspace-leaf-content[data-type="bases"] [data-view-type="kanban"] {
+    --bases-cards-container-background: rgb(var(--ctp-crust));
+}
+
+.bases-toolbar-menu {
+    background-color: rgb(var(--ctp-surface0));
+}
+
+
+/* ── 属性面板 ── */
+
+.metadata-container {
+    --metadata-background: rgba(var(--ctp-mantle), 0.55);
+    --metadata-border-color: rgb(var(--ctp-surface0));
+    --metadata-label-text-color: rgb(var(--ctp-overlay1));
+    --metadata-input-text-color: rgb(var(--ctp-text));
+    --metadata-property-background-hover: rgba(var(--ctp-text), 0.05);
+}
+
+
+/* ── 数学块 1.14：$$ 每一行带 .HyperMD-math ── */
+
+.HyperMD-math {
+    font-family: var(--font-text);
+}
+
+.markdown-rendered mjx-container,
+.markdown-rendered mjx-container svg {
+    color: rgb(var(--ctp-text));
+}
+
+
+/* ── Pele 图（1.15）──
+   1.13–1.14 暗色会对 .mermaid > svg 做 invert。Pele 用 CSS 变量上色，invert 会把色板拧反。 */
+
+.theme-dark svg.pele {
+    filter: none;
+}
+
+.pele {
+    --pele-bg: rgb(var(--ctp-base));
+    --pele-fg: rgb(var(--ctp-text));
+    --pele-muted: rgb(var(--ctp-overlay1));
+    --pele-line: rgb(var(--ctp-overlay0));
+    --pele-surface: rgb(var(--ctp-surface0));
+    --pele-surface-alt: rgb(var(--ctp-mantle));
+    --pele-border: rgb(var(--ctp-surface1));
+    --pele-accent: rgb(var(--ctp-accent, var(--ctp-blue)));
+    --pele-critical: rgb(var(--ctp-red));
+    --pele-error: rgb(var(--ctp-red));
+    --pele-title-weight: var(--bold-weight, 700);
+    --pele-heading-weight: var(--bold-weight, 700);
+    --pele-bold-weight: var(--bold-weight, 700);
+    border-radius: 12px;
+}
+
+
+/* ── Web viewer ── */
+
+.workspace-leaf-content[data-type="webviewer"] .view-header {
+    background-color: rgb(var(--ctp-mantle));
+}
+
+.workspace-leaf-content[data-type="webviewer"] .webviewer-content {
+    background-color: rgb(var(--ctp-base));
+}
+
+
+/* ── 空状态、库外文件 ── */
+
+.empty-state {
+    color: rgb(var(--ctp-overlay1));
+}
+
+.workspace-leaf-content[data-type="markdown"].mod-outside-vault .view-header,
+.mod-outside-vault .inline-title {
+    font-style: italic;
+}
+
+
+/* ── 移动端系统字号 ── */
+
+.is-mobile {
+    --font-preferred-size: calc(var(--font-text-size) * var(--preferred-text-scale, 1));
+}
+
+
+/* ── .base 文件图标（AnuPpuccin 文件图标开着时才生效） ── */
+
+.anp-file-icons .nav-file .nav-file-title[data-path$=".base"]::before {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='7' height='7' rx='1'/%3E%3Crect x='14' y='3' width='7' height='7' rx='1'/%3E%3Crect x='3' y='14' width='7' height='7' rx='1'/%3E%3Crect x='14' y='14' width='7' height='7' rx='1'/%3E%3C/svg%3E");
+    -webkit-mask-repeat: no-repeat;
+}

@@ -1,0 +1,64 @@
+/* 代码窗：左上红黄绿三点。不改 AnuPpuccin 的语法色。 */
+
+body:not(.sy-off-code-window) {
+    --code-radius: var(--sy-code-radius);
+}
+
+body:not(.sy-off-code-window) .markdown-rendered pre {
+    position: relative;
+    padding-top: var(--sy-code-toolbar);
+    border-radius: var(--sy-code-radius);
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgb(var(--ctp-surface0));
+}
+
+body:not(.sy-off-code-window) .markdown-rendered pre::before {
+    content: "";
+    position: absolute;
+    top: 13px;
+    inset-inline-start: 14px;
+    width: var(--sy-code-dot-size);
+    height: var(--sy-code-dot-size);
+    border-radius: 50%;
+    background: var(--sy-code-dot-red);
+    box-shadow:
+        var(--sy-code-dot-gap) 0 0 var(--sy-code-dot-yellow),
+        calc(var(--sy-code-dot-gap) * 2) 0 0 var(--sy-code-dot-green);
+    pointer-events: none;
+    z-index: 1;
+}
+
+body:not(.sy-off-code-window) .markdown-rendered pre:has(> code[class*="language-"]) {
+    padding-top: var(--sy-code-toolbar);
+}
+
+body:not(.sy-off-code-window) .markdown-rendered button.copy-code-button {
+    top: 8px;
+    right: 8px;
+    left: auto;
+    background-color: rgba(var(--ctp-crust), 0.72);
+    border-radius: var(--sy-radius-sm);
+    opacity: 0;
+    transition: opacity var(--sy-ease), transform var(--sy-ease);
+}
+
+body:not(.sy-off-code-window) .markdown-rendered pre:hover button.copy-code-button,
+body:not(.sy-off-code-window) .markdown-rendered pre:focus-within button.copy-code-button {
+    opacity: 1;
+}
+
+
+/* 行内代码 */
+
+.markdown-rendered :not(pre) > code,
+.cm-s-obsidian span.cm-inline-code {
+    border-radius: var(--sy-radius-xs);
+    padding: 0.12em 0.38em;
+    font-size: 0.9em;
+}
+
+.markdown-rendered :is(h1, h2, h3, h4, h5, h6) code {
+    background: transparent;
+    padding: 0;
+    font-size: 0.88em;
+}

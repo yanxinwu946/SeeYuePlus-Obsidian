@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>见月 · 预览</title>
+  <link rel="stylesheet" href="../theme.css" />
+  <style>
+    :root {
+      --font-text: var(--font-text-theme), "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      --font-interface: var(--font-interface-theme), system-ui, sans-serif;
+      --font-monospace: var(--font-monospace-theme), ui-monospace, monospace;
+      --file-line-width: 720px;
+      --size-4-2: 8px;
+      --size-4-4: 16px;
+      --icon-opacity: 0.85;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: var(--font-text);
+      background: var(--background-secondary);
+      color: var(--text-normal);
+      display: flex;
+      flex-direction: column;
+    }
+    .bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 12px;
+      background: var(--background-primary-alt);
+      border-bottom: 1px solid var(--background-modifier-border);
+      font-family: var(--font-interface);
+      font-size: 13px;
+    }
+    .bar button {
+      background: var(--interactive-normal);
+      color: var(--text-normal);
+      border: 0;
+      border-radius: 6px;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+    .bar button:hover { background: var(--interactive-hover); }
+    .workspace {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      background: var(--tab-container-background, var(--background-secondary));
+    }
+    .workspace-split.mod-left-split {
+      width: 260px;
+      background: var(--background-secondary);
+      border-right: 1px solid var(--background-modifier-border);
+      padding: 12px 8px;
+      overflow: auto;
+    }
+    .nav-folder-title, .nav-file-title {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      font-size: 13px;
+      font-family: var(--font-interface);
+      cursor: default;
+    }
+    .workspace-split.mod-root {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .workspace-tab-header-container {
+      display: flex;
+      gap: 4px;
+      padding: 8px 12px 0;
+    }
+    .workspace-tab-header {
+      padding: 6px 12px;
+      font-size: 13px;
+      font-family: var(--font-interface);
+    }
+    .workspace-leaf-content { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .view-header {
+      padding: 8px 16px;
+      font-family: var(--font-interface);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .view-content {
+      flex: 1;
+      overflow: auto;
+      background: var(--background-primary);
+    }
+    .markdown-preview-view {
+      max-width: var(--file-line-width);
+      margin: 0 auto;
+      padding: var(--file-margins, 28px 40px 48px);
+      line-height: var(--line-height-normal, 1.7);
+    }
+    h1, h2, h3, h4, h5, h6 { color: var(--h1-color, inherit); }
+    h2 { color: var(--h2-color); }
+    h3 { color: var(--h3-color); }
+    h4 { color: var(--h4-color); }
+    h5 { color: var(--h5-color); }
+    h6 { color: var(--h6-color); }
+    pre {
+      background: var(--code-background, var(--background-secondary-alt));
+      color: var(--code-normal, var(--text-normal));
+      padding: 1em 1.2em;
+      font-family: var(--font-monospace);
+      font-size: 13px;
+      overflow: auto;
+    }
+    :not(pre) > code {
+      font-family: var(--font-monospace);
+      background: var(--code-background, var(--background-secondary-alt));
+    }
+    blockquote {
+      margin: 1em 0;
+      border-inline-start: 3px solid var(--blockquote-border-color);
+      color: var(--text-muted);
+    }
+    .callout {
+      --callout-color: var(--color-blue);
+      background: rgba(var(--ctp-blue), 0.12);
+      padding: 12px 14px;
+      margin: 1em 0;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 1em 0; }
+    th, td { text-align: left; }
+    a.tag { text-decoration: none; }
+    .menu-demo {
+      position: absolute;
+      right: 28px;
+      top: 86px;
+      width: 220px;
+      padding: 8px;
+      z-index: 20;
+    }
+    .menu-item { padding: 6px 10px; font-size: 13px; font-family: var(--font-interface); }
+  </style>
+</head>
+<body class="theme-dark">
+  <div class="bar">
+    <strong>见月 · 预览</strong>
+    <button type="button" id="toggle-theme">切换明亮 / 暗黑</button>
+    <span id="mode-label">暗黑 · Mocha</span>
+  </div>
+  <div class="app-container workspace">
+    <div class="workspace-split mod-left-split">
+      <div class="nav-folder-title">Notes</div>
+      <div class="nav-file"><div class="nav-file-title is-active" data-path="welcome.md"><div class="nav-file-title-content">欢迎.md</div></div></div>
+      <div class="nav-file"><div class="nav-file-title" data-path="daily.md"><div class="nav-file-title-content">日记.md</div></div></div>
+      <div class="nav-file"><div class="nav-file-title" data-path="projects.md"><div class="nav-file-title-content">项目.md</div></div></div>
+      <div class="tree-item-self is-active" style="margin-top:16px">大纲 · 写作秩序</div>
+    </div>
+    <div class="workspace-split mod-root">
+      <div class="workspace-tab-header-container">
+        <div class="workspace-tab-header is-active"><div class="workspace-tab-header-inner"><div class="workspace-tab-header-inner-title">欢迎.md</div></div></div>
+        <div class="workspace-tab-header"><div class="workspace-tab-header-inner"><div class="workspace-tab-header-inner-title">日记.md</div></div></div>
+      </div>
+      <div class="workspace-leaf-content" data-type="markdown">
+        <div class="view-header">欢迎.md</div>
+        <div class="view-content">
+          <div class="markdown-preview-view markdown-rendered markdown-preview-section">
+            <h1>给长文的秩序</h1>
+            <p>打开库的那一瞬间，标题自己会呼吸。正文用霞鹜文楷，强调色跟着 Catppuccin 走。</p>
+            <h2>第一节 · 色阶</h2>
+            <p>H2 到 H6 只靠色相区分层级，前面不加装饰。</p>
+            <h3>更小一档</h3>
+            <p>引用、列表、代码、表格都该在这一屏里站稳。</p>
+            <h4>再往下</h4>
+            <h5>细部</h5>
+            <h6>注脚级</h6>
+            <blockquote>
+              <p>长夜与长文之间，屏幕不该扎人。</p>
+            </blockquote>
+            <div class="callout" data-callout="info">
+              <div class="callout-title"><div class="callout-title-inner">提示</div></div>
+              <div class="callout-content"><p>Style Settings 里可以单独关掉某一笔。</p></div>
+            </div>
+            <ul>
+              <li>无序一层</li>
+              <li>无序一层
+                <ul>
+                  <li>空心圆</li>
+                </ul>
+              </li>
+            </ul>
+            <ol>
+              <li>先把句子写完</li>
+              <li>再让版面自己站好
+                <ol>
+                  <li>二级徽章淡一点</li>
+                </ol>
+              </li>
+              <li>最后才去调颜色</li>
+            </ol>
+            <p>行内代码 <code>theme.css</code> 和标签 <a class="tag" href="#tag">#写作</a>。</p>
+            <pre><code class="language-js">function greet(name) {
+  return `hello, ${name}`;
+}
+</code></pre>
+            <table>
+              <thead>
+                <tr><th>时刻</th><th>底色</th><th>心情</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>白天</td><td>Latte</td><td>校色、付印</td></tr>
+                <tr><td>凌晨</td><td>Mocha</td><td>屏幕不扎人</td></tr>
+              </tbody>
+            </table>
+            <hr />
+            <section class="footnotes">
+              <p>脚注走淡一档，不跟正文抢。</p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="menu menu-demo">
+      <div class="menu-item">打开笔记</div>
+      <div class="menu-item">重命名</div>
+      <div class="menu-item">在新标签打开</div>
+    </div>
+  </div>
+  <script>
+    const btn = document.getElementById("toggle-theme");
+    const label = document.getElementById("mode-label");
+    btn.addEventListener("click", () => {
+      const dark = document.body.classList.toggle("theme-dark");
+      document.body.classList.toggle("theme-light", !dark);
+      label.textContent = dark ? "暗黑 · Mocha" : "明亮 · Latte";
+    });
+  </script>
+</body>
+</html>
